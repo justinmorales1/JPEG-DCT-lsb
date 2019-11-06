@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_function' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_height' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::row_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::bit_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_usage' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_map' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_areas' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_area_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::progress_function' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::progress_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::image_height' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::row_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::bit_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_usage' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_map' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_areas' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::color_area_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::progress_function' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>bitimage.cpp</FILENAME>
+      <LINE>53</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImage::progress_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImage::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImage@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

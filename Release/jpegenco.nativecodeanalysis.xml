@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_function' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>jpdedu.h</FILENAME>
+      <LINE>42</LINE>
+      <COLUMN>2</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegDecoderDataUnit::values' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegDecoderDataUnit::{ctor}</FUNCTION>
+    <DECORATED>??0JpegDecoderDataUnit@@QAE@XZ</DECORATED>
+    <FUNCLINE>42</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::total_passes' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_component_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::mcu_cols' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::bit_buffer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::luminance_quanttbl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::current_image' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::dc_tables' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::gray_scale' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::image_scans' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::ac_tables' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::chrominance_quanttbl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::bit_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::current_pass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::frame_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::frame_height' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::mcu_rows' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::max_vertical_frequency' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::max_horizontal_frequency' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::rows_per_restart' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::progressive_mode' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::restart_interval' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::image_quality' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::output_stream' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>66</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_components' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::total_passes' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_component_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::mcu_cols' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::bit_buffer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::luminance_quanttbl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::current_image' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::dc_tables' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::gray_scale' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::image_scans' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::ac_tables' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::chrominance_quanttbl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::bit_count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::current_pass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::frame_width' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::frame_height' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::mcu_rows' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::max_vertical_frequency' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::max_horizontal_frequency' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::rows_per_restart' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::progressive_mode' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::restart_interval' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::image_quality' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::output_stream' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>13</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegEncoder::scan_components' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegEncoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>77</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpegenco.cpp</FILENAME>
+      <LINE>270</LINE>
+      <COLUMN>26</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>JpegEncoder::CreateQuantizationTables</FUNCTION>
+    <DECORATED>?CreateQuantizationTables@JpegEncoder@@AAEXI@Z</DECORATED>
+    <FUNCLINE>260</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_function' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\include</FILEPATH>
+      <FILENAME>bitimage.h</FILENAME>
+      <LINE>98</LINE>
+      <COLUMN>25</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'BitmapImageCoder::progress_data' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>BitmapImageCoder::{ctor}</FUNCTION>
+    <DECORATED>??0BitmapImageCoder@@QAE@ABV0@@Z</DECORATED>
+    <FUNCLINE>98</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>32</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegHuffmanDecoder::valptr' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegHuffmanDecoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>32</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>32</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegHuffmanDecoder::maxcode' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegHuffmanDecoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>32</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>32</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegHuffmanDecoder::mincode' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegHuffmanDecoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>32</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>32</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'JpegHuffmanDecoder::huff_values' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::{ctor}</FUNCTION>
+    <DECORATED>??0JpegHuffmanDecoder@@QAE@XZ</DECORATED>
+    <FUNCLINE>32</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>161</LINE>
+      <COLUMN>21</COLUMN>
+    </SFA>
+    <DEFECTCODE>6385</DEFECTCODE>
+    <DESCRIPTION>Reading invalid data from 'huffcodes':  the readable size is '512' bytes, but '-4' bytes may be read.</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::MakeTable</FUNCTION>
+    <DECORATED>?MakeTable@JpegHuffmanDecoder@@AAEXQAE@Z</DECORATED>
+    <FUNCLINE>103</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>23</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>113</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'huffcodes' is an array of 256 elements (512 bytes)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>114</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>26</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>127</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>56</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>26</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>127</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>56</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Continue this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>132</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>133</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>134</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>135</LINE>
+        <COLUMN>22</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'huffsizes[kk]!=0' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>150</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>150</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>6</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>154</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>7</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this branch, (assume 'huffbits[ii]!=0')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>158</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>159</LINE>
+        <COLUMN>21</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>160</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>161</LINE>
+        <COLUMN>21</COLUMN>
+        <KEYEVENT>
+          <ID>8</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Invalid read from 'huffcodes[-2]', (readable range is 0 to 255)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+      <FILENAME>jpdehuff.cpp</FILENAME>
+      <LINE>159</LINE>
+      <COLUMN>21</COLUMN>
+    </SFA>
+    <DEFECTCODE>6001</DEFECTCODE>
+    <DESCRIPTION>Using uninitialized memory 'huffcodes'.</DESCRIPTION>
+    <FUNCTION>JpegHuffmanDecoder::MakeTable</FUNCTION>
+    <DECORATED>?MakeTable@JpegHuffmanDecoder@@AAEXQAE@Z</DECORATED>
+    <FUNCLINE>103</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>3</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>107</LINE>
+        <COLUMN>23</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>113</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'huffcodes' is not initialized</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>114</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>26</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'jj&lt;huffbits[ii]' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>127</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>56</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>4</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>26</COLUMN>
+        <KEYEVENT>
+          <ID>5</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'jj&lt;huffbits[ii]' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>127</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>56</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>120</LINE>
+        <COLUMN>27</COLUMN>
+        <KEYEVENT>
+          <ID>6</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Continue this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>132</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>133</LINE>
+        <COLUMN>15</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>134</LINE>
+        <COLUMN>13</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>135</LINE>
+        <COLUMN>22</COLUMN>
+        <KEYEVENT>
+          <ID>7</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Skip this loop, (assume 'huffsizes[kk]!=0' is false)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>150</LINE>
+        <COLUMN>11</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>150</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>8</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this loop, (assume 'ii&lt;JpegMaxHuffmanCodeLength')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>154</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>9</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this branch, (assume 'huffbits[ii]!=0')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>158</LINE>
+        <COLUMN>20</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\justin\desktop\chang's high-capacity jpeg hiding\jpeg</FILEPATH>
+        <FILENAME>jpdehuff.cpp</FILENAME>
+        <LINE>159</LINE>
+        <COLUMN>21</COLUMN>
+        <KEYEVENT>
+          <ID>10</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'huffcodes' is used, but may not have been initialized</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>
