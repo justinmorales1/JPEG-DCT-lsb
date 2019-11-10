@@ -68,14 +68,16 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
           
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
-                printf("The values was a 0 or it was a 1");
+                printf("The values was a 0 or it was a 1\n");
                 break;
             }
             else {
-                printf("The value is: %d", (*data)[row][col]);
+                printf("The value is: %d\n", (*data)[row][col]);
+                //(*data)[row][col] = 0xff;
+                //printf("The new value is: %d\n", (*data)[row][col]);
             }
-			(*data)[row][col] &= 0;
-			(*data)[row][col] |= 0;	// hide data in coefficients
+			//(*data)[row][col] &= 0;
+			//(*data)[row][col] |= 0;	// hide data in coefficients
 		}
 
     

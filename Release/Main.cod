@@ -156,6 +156,8 @@ PUBLIC	??_C@_0CM@IOGDDIIC@?5?5?5?5?5?5?5?5?9q?5?$FL10?5?9?5100?5def?350?$FN?7qu@
 PUBLIC	??_C@_02JDPG@rb@				; `string'
 PUBLIC	??_C@_0CB@HJJFPCIJ@Could?5not?5open?5message?5file?5?$CFs?6@ ; `string'
 PUBLIC	??_C@_0CO@PPALOBGM@Could?5not?5allocate?5memory?5for?5m@ ; `string'
+PUBLIC	??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@ ; `string'
+PUBLIC	??_C@_0BI@NOCMBPFN@The?5message?5size?5is?5?$CFd?6@ ; `string'
 PUBLIC	??_C@_0BK@KAGKMFJB@MUST?5have?5an?5input?5file?4?6@ ; `string'
 PUBLIC	??_C@_04LJDDIHIK@?4bmp@				; `string'
 PUBLIC	??_C@_04GNPKBLNA@?4jpg@				; `string'
@@ -959,6 +961,16 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0BK@KAGKMFJB@MUST?5have?5an?5input?5file?4?6@ DB 'MUST have an inpu'
 	DB	't file.', 0aH, 00H				; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0BI@NOCMBPFN@The?5message?5size?5is?5?$CFd?6@
+CONST	SEGMENT
+??_C@_0BI@NOCMBPFN@The?5message?5size?5is?5?$CFd?6@ DB 'The message size '
+	DB	'is %d', 0aH, 00H				; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
+CONST	SEGMENT
+??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@ DB 'The messa'
+	DB	'ge buffer values are %s', 0aH, 00H		; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0CO@PPALOBGM@Could?5not?5allocate?5memory?5for?5m@
 CONST	SEGMENT
@@ -4386,14 +4398,15 @@ _TEXT	ENDS
 ; File c:\users\justin\desktop\jpeg-dct-lsb\main.cpp
 ;	COMDAT _main
 _TEXT	SEGMENT
-_tmpDbl$ = -32						; size = 8
-_fptr$1$ = -28						; size = 4
-_g$ = -24						; size = 1
-_p$ = -20						; size = 1
-_v$ = -16						; size = 1
-_size$1$ = -12						; size = 4
-_inputFile$1$ = -8					; size = 4
-_outputFile$1$ = -4					; size = 4
+_tmpDbl$ = -36						; size = 8
+_fptr$1$ = -32						; size = 4
+_inputFile$1$ = -28					; size = 4
+_size$1$ = -24						; size = 4
+_g$ = -20						; size = 1
+_p$ = -16						; size = 1
+_v$ = -12						; size = 1
+_outputFile$1$ = -8					; size = 4
+_inExt$1$ = -1						; size = 1
 _argc$ = 8						; size = 4
 _argv$ = 12						; size = 4
 _main	PROC						; COMDAT
@@ -4402,8 +4415,9 @@ _main	PROC						; COMDAT
 
   00000	55		 push	 ebp
   00001	8b ec		 mov	 ebp, esp
-  00003	83 ec 20	 sub	 esp, 32			; 00000020H
+  00003	83 ec 24	 sub	 esp, 36			; 00000024H
   00006	53		 push	 ebx
+  00007	56		 push	 esi
 
 ; 43   : 	int test = 0, i, x, fileno, size;
 ; 44   : 	char ch, *ext, *inputFile, *outputFile, inExt, outExt;
@@ -4414,12 +4428,11 @@ _main	PROC						; COMDAT
 ; 49   : 
 ; 50   : 	if(argc < 2) Usage(argc, argv);
 
-  00007	8b 5d 08	 mov	 ebx, DWORD PTR _argc$[ebp]
-  0000a	56		 push	 esi
+  00008	8b 75 08	 mov	 esi, DWORD PTR _argc$[ebp]
   0000b	57		 push	 edi
-  0000c	83 fb 02	 cmp	 ebx, 2
-  0000f	0f 8c d6 08 00
-	00		 jl	 $LN161@main
+  0000c	83 fe 02	 cmp	 esi, 2
+  0000f	0f 8c 88 08 00
+	00		 jl	 $LN156@main
 
 ; 51   : 
 ; 52   : 	// initialize variables
@@ -4432,34 +4445,33 @@ _main	PROC						; COMDAT
 
   00015	f2 0f 10 05 00
 	00 00 00	 movsd	 xmm0, QWORD PTR __real@4000000000000000
-  0001d	33 f6		 xor	 esi, esi
-  0001f	89 75 f8	 mov	 DWORD PTR _inputFile$1$[ebp], esi
-  00022	89 75 fc	 mov	 DWORD PTR _outputFile$1$[ebp], esi
-  00025	c6 45 e8 00	 mov	 BYTE PTR _g$[ebp], 0
-  00029	c6 45 ec 00	 mov	 BYTE PTR _p$[ebp], 0
-  0002d	c6 45 f0 00	 mov	 BYTE PTR _v$[ebp], 0
-  00031	e8 00 00 00 00	 call	 __libm_sse2_log_precise
+  0001d	33 c0		 xor	 eax, eax
+  0001f	89 45 e4	 mov	 DWORD PTR _inputFile$1$[ebp], eax
+  00022	89 45 f8	 mov	 DWORD PTR _outputFile$1$[ebp], eax
+  00025	88 45 ec	 mov	 BYTE PTR _g$[ebp], al
+  00028	88 45 f0	 mov	 BYTE PTR _p$[ebp], al
+  0002b	88 45 f4	 mov	 BYTE PTR _v$[ebp], al
+  0002e	e8 00 00 00 00	 call	 __libm_sse2_log_precise
 
 ; 59   : 	srand(1);
 
-  00036	6a 01		 push	 1
-  00038	f2 0f 11 05 00
+  00033	6a 01		 push	 1
+  00035	f2 0f 11 05 00
 	00 00 00	 movsd	 QWORD PTR ?lg2@@3NA, xmm0
-  00040	e8 00 00 00 00	 call	 _srand
+  0003d	e8 00 00 00 00	 call	 _srand
 
 ; 60   : 	gBitCapacity = 0;
 ; 61   : 
 ; 62   : 	for(i = 1; i < argc; i++)
 
-  00045	8d 7e 01	 lea	 edi, DWORD PTR [esi+1]
-  00048	89 35 00 00 00
-	00		 mov	 DWORD PTR ?gBitCapacity@@3IA, esi ; gBitCapacity
-  0004e	83 c4 04	 add	 esp, 4
-  00051	3b df		 cmp	 ebx, edi
-  00053	8b 5d 0c	 mov	 ebx, DWORD PTR _argv$[ebp]
-  00056	0f 8e 68 08 00
-	00		 jle	 $LN108@main
-  0005c	8d 77 63	 lea	 esi, DWORD PTR [edi+99]
+  00042	8b 5d 0c	 mov	 ebx, DWORD PTR _argv$[ebp]
+  00045	bf 01 00 00 00	 mov	 edi, 1
+  0004a	83 c4 04	 add	 esp, 4
+  0004d	c7 05 00 00 00
+	00 00 00 00 00	 mov	 DWORD PTR ?gBitCapacity@@3IA, 0 ; gBitCapacity
+  00057	3b f7		 cmp	 esi, edi
+  00059	0f 8e 19 08 00
+	00		 jle	 $LN104@main
   0005f	90		 npad	 1
 $LL4@main:
 
@@ -4468,7 +4480,7 @@ $LL4@main:
 
   00060	8b 04 bb	 mov	 eax, DWORD PTR [ebx+edi*4]
   00063	80 38 2d	 cmp	 BYTE PTR [eax], 45	; 0000002dH
-  00066	0f 85 78 02 00
+  00066	0f 85 4c 02 00
 	00		 jne	 $LN2@main
 
 ; 65   : 		{
@@ -4478,45 +4490,45 @@ $LL4@main:
   0006c	0f be 40 01	 movsx	 eax, BYTE PTR [eax+1]
   00070	83 c0 9f	 add	 eax, -97		; ffffff9fH
   00073	83 f8 16	 cmp	 eax, 22			; 00000016H
-  00076	0f 87 68 02 00
+  00076	0f 87 3c 02 00
 	00		 ja	 $LN2@main
   0007c	0f b6 80 00 00
-	00 00		 movzx	 eax, BYTE PTR $LN114@main[eax]
+	00 00		 movzx	 eax, BYTE PTR $LN110@main[eax]
   00083	ff 24 85 00 00
-	00 00		 jmp	 DWORD PTR $LN164@main[eax*4]
+	00 00		 jmp	 DWORD PTR $LN159@main[eax*4]
 $LN9@main:
 
 ; 68   : 			{
 ; 69   : 			case 'g':	// greyscale
 ; 70   : 				g = true;
 
-  0008a	c6 45 e8 01	 mov	 BYTE PTR _g$[ebp], 1
+  0008a	c6 45 ec 01	 mov	 BYTE PTR _g$[ebp], 1
 
 ; 71   : 				break;
 
-  0008e	e9 51 02 00 00	 jmp	 $LN2@main
+  0008e	e9 25 02 00 00	 jmp	 $LN2@main
 $LN10@main:
 
 ; 72   : 
 ; 73   : 			case 'p':	// progressive
 ; 74   : 				p = true;
 
-  00093	c6 45 ec 01	 mov	 BYTE PTR _p$[ebp], 1
+  00093	c6 45 f0 01	 mov	 BYTE PTR _p$[ebp], 1
 
 ; 75   : 				break;
 
-  00097	e9 48 02 00 00	 jmp	 $LN2@main
+  00097	e9 1c 02 00 00	 jmp	 $LN2@main
 $LN11@main:
 
 ; 76   : 
 ; 77   : 			case 'v':	// verbose output
 ; 78   : 				v = true;
 
-  0009c	c6 45 f0 01	 mov	 BYTE PTR _v$[ebp], 1
+  0009c	c6 45 f4 01	 mov	 BYTE PTR _v$[ebp], 1
 
 ; 79   : 				break;
 
-  000a0	e9 3f 02 00 00	 jmp	 $LN2@main
+  000a0	e9 13 02 00 00	 jmp	 $LN2@main
 $LN12@main:
 
 ; 80   : 
@@ -4533,8 +4545,8 @@ $LN12@main:
   000af	f2 0f 10 0d 00
 	00 00 00	 movsd	 xmm1, QWORD PTR __real@3fb999999999999a
   000b7	83 c4 04	 add	 esp, 4
-  000ba	dd 5d e0	 fstp	 QWORD PTR _tmpDbl$[ebp]
-  000bd	f2 0f 10 45 e0	 movsd	 xmm0, QWORD PTR _tmpDbl$[ebp]
+  000ba	dd 5d dc	 fstp	 QWORD PTR _tmpDbl$[ebp]
+  000bd	f2 0f 10 45 dc	 movsd	 xmm0, QWORD PTR _tmpDbl$[ebp]
   000c2	66 0f 2f c8	 comisd	 xmm1, xmm0
   000c6	77 0a		 ja	 SHORT $LN14@main
   000c8	66 0f 2f 05 00
@@ -4552,7 +4564,7 @@ $LN13@main:
 
 ; 86   : 				break;
 
-  000e2	e9 fd 01 00 00	 jmp	 $LN2@main
+  000e2	e9 d1 01 00 00	 jmp	 $LN2@main
 $LN15@main:
 
 ; 87   : 
@@ -4578,1284 +4590,1262 @@ $LN15@main:
 ; 98   : 				break;
 
   000fe	a3 00 00 00 00	 mov	 DWORD PTR ?gImageQuality@@3IA, eax ; gImageQuality
-  00103	e9 dc 01 00 00	 jmp	 $LN2@main
+  00103	e9 b0 01 00 00	 jmp	 $LN2@main
 $LN16@main:
 
 ; 93   : 
 ; 94   : 				else if(tmpInt > 100) gImageQuality = 100;
 
   00108	83 f8 64	 cmp	 eax, 100		; 00000064H
-  0010b	0f 47 c6	 cmova	 eax, esi
+  0010b	b9 64 00 00 00	 mov	 ecx, 100		; 00000064H
+  00110	0f 47 c1	 cmova	 eax, ecx
 
 ; 95   : 
 ; 96   : 				else gImageQuality = tmpInt;
 ; 97   : 
 ; 98   : 				break;
 
-  0010e	a3 00 00 00 00	 mov	 DWORD PTR ?gImageQuality@@3IA, eax ; gImageQuality
-  00113	e9 cc 01 00 00	 jmp	 $LN2@main
+  00113	a3 00 00 00 00	 mov	 DWORD PTR ?gImageQuality@@3IA, eax ; gImageQuality
+  00118	e9 9b 01 00 00	 jmp	 $LN2@main
 $LN20@main:
 
 ; 99   : 
 ; 100  : 			case 'e':	// extract a message
 ; 101  : 				gExtractMsg = true;
 
-  00118	c6 05 00 00 00
+  0011d	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?gExtractMsg@@3_NA, 1 ; gExtractMsg
 
 ; 102  : 				break;
 
-  0011f	e9 c0 01 00 00	 jmp	 $LN2@main
+  00124	e9 8f 01 00 00	 jmp	 $LN2@main
 $LN21@main:
 
 ; 103  : 
 ; 104  : 			case 'w':	// wipe a message (replaces message with zeros)
 ; 105  : 				gWipeMsg = true;
 
-  00124	c6 05 00 00 00
+  00129	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?gWipeMsg@@3_NA, 1 ; gWipeMsg
 
 ; 106  : 				break;
 
-  0012b	e9 b4 01 00 00	 jmp	 $LN2@main
+  00130	e9 83 01 00 00	 jmp	 $LN2@main
 $LN22@main:
 
 ; 107  : 
 ; 108  : 			case 'd':	// destroy a message (replaces message with pseudornd bits)
 ; 109  : 				gDestroyMsg = true;
 
-  00130	c6 05 00 00 00
+  00135	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?gDestroyMsg@@3_NA, 1 ; gDestroyMsg
 
 ; 110  : 				break;
 
-  00137	e9 a8 01 00 00	 jmp	 $LN2@main
+  0013c	e9 77 01 00 00	 jmp	 $LN2@main
 $LN23@main:
 
 ; 111  : 
 ; 112  : 			case 'h':	// hide - provide message file name
 ; 113  : 				i++;
 
-  0013c	47		 inc	 edi
+  00141	47		 inc	 edi
 
-; 114  : 				fptr = fopen(argv[i], "rb");
+; 114  :                 char buffer[4096];
+; 115  : 				fptr = fopen(argv[i], "rb");
 
-  0013d	68 00 00 00 00	 push	 OFFSET ??_C@_02JDPG@rb@
-  00142	ff 34 bb	 push	 DWORD PTR [ebx+edi*4]
-  00145	e8 00 00 00 00	 call	 _fopen
-  0014a	83 c4 08	 add	 esp, 8
-  0014d	89 45 e4	 mov	 DWORD PTR _fptr$1$[ebp], eax
+  00142	68 00 00 00 00	 push	 OFFSET ??_C@_02JDPG@rb@
+  00147	ff 34 bb	 push	 DWORD PTR [ebx+edi*4]
+  0014a	e8 00 00 00 00	 call	 _fopen
+  0014f	83 c4 08	 add	 esp, 8
+  00152	89 45 e0	 mov	 DWORD PTR _fptr$1$[ebp], eax
 
-; 115  : 				if(fptr == NULL)
+; 116  :                
+; 117  : 				if(fptr == NULL)
 
-  00150	85 c0		 test	 eax, eax
-  00152	0f 84 9c 07 00
-	00		 je	 $LN93@main
+  00155	85 c0		 test	 eax, eax
+  00157	0f 84 49 07 00
+	00		 je	 $LN91@main
 
-; 119  : 				}
-; 120  : 
-; 121  : 				fileno = _fileno(fptr);
+; 121  : 				}
+; 122  : 
+; 123  : 				fileno = _fileno(fptr);
 
-  00158	50		 push	 eax
-  00159	e8 00 00 00 00	 call	 __fileno
+  0015d	50		 push	 eax
+  0015e	e8 00 00 00 00	 call	 __fileno
 
-; 122  : 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
+; 124  : 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 
-  0015e	8b 34 bb	 mov	 esi, DWORD PTR [ebx+edi*4]
-  00161	83 c4 04	 add	 esp, 4
-  00164	8b c8		 mov	 ecx, eax
-  00166	8d 56 01	 lea	 edx, DWORD PTR [esi+1]
-  00169	0f 1f 80 00 00
-	00 00		 npad	 7
-$LL115@main:
+  00163	8b 34 bb	 mov	 esi, DWORD PTR [ebx+edi*4]
+  00166	83 c4 04	 add	 esp, 4
+  00169	8b c8		 mov	 ecx, eax
+  0016b	8d 56 01	 lea	 edx, DWORD PTR [esi+1]
+  0016e	66 90		 npad	 2
+$LL111@main:
   00170	8a 06		 mov	 al, BYTE PTR [esi]
   00172	46		 inc	 esi
   00173	84 c0		 test	 al, al
-  00175	75 f9		 jne	 SHORT $LL115@main
+  00175	75 f9		 jne	 SHORT $LL111@main
   00177	51		 push	 ecx
   00178	2b f2		 sub	 esi, edx
   0017a	e8 00 00 00 00	 call	 __filelength
   0017f	83 c0 05	 add	 eax, 5
   00182	03 c6		 add	 eax, esi
 
-; 123  : 															// the +5 allows for 4-byte length & NULL terminator
-; 124  : 				gMsgBuffer = (char *) malloc(size);
+; 125  : 															// the +5 allows for 4-byte length & NULL terminator
+; 126  : 				gMsgBuffer = (char *) malloc(size);
 
   00184	50		 push	 eax
-  00185	89 45 f4	 mov	 DWORD PTR _size$1$[ebp], eax
+  00185	89 45 e8	 mov	 DWORD PTR _size$1$[ebp], eax
   00188	e8 00 00 00 00	 call	 _malloc
   0018d	83 c4 08	 add	 esp, 8
   00190	a3 00 00 00 00	 mov	 DWORD PTR ?gMsgBuffer@@3PADA, eax ; gMsgBuffer
 
-; 125  : 				if(gMsgBuffer == NULL)
+; 127  : 				if(gMsgBuffer == NULL)
 
   00195	85 c0		 test	 eax, eax
-  00197	0f 84 af 07 00
-	00		 je	 $LN112@main
+  00197	0f 84 5f 07 00
+	00		 je	 $LN108@main
 
-; 126  : 				{
-; 127  : 					printf("Could not allocate memory for message file.\n\n");
-; 128  : 					exit(1);
-; 129  : 				}
-; 130  : 				memset(gMsgBuffer, 0, size);
+; 128  : 				{
+; 129  : 					printf("Could not allocate memory for message file.\n\n");
+; 130  : 					exit(1);
+; 131  : 				}           
+; 132  : 				memset(gMsgBuffer, 0, size);
 
-  0019d	8b 55 f4	 mov	 edx, DWORD PTR _size$1$[ebp]
-  001a0	52		 push	 edx
+  0019d	8b 75 e8	 mov	 esi, DWORD PTR _size$1$[ebp]
+  001a0	56		 push	 esi
   001a1	6a 00		 push	 0
   001a3	50		 push	 eax
   001a4	e8 00 00 00 00	 call	 _memset
 
-; 131  : 				gMsgSize = 0;
-; 132  : 				*(gMsgBuffer + gMsgSize++) = size >> 24;
+; 133  : 				gMsgSize = 0;
+; 134  : 				*(gMsgBuffer + gMsgSize++) = size >> 24;
 
   001a9	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  001ae	83 c4 0c	 add	 esp, 12			; 0000000cH
-  001b1	8b 4d f4	 mov	 ecx, DWORD PTR _size$1$[ebp]
-  001b4	c1 f9 18	 sar	 ecx, 24			; 00000018H
-  001b7	c7 05 00 00 00
+  001ae	8b ce		 mov	 ecx, esi
+  001b0	c1 f9 18	 sar	 ecx, 24			; 00000018H
+  001b3	c7 05 00 00 00
 	00 00 00 00 00	 mov	 DWORD PTR ?gMsgSize@@3IA, 0 ; gMsgSize
-  001c1	88 08		 mov	 BYTE PTR [eax], cl
-  001c3	8b 15 00 00 00
+  001bd	88 08		 mov	 BYTE PTR [eax], cl
+
+; 135  : 				*(gMsgBuffer + gMsgSize++) = (size >> 16) & 0xFF;
+
+  001bf	8b ce		 mov	 ecx, esi
+  001c1	8b 15 00 00 00
 	00		 mov	 edx, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-
-; 133  : 				*(gMsgBuffer + gMsgSize++) = (size >> 16) & 0xFF;
-
-  001c9	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  001ce	42		 inc	 edx
-  001cf	8b 4d f4	 mov	 ecx, DWORD PTR _size$1$[ebp]
-  001d2	89 15 00 00 00
+  001c7	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  001cc	42		 inc	 edx
+  001cd	89 15 00 00 00
 	00		 mov	 DWORD PTR ?gMsgSize@@3IA, edx ; gMsgSize
-  001d8	c1 f9 10	 sar	 ecx, 16			; 00000010H
-  001db	88 0c 02	 mov	 BYTE PTR [edx+eax], cl
-  001de	8b 15 00 00 00
+  001d3	c1 f9 10	 sar	 ecx, 16			; 00000010H
+  001d6	88 0c 02	 mov	 BYTE PTR [edx+eax], cl
+
+; 136  : 				*(gMsgBuffer + gMsgSize++) = (size >> 8) & 0xFF;
+
+  001d9	8b ce		 mov	 ecx, esi
+  001db	8b 15 00 00 00
 	00		 mov	 edx, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-
-; 134  : 				*(gMsgBuffer + gMsgSize++) = (size >> 8) & 0xFF;
-
-  001e4	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  001e9	42		 inc	 edx
-  001ea	8b 4d f4	 mov	 ecx, DWORD PTR _size$1$[ebp]
-  001ed	89 15 00 00 00
+  001e1	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  001e6	42		 inc	 edx
+  001e7	89 15 00 00 00
 	00		 mov	 DWORD PTR ?gMsgSize@@3IA, edx ; gMsgSize
-  001f3	c1 f9 08	 sar	 ecx, 8
-  001f6	88 0c 02	 mov	 BYTE PTR [edx+eax], cl
-  001f9	8b 0d 00 00 00
+  001ed	c1 f9 08	 sar	 ecx, 8
+  001f0	88 0c 02	 mov	 BYTE PTR [edx+eax], cl
+
+; 137  : 				*(gMsgBuffer + gMsgSize++) = size & 0xFF;
+
+  001f3	8b d6		 mov	 edx, esi
+  001f5	8b 0d 00 00 00
 	00		 mov	 ecx, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
+  001fb	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  00200	41		 inc	 ecx
 
-; 135  : 				*(gMsgBuffer + gMsgSize++) = size & 0xFF;
+; 138  : 				//strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
+; 139  : 				//gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
+; 140  :                 gMsgSize += (unsigned int)fread(gMsgBuffer, 1, size, fptr);	// read entire message file into memory
 
-  001ff	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  00204	41		 inc	 ecx
-  00205	8b 55 f4	 mov	 edx, DWORD PTR _size$1$[ebp]
-  00208	89 0d 00 00 00
+  00201	8b 75 e0	 mov	 esi, DWORD PTR _fptr$1$[ebp]
+  00204	56		 push	 esi
+  00205	52		 push	 edx
+  00206	89 0d 00 00 00
 	00		 mov	 DWORD PTR ?gMsgSize@@3IA, ecx ; gMsgSize
-  0020e	88 14 01	 mov	 BYTE PTR [ecx+eax], dl
-  00211	ff 05 00 00 00
+  0020c	88 14 01	 mov	 BYTE PTR [ecx+eax], dl
+  0020f	ff 05 00 00 00
 	00		 inc	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
+  00215	6a 01		 push	 1
+  00217	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  0021d	e8 00 00 00 00	 call	 _fread
 
-; 136  : 				strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
+; 141  : 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
+; 142  :                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
+; 143  :                 printf("The message buffer values are %s\n", gMsgBuffer);
 
-  00217	8b 15 00 00 00
-	00		 mov	 edx, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  0021d	8b 0c bb	 mov	 ecx, DWORD PTR [ebx+edi*4]
-  00220	83 c2 04	 add	 edx, 4
-$LL78@main:
-  00223	8a 01		 mov	 al, BYTE PTR [ecx]
-  00225	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  00228	88 02		 mov	 BYTE PTR [edx], al
-  0022a	8d 52 01	 lea	 edx, DWORD PTR [edx+1]
-  0022d	84 c0		 test	 al, al
-  0022f	75 f2		 jne	 SHORT $LL78@main
-
-; 137  : 				gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
-
-  00231	8b 15 00 00 00
-	00		 mov	 edx, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  00237	8d 4a 04	 lea	 ecx, DWORD PTR [edx+4]
-  0023a	8d 71 01	 lea	 esi, DWORD PTR [ecx+1]
-  0023d	0f 1f 00	 npad	 3
-$LL116@main:
-  00240	8a 01		 mov	 al, BYTE PTR [ecx]
-  00242	41		 inc	 ecx
-  00243	84 c0		 test	 al, al
-  00245	75 f9		 jne	 SHORT $LL116@main
-  00247	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  0024c	2b ce		 sub	 ecx, esi
-
-; 138  : 
-; 139  : 				gMsgSize += (unsigned int) fread(&gMsgBuffer[gMsgSize], 1, size, fptr);	// read entire message file into memory
-
-  0024e	8b 75 e4	 mov	 esi, DWORD PTR _fptr$1$[ebp]
-  00251	40		 inc	 eax
-  00252	56		 push	 esi
-  00253	ff 75 f4	 push	 DWORD PTR _size$1$[ebp]
-  00256	03 c1		 add	 eax, ecx
-  00258	a3 00 00 00 00	 mov	 DWORD PTR ?gMsgSize@@3IA, eax ; gMsgSize
-  0025d	03 c2		 add	 eax, edx
-  0025f	6a 01		 push	 1
-  00261	50		 push	 eax
-  00262	e8 00 00 00 00	 call	 _fread
-  00267	01 05 00 00 00
+  00222	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  00228	01 05 00 00 00
 	00		 add	 DWORD PTR ?gMsgSize@@3IA, eax ; gMsgSize
+  0022e	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
+  00233	e8 00 00 00 00	 call	 _printf
 
-; 140  : 				fclose(fptr);
+; 144  :                 printf("The message size is %d\n", gMsgSize);
 
-  0026d	56		 push	 esi
-  0026e	e8 00 00 00 00	 call	 _fclose
+  00238	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
+  0023e	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@NOCMBPFN@The?5message?5size?5is?5?$CFd?6@
+  00243	e8 00 00 00 00	 call	 _printf
 
-; 141  : 				gHideMsg = true;
-; 142  : 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
+; 145  : 				fclose(fptr);
 
-  00273	6a 00		 push	 0
-  00275	6a 00		 push	 0
-  00277	6a 00		 push	 0
-  00279	c6 05 00 00 00
+  00248	56		 push	 esi
+  00249	e8 00 00 00 00	 call	 _fclose
+
+; 146  : 				gHideMsg = true;
+; 147  : 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
+
+  0024e	6a 00		 push	 0
+  00250	6a 00		 push	 0
+  00252	6a 00		 push	 0
+  00254	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?gHideMsg@@3_NA, 1 ; gHideMsg
-  00280	e8 00 00 00 00	 call	 ?getBitsFromBuffer@@YAEIPAEI@Z ; getBitsFromBuffer
-  00285	83 c4 20	 add	 esp, 32			; 00000020H
-
-; 143  : 				break;
-
-  00288	be 64 00 00 00	 mov	 esi, 100		; 00000064H
-  0028d	eb 55		 jmp	 SHORT $LN2@main
-$LN26@main:
-
-; 144  : 
-; 145  : 			case 'i':	// input file name
-; 146  : 				i++;
-; 147  : 				inputFile = argv[i];
-
-  0028f	8b 74 bb 04	 mov	 esi, DWORD PTR [ebx+edi*4+4]
-  00293	47		 inc	 edi
-  00294	89 75 f8	 mov	 DWORD PTR _inputFile$1$[ebp], esi
+  0025b	e8 00 00 00 00	 call	 ?getBitsFromBuffer@@YAEIPAEI@Z ; getBitsFromBuffer
 
 ; 148  : 				break;
 
-  00297	be 64 00 00 00	 mov	 esi, 100		; 00000064H
-  0029c	eb 46		 jmp	 SHORT $LN2@main
-$LN27@main:
+  00260	8b 75 08	 mov	 esi, DWORD PTR _argc$[ebp]
+  00263	83 c4 3c	 add	 esp, 60			; 0000003cH
+  00266	eb 50		 jmp	 SHORT $LN2@main
+$LN26@main:
 
 ; 149  : 
-; 150  : 			case 'u':	// setting the uniformity factor
-; 151  : 				tmpDbl = atof(argv[i+1]);
+; 150  : 			case 'i':	// input file name
+; 151  : 				i++;
+; 152  : 				inputFile = argv[i];
 
-  0029e	ff 74 bb 04	 push	 DWORD PTR [ebx+edi*4+4]
-  002a2	e8 00 00 00 00	 call	 _atof
+  00268	8b 44 bb 04	 mov	 eax, DWORD PTR [ebx+edi*4+4]
+  0026c	47		 inc	 edi
+  0026d	89 45 e4	 mov	 DWORD PTR _inputFile$1$[ebp], eax
 
-; 152  : 				if(tmpDbl < 1.0 || tmpDbl > 99.99) tmpDbl = 1.2; // choose default value
+; 153  : 				break;
 
-  002a7	f2 0f 10 0d 00
+  00270	eb 46		 jmp	 SHORT $LN2@main
+$LN27@main:
+
+; 154  : 
+; 155  : 			case 'u':	// setting the uniformity factor
+; 156  : 				tmpDbl = atof(argv[i+1]);
+
+  00272	ff 74 bb 04	 push	 DWORD PTR [ebx+edi*4+4]
+  00276	e8 00 00 00 00	 call	 _atof
+
+; 157  : 				if(tmpDbl < 1.0 || tmpDbl > 99.99) tmpDbl = 1.2; // choose default value
+
+  0027b	f2 0f 10 0d 00
 	00 00 00	 movsd	 xmm1, QWORD PTR __real@3ff0000000000000
-  002af	83 c4 04	 add	 esp, 4
-  002b2	dd 5d e0	 fstp	 QWORD PTR _tmpDbl$[ebp]
-  002b5	f2 0f 10 45 e0	 movsd	 xmm0, QWORD PTR _tmpDbl$[ebp]
-  002ba	66 0f 2f c8	 comisd	 xmm1, xmm0
-  002be	77 0a		 ja	 SHORT $LN29@main
-  002c0	66 0f 2f 05 00
+  00283	83 c4 04	 add	 esp, 4
+  00286	dd 5d dc	 fstp	 QWORD PTR _tmpDbl$[ebp]
+  00289	f2 0f 10 45 dc	 movsd	 xmm0, QWORD PTR _tmpDbl$[ebp]
+  0028e	66 0f 2f c8	 comisd	 xmm1, xmm0
+  00292	77 0a		 ja	 SHORT $LN29@main
+  00294	66 0f 2f 05 00
 	00 00 00	 comisd	 xmm0, QWORD PTR __real@4058ff5c28f5c28f
-  002c8	76 08		 jbe	 SHORT $LN28@main
+  0029c	76 08		 jbe	 SHORT $LN28@main
 $LN29@main:
-  002ca	f2 0f 10 05 00
+  0029e	f2 0f 10 05 00
 	00 00 00	 movsd	 xmm0, QWORD PTR __real@3ff3333333333333
 $LN28@main:
 
-; 153  : 				gUniformityFactor = tmpDbl;
+; 158  : 				gUniformityFactor = tmpDbl;
 
-  002d2	f2 0f 11 05 00
+  002a6	f2 0f 11 05 00
 	00 00 00	 movsd	 QWORD PTR ?gUniformityFactor@@3NA, xmm0
 
-; 154  : 				break;
+; 159  : 				break;
 
-  002da	eb 08		 jmp	 SHORT $LN2@main
+  002ae	eb 08		 jmp	 SHORT $LN2@main
 $LN30@main:
 
-; 155  : 
-; 156  : 			case 'o':	// output file name
-; 157  : 				i++;
-; 158  : 				outputFile = argv[i];
+; 160  : 
+; 161  : 			case 'o':	// output file name
+; 162  : 				i++;
+; 163  : 				outputFile = argv[i];
 
-  002dc	8b 44 bb 04	 mov	 eax, DWORD PTR [ebx+edi*4+4]
-  002e0	47		 inc	 edi
-  002e1	89 45 fc	 mov	 DWORD PTR _outputFile$1$[ebp], eax
+  002b0	8b 44 bb 04	 mov	 eax, DWORD PTR [ebx+edi*4+4]
+  002b4	47		 inc	 edi
+  002b5	89 45 f8	 mov	 DWORD PTR _outputFile$1$[ebp], eax
 $LN2@main:
 
 ; 60   : 	gBitCapacity = 0;
 ; 61   : 
 ; 62   : 	for(i = 1; i < argc; i++)
 
-  002e4	47		 inc	 edi
-  002e5	3b 7d 08	 cmp	 edi, DWORD PTR _argc$[ebp]
-  002e8	0f 8c 72 fd ff
+  002b8	47		 inc	 edi
+  002b9	3b fe		 cmp	 edi, esi
+  002bb	0f 8c 9f fd ff
 	ff		 jl	 $LL4@main
 
-; 159  : 				break;
-; 160  : 
-; 161  : 			} // switch
-; 162  : 		} // argv == '-'
-; 163  : 	} // for loop through arguments
-; 164  : 
-; 165  : 	// MUST have an input file
-; 166  : 	if(inputFile == NULL)
+; 164  : 				break;
+; 165  : 
+; 166  : 			} // switch
+; 167  : 		} // argv == '-'
+; 168  : 	} // for loop through arguments
+; 169  : 
+; 170  : 	// MUST have an input file
+; 171  : 	if(inputFile == NULL)
 
-  002ee	8b 7d f8	 mov	 edi, DWORD PTR _inputFile$1$[ebp]
-  002f1	85 ff		 test	 edi, edi
-  002f3	0f 84 cb 05 00
-	00		 je	 $LN108@main
+  002c1	8b 7d e4	 mov	 edi, DWORD PTR _inputFile$1$[ebp]
+  002c4	85 ff		 test	 edi, edi
+  002c6	0f 84 ac 05 00
+	00		 je	 $LN104@main
 
-; 170  : 	}
-; 171  : 
-; 172  : 	x = (int) strlen(inputFile);
+; 175  : 	}
+; 176  : 
+; 177  : 	x = (int) strlen(inputFile);
 
-  002f9	8b f7		 mov	 esi, edi
-  002fb	8d 4e 01	 lea	 ecx, DWORD PTR [esi+1]
-  002fe	66 90		 npad	 2
-$LL117@main:
-  00300	8a 06		 mov	 al, BYTE PTR [esi]
-  00302	46		 inc	 esi
-  00303	84 c0		 test	 al, al
-  00305	75 f9		 jne	 SHORT $LL117@main
-  00307	2b f1		 sub	 esi, ecx
+  002cc	8b f7		 mov	 esi, edi
+  002ce	8d 4e 01	 lea	 ecx, DWORD PTR [esi+1]
+$LL112@main:
+  002d1	8a 06		 mov	 al, BYTE PTR [esi]
+  002d3	46		 inc	 esi
+  002d4	84 c0		 test	 al, al
+  002d6	75 f9		 jne	 SHORT $LL112@main
+  002d8	2b f1		 sub	 esi, ecx
 
-; 173  : 	ext = inputFile + x - 4; // get extension of file name
-; 174  : 	if(strcmp(ext, ".bmp") == 0) inExt = 'b';
+; 178  : 	ext = inputFile + x - 4; // get extension of file name
+; 179  : 	if(strcmp(ext, ".bmp") == 0) inExt = 'b';
 
-  00309	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
-  0030e	8d 4f fc	 lea	 ecx, DWORD PTR [edi-4]
-  00311	03 ce		 add	 ecx, esi
-  00313	8b c1		 mov	 eax, ecx
-$LL118@main:
-  00315	8a 18		 mov	 bl, BYTE PTR [eax]
-  00317	3a 1a		 cmp	 bl, BYTE PTR [edx]
-  00319	75 1a		 jne	 SHORT $LN119@main
-  0031b	84 db		 test	 bl, bl
-  0031d	74 12		 je	 SHORT $LN120@main
-  0031f	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
-  00322	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
-  00325	75 0e		 jne	 SHORT $LN119@main
-  00327	83 c0 02	 add	 eax, 2
-  0032a	83 c2 02	 add	 edx, 2
-  0032d	84 db		 test	 bl, bl
-  0032f	75 e4		 jne	 SHORT $LL118@main
-$LN120@main:
-  00331	33 c0		 xor	 eax, eax
-  00333	eb 05		 jmp	 SHORT $LN121@main
-$LN119@main:
-  00335	1b c0		 sbb	 eax, eax
-  00337	83 c8 01	 or	 eax, 1
-$LN121@main:
-  0033a	85 c0		 test	 eax, eax
-  0033c	75 04		 jne	 SHORT $LN32@main
-  0033e	b7 62		 mov	 bh, 98			; 00000062H
-  00340	eb 34		 jmp	 SHORT $LN35@main
+  002da	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
+  002df	8d 4f fc	 lea	 ecx, DWORD PTR [edi-4]
+  002e2	03 ce		 add	 ecx, esi
+  002e4	8b c1		 mov	 eax, ecx
+$LL113@main:
+  002e6	8a 18		 mov	 bl, BYTE PTR [eax]
+  002e8	3a 1a		 cmp	 bl, BYTE PTR [edx]
+  002ea	75 1a		 jne	 SHORT $LN114@main
+  002ec	84 db		 test	 bl, bl
+  002ee	74 12		 je	 SHORT $LN115@main
+  002f0	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
+  002f3	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
+  002f6	75 0e		 jne	 SHORT $LN114@main
+  002f8	83 c0 02	 add	 eax, 2
+  002fb	83 c2 02	 add	 edx, 2
+  002fe	84 db		 test	 bl, bl
+  00300	75 e4		 jne	 SHORT $LL113@main
+$LN115@main:
+  00302	33 c0		 xor	 eax, eax
+  00304	eb 05		 jmp	 SHORT $LN116@main
+$LN114@main:
+  00306	1b c0		 sbb	 eax, eax
+  00308	83 c8 01	 or	 eax, 1
+$LN116@main:
+  0030b	85 c0		 test	 eax, eax
+  0030d	75 04		 jne	 SHORT $LN32@main
+  0030f	b7 62		 mov	 bh, 98			; 00000062H
+  00311	eb 34		 jmp	 SHORT $LN152@main
 $LN32@main:
 
-; 175  : 	else if(strcmp(ext, ".jpg") == 0) inExt = 'j';
+; 180  : 	else if(strcmp(ext, ".jpg") == 0) inExt = 'j';
 
-  00342	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
-$LL122@main:
-  00347	8a 11		 mov	 dl, BYTE PTR [ecx]
-  00349	3a 10		 cmp	 dl, BYTE PTR [eax]
-  0034b	75 1a		 jne	 SHORT $LN123@main
-  0034d	84 d2		 test	 dl, dl
-  0034f	74 12		 je	 SHORT $LN124@main
-  00351	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
-  00354	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
-  00357	75 0e		 jne	 SHORT $LN123@main
-  00359	83 c1 02	 add	 ecx, 2
-  0035c	83 c0 02	 add	 eax, 2
-  0035f	84 d2		 test	 dl, dl
-  00361	75 e4		 jne	 SHORT $LL122@main
-$LN124@main:
-  00363	33 c0		 xor	 eax, eax
-  00365	eb 05		 jmp	 SHORT $LN125@main
-$LN123@main:
-  00367	1b c0		 sbb	 eax, eax
-  00369	83 c8 01	 or	 eax, 1
-$LN125@main:
-  0036c	85 c0		 test	 eax, eax
-  0036e	0f 85 6c 06 00
+  00313	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
+$LL117@main:
+  00318	8a 11		 mov	 dl, BYTE PTR [ecx]
+  0031a	3a 10		 cmp	 dl, BYTE PTR [eax]
+  0031c	75 1a		 jne	 SHORT $LN118@main
+  0031e	84 d2		 test	 dl, dl
+  00320	74 12		 je	 SHORT $LN119@main
+  00322	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
+  00325	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
+  00328	75 0e		 jne	 SHORT $LN118@main
+  0032a	83 c1 02	 add	 ecx, 2
+  0032d	83 c0 02	 add	 eax, 2
+  00330	84 d2		 test	 dl, dl
+  00332	75 e4		 jne	 SHORT $LL117@main
+$LN119@main:
+  00334	33 c0		 xor	 eax, eax
+  00336	eb 05		 jmp	 SHORT $LN120@main
+$LN118@main:
+  00338	1b c0		 sbb	 eax, eax
+  0033a	83 c8 01	 or	 eax, 1
+$LN120@main:
+  0033d	85 c0		 test	 eax, eax
+  0033f	0f 85 4e 06 00
 	00		 jne	 $LN34@main
-  00374	b7 6a		 mov	 bh, 106			; 0000006aH
-$LN35@main:
+  00345	b7 6a		 mov	 bh, 106			; 0000006aH
+$LN152@main:
 
-; 180  : 	}
-; 181  : 
-; 182  : 	// DETERMINE THE OPERATION
-; 183  : 	// Converting
-; 184  : 	if(gHideMsg == false && gExtractMsg == false && gWipeMsg == false && gDestroyMsg == false)
+; 185  : 	}
+; 186  : 
+; 187  : 	// DETERMINE THE OPERATION
+; 188  : 	// Converting
+; 189  : 	if(gHideMsg == false && gExtractMsg == false && gWipeMsg == false && gDestroyMsg == false)
 
-  00376	80 3d 00 00 00
+  00347	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gHideMsg@@3_NA, 0 ; gHideMsg
-  0037d	0f 85 a1 03 00
-	00		 jne	 $LN107@main
-  00383	80 3d 00 00 00
+  0034e	88 7d ff	 mov	 BYTE PTR _inExt$1$[ebp], bh
+  00351	0f 85 96 03 00
+	00		 jne	 $LN103@main
+  00357	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
-  0038a	0f 85 a6 01 00
+  0035e	0f 85 a5 01 00
 	00		 jne	 $LN62@main
-  00390	80 3d 00 00 00
+  00364	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
-  00397	0f 85 99 01 00
+  0036b	0f 85 98 01 00
 	00		 jne	 $LN62@main
-  0039d	80 3d 00 00 00
+  00371	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
-  003a4	0f 85 8c 01 00
+  00378	0f 85 8b 01 00
 	00		 jne	 $LN62@main
 
-; 185  : 	{
-; 186  : 		// if no output file name, get it from input file
-; 187  : 		if(outputFile == NULL)
+; 190  : 	{
+; 191  : 		// if no output file name, get it from input file
+; 192  : 		if(outputFile == NULL)
 
-  003aa	8b 45 fc	 mov	 eax, DWORD PTR _outputFile$1$[ebp]
-  003ad	85 c0		 test	 eax, eax
-  003af	0f 85 8f 00 00
+  0037e	8b 55 f8	 mov	 edx, DWORD PTR _outputFile$1$[ebp]
+  00381	85 d2		 test	 edx, edx
+  00383	0f 85 95 00 00
 	00		 jne	 $LN37@main
 
-; 188  : 		{
-; 189  : 			outputFile = gOutputFileName;
+; 193  : 		{
+; 194  : 			outputFile = gOutputFileName;
 
-  003b5	ba 00 00 00 00	 mov	 edx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
-  003ba	c7 45 fc 00 00
+  00389	ba 00 00 00 00	 mov	 edx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+  0038e	c7 45 f8 00 00
 	00 00		 mov	 DWORD PTR _outputFile$1$[ebp], OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
 
-; 190  : 			strcpy(gOutputFileName, inputFile);
+; 195  : 			strcpy(gOutputFileName, inputFile);
 
-  003c1	8b cf		 mov	 ecx, edi
-  003c3	2b d7		 sub	 edx, edi
-$LL79@main:
-  003c5	8a 01		 mov	 al, BYTE PTR [ecx]
-  003c7	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  003ca	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
-  003ce	84 c0		 test	 al, al
-  003d0	75 f3		 jne	 SHORT $LL79@main
+  00395	8b cf		 mov	 ecx, edi
+  00397	2b d7		 sub	 edx, edi
+  00399	0f 1f 80 00 00
+	00 00		 npad	 7
+$LL78@main:
+  003a0	8a 01		 mov	 al, BYTE PTR [ecx]
+  003a2	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  003a5	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
+  003a9	84 c0		 test	 al, al
+  003ab	75 f3		 jne	 SHORT $LL78@main
 
-; 191  : 			// lop off extension
-; 192  : 			gOutputFileName[x-4] = 0;
+; 196  : 			// lop off extension
+; 197  : 			gOutputFileName[x-4] = 0;
 
-  003d2	83 c6 fc	 add	 esi, -4			; fffffffcH
-  003d5	81 fe 04 01 00
+  003ad	83 c6 fc	 add	 esi, -4			; fffffffcH
+  003b0	81 fe 04 01 00
 	00		 cmp	 esi, 260		; 00000104H
-  003db	0f 83 a8 05 00
-	00		 jae	 $LN83@main
+  003b6	0f 83 7e 05 00
+	00		 jae	 $LN82@main
 
-; 193  : 			if(inExt == 'j')
+; 198  : 			if(inExt == 'j')
 
-  003e1	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
-  003e6	88 86 00 00 00
+  003bc	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+  003c1	88 86 00 00 00
 	00		 mov	 BYTE PTR ?gOutputFileName@@3PADA[esi], al
-  003ec	49		 dec	 ecx
-  003ed	80 ff 6a	 cmp	 bh, 106			; 0000006aH
-  003f0	75 2f		 jne	 SHORT $LN39@main
+  003c7	49		 dec	 ecx
+  003c8	80 ff 6a	 cmp	 bh, 106			; 0000006aH
+  003cb	75 2d		 jne	 SHORT $LN39@main
 
-; 194  : 			{
-; 195  : 				outExt = 'b';
+; 199  : 			{
+; 200  : 				outExt = 'b';
 
-  003f2	b3 62		 mov	 bl, 98			; 00000062H
-$LL126@main:
+  003cd	b3 62		 mov	 bl, 98			; 00000062H
+  003cf	90		 npad	 1
+$LL121@main:
 
-; 196  : 				strcat(gOutputFileName, ".bmp");
+; 201  : 				strcat(gOutputFileName, ".bmp");
 
-  003f4	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
-  003f7	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  003fa	84 c0		 test	 al, al
-  003fc	75 f6		 jne	 SHORT $LL126@main
-  003fe	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_04LJDDIHIK@?4bmp@
+  003d0	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
+  003d3	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  003d6	84 c0		 test	 al, al
+  003d8	75 f6		 jne	 SHORT $LL121@main
+  003da	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_04LJDDIHIK@?4bmp@
 
-; 222  : 			readJpg(inputFile, v);
+; 227  : 			readJpg(inputFile, v);
 
-  00403	ff 75 f0	 push	 DWORD PTR _v$[ebp]
-  00406	8b 75 fc	 mov	 esi, DWORD PTR _outputFile$1$[ebp]
-  00409	89 01		 mov	 DWORD PTR [ecx], eax
-  0040b	a0 04 00 00 00	 mov	 al, BYTE PTR ??_C@_04LJDDIHIK@?4bmp@+4
-  00410	57		 push	 edi
-  00411	88 41 04	 mov	 BYTE PTR [ecx+4], al
-  00414	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
-  00419	83 c4 08	 add	 esp, 8
+  003df	ff 75 f4	 push	 DWORD PTR _v$[ebp]
+  003e2	89 01		 mov	 DWORD PTR [ecx], eax
+  003e4	a0 04 00 00 00	 mov	 al, BYTE PTR ??_C@_04LJDDIHIK@?4bmp@+4
+  003e9	57		 push	 edi
+  003ea	88 41 04	 mov	 BYTE PTR [ecx+4], al
+  003ed	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
+  003f2	83 c4 08	 add	 esp, 8
 
-; 223  : 		else
+; 228  : 		else
 
-  0041c	e9 e6 00 00 00	 jmp	 $LN47@main
+  003f5	e9 dd 00 00 00	 jmp	 $LN47@main
 $LN39@main:
 
-; 197  : 			}
-; 198  : 			else
-; 199  : 			{
-; 200  : 				outExt = 'j';
-
-  00421	b3 6a		 mov	 bl, 106			; 0000006aH
-$LL127@main:
-
-; 201  : 				strcat(gOutputFileName, ".jpg");
-
-  00423	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
-  00426	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  00429	84 c0		 test	 al, al
-  0042b	75 f6		 jne	 SHORT $LL127@main
-  0042d	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_04GNPKBLNA@?4jpg@
-
 ; 202  : 			}
-; 203  : 		}
-; 204  : 		else
+; 203  : 			else
+; 204  : 			{
+; 205  : 				outExt = 'j';
 
-  00432	8b 75 fc	 mov	 esi, DWORD PTR _outputFile$1$[ebp]
-  00435	89 01		 mov	 DWORD PTR [ecx], eax
-  00437	a0 04 00 00 00	 mov	 al, BYTE PTR ??_C@_04GNPKBLNA@?4jpg@+4
-  0043c	88 41 04	 mov	 BYTE PTR [ecx+4], al
-  0043f	e9 8b 00 00 00	 jmp	 $LN44@main
+  003fa	b3 6a		 mov	 bl, 106			; 0000006aH
+  003fc	0f 1f 40 00	 npad	 4
+$LL122@main:
+
+; 206  : 				strcat(gOutputFileName, ".jpg");
+
+  00400	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
+  00403	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  00406	84 c0		 test	 al, al
+  00408	75 f6		 jne	 SHORT $LL122@main
+  0040a	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_04GNPKBLNA@?4jpg@
+  0040f	89 01		 mov	 DWORD PTR [ecx], eax
+  00411	a0 04 00 00 00	 mov	 al, BYTE PTR ??_C@_04GNPKBLNA@?4jpg@+4
+  00416	88 41 04	 mov	 BYTE PTR [ecx+4], al
+
+; 207  : 			}
+; 208  : 		}
+; 209  : 		else
+
+  00419	e9 81 00 00 00	 jmp	 $LN44@main
 $LN37@main:
 
-; 205  : 		{
-; 206  : 			x = (int) strlen(outputFile);
+; 210  : 		{
+; 211  : 			x = (int) strlen(outputFile);
 
-  00444	8b c8		 mov	 ecx, eax
-  00446	8d 51 01	 lea	 edx, DWORD PTR [ecx+1]
-  00449	0f 1f 80 00 00
-	00 00		 npad	 7
-$LL128@main:
-  00450	8a 01		 mov	 al, BYTE PTR [ecx]
-  00452	41		 inc	 ecx
-  00453	84 c0		 test	 al, al
-  00455	75 f9		 jne	 SHORT $LL128@main
+  0041e	8b ca		 mov	 ecx, edx
+  00420	8d 71 01	 lea	 esi, DWORD PTR [ecx+1]
+$LL123@main:
+  00423	8a 01		 mov	 al, BYTE PTR [ecx]
+  00425	41		 inc	 ecx
+  00426	84 c0		 test	 al, al
+  00428	75 f9		 jne	 SHORT $LL123@main
 
-; 207  : 			ext = outputFile + x - 4; // get extension of file name
+; 212  : 			ext = outputFile + x - 4; // get extension of file name
 
-  00457	8b 75 fc	 mov	 esi, DWORD PTR _outputFile$1$[ebp]
-  0045a	2b ca		 sub	 ecx, edx
-  0045c	83 c1 fc	 add	 ecx, -4			; fffffffcH
+  0042a	83 c2 fc	 add	 edx, -4			; fffffffcH
+  0042d	2b ce		 sub	 ecx, esi
+  0042f	03 ca		 add	 ecx, edx
 
-; 208  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
+; 213  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
 
-  0045f	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
-  00464	03 ce		 add	 ecx, esi
-  00466	8b c1		 mov	 eax, ecx
-$LL129@main:
-  00468	8a 18		 mov	 bl, BYTE PTR [eax]
-  0046a	3a 1a		 cmp	 bl, BYTE PTR [edx]
-  0046c	75 1a		 jne	 SHORT $LN130@main
-  0046e	84 db		 test	 bl, bl
-  00470	74 12		 je	 SHORT $LN131@main
-  00472	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
-  00475	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
-  00478	75 0e		 jne	 SHORT $LN130@main
-  0047a	83 c0 02	 add	 eax, 2
-  0047d	83 c2 02	 add	 edx, 2
-  00480	84 db		 test	 bl, bl
-  00482	75 e4		 jne	 SHORT $LL129@main
-$LN131@main:
-  00484	33 c0		 xor	 eax, eax
-  00486	eb 05		 jmp	 SHORT $LN132@main
-$LN130@main:
-  00488	1b c0		 sbb	 eax, eax
-  0048a	83 c8 01	 or	 eax, 1
-$LN132@main:
-  0048d	85 c0		 test	 eax, eax
-  0048f	75 04		 jne	 SHORT $LN41@main
-  00491	b3 62		 mov	 bl, 98			; 00000062H
-  00493	eb 3a		 jmp	 SHORT $LN44@main
+  00431	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
+  00436	8b c1		 mov	 eax, ecx
+$LL124@main:
+  00438	8a 18		 mov	 bl, BYTE PTR [eax]
+  0043a	3a 1a		 cmp	 bl, BYTE PTR [edx]
+  0043c	75 1a		 jne	 SHORT $LN125@main
+  0043e	84 db		 test	 bl, bl
+  00440	74 12		 je	 SHORT $LN126@main
+  00442	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
+  00445	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
+  00448	75 0e		 jne	 SHORT $LN125@main
+  0044a	83 c0 02	 add	 eax, 2
+  0044d	83 c2 02	 add	 edx, 2
+  00450	84 db		 test	 bl, bl
+  00452	75 e4		 jne	 SHORT $LL124@main
+$LN126@main:
+  00454	33 c0		 xor	 eax, eax
+  00456	eb 05		 jmp	 SHORT $LN127@main
+$LN125@main:
+  00458	1b c0		 sbb	 eax, eax
+  0045a	83 c8 01	 or	 eax, 1
+$LN127@main:
+  0045d	85 c0		 test	 eax, eax
+  0045f	75 04		 jne	 SHORT $LN41@main
+  00461	b3 62		 mov	 bl, 98			; 00000062H
+  00463	eb 3a		 jmp	 SHORT $LN44@main
 $LN41@main:
 
-; 209  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 214  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
-  00495	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
-  0049a	66 0f 1f 44 00
+  00465	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
+  0046a	66 0f 1f 44 00
 	00		 npad	 6
-$LL133@main:
-  004a0	8a 11		 mov	 dl, BYTE PTR [ecx]
-  004a2	3a 10		 cmp	 dl, BYTE PTR [eax]
-  004a4	75 1a		 jne	 SHORT $LN134@main
-  004a6	84 d2		 test	 dl, dl
-  004a8	74 12		 je	 SHORT $LN135@main
-  004aa	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
-  004ad	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
-  004b0	75 0e		 jne	 SHORT $LN134@main
-  004b2	83 c1 02	 add	 ecx, 2
-  004b5	83 c0 02	 add	 eax, 2
-  004b8	84 d2		 test	 dl, dl
-  004ba	75 e4		 jne	 SHORT $LL133@main
-$LN135@main:
-  004bc	33 c0		 xor	 eax, eax
-  004be	eb 05		 jmp	 SHORT $LN136@main
-$LN134@main:
-  004c0	1b c0		 sbb	 eax, eax
-  004c2	83 c8 01	 or	 eax, 1
-$LN136@main:
-  004c5	85 c0		 test	 eax, eax
-  004c7	0f 85 93 04 00
+$LL128@main:
+  00470	8a 11		 mov	 dl, BYTE PTR [ecx]
+  00472	3a 10		 cmp	 dl, BYTE PTR [eax]
+  00474	75 1a		 jne	 SHORT $LN129@main
+  00476	84 d2		 test	 dl, dl
+  00478	74 12		 je	 SHORT $LN130@main
+  0047a	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
+  0047d	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
+  00480	75 0e		 jne	 SHORT $LN129@main
+  00482	83 c1 02	 add	 ecx, 2
+  00485	83 c0 02	 add	 eax, 2
+  00488	84 d2		 test	 dl, dl
+  0048a	75 e4		 jne	 SHORT $LL128@main
+$LN130@main:
+  0048c	33 c0		 xor	 eax, eax
+  0048e	eb 05		 jmp	 SHORT $LN131@main
+$LN129@main:
+  00490	1b c0		 sbb	 eax, eax
+  00492	83 c8 01	 or	 eax, 1
+$LN131@main:
+  00495	85 c0		 test	 eax, eax
+  00497	0f 85 73 04 00
 	00		 jne	 $LN43@main
-  004cd	b3 6a		 mov	 bl, 106			; 0000006aH
+  0049d	b3 6a		 mov	 bl, 106			; 0000006aH
 $LN44@main:
 
-; 210  : 			else
-; 211  : 			{
-; 212  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
-; 213  : 				Usage(argc, argv);
-; 214  : 			}
-; 215  : 		}
-; 216  : 
-; 217  : 		if(inExt == outExt)	// nothing to be done
+; 215  : 			else
+; 216  : 			{
+; 217  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
+; 218  : 				Usage(argc, argv);
+; 219  : 			}
+; 220  : 		}
+; 221  : 
+; 222  : 		if(inExt == outExt)	// nothing to be done
 
-  004cf	3a fb		 cmp	 bh, bl
-  004d1	75 18		 jne	 SHORT $LN45@main
+  0049f	3a fb		 cmp	 bh, bl
+  004a1	75 18		 jne	 SHORT $LN45@main
 
-; 218  : 			cerr << "You are converting a file to the same type - this will produce a copy." << endl;
+; 223  : 			cerr << "You are converting a file to the same type - this will produce a copy." << endl;
 
-  004d3	68 00 00 00 00	 push	 OFFSET ??_C@_0EH@KEAHJBIO@You?5are?5converting?5a?5file?5to?5th@
-  004d8	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  004dd	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  004a3	68 00 00 00 00	 push	 OFFSET ??_C@_0EH@KEAHJBIO@You?5are?5converting?5a?5file?5to?5th@
+  004a8	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  004ad	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
 ; File c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\ostream
 
 ; 206  : 		return ((*_Pfn)(*this));
 
-  004e2	50		 push	 eax
-  004e3	e8 00 00 00 00	 call	 ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  004e8	83 c4 0c	 add	 esp, 12			; 0000000cH
+  004b2	50		 push	 eax
+  004b3	e8 00 00 00 00	 call	 ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  004b8	83 c4 0c	 add	 esp, 12			; 0000000cH
 $LN45@main:
 ; File c:\users\justin\desktop\jpeg-dct-lsb\main.cpp
 
-; 221  : 		if(inExt == 'j')
+; 226  : 		if(inExt == 'j')
 
-  004eb	80 ff 6a	 cmp	 bh, 106			; 0000006aH
-  004ee	75 0e		 jne	 SHORT $LN46@main
+  004bb	80 ff 6a	 cmp	 bh, 106			; 0000006aH
+  004be	75 0e		 jne	 SHORT $LN46@main
 
-; 222  : 			readJpg(inputFile, v);
+; 227  : 			readJpg(inputFile, v);
 
-  004f0	ff 75 f0	 push	 DWORD PTR _v$[ebp]
-  004f3	57		 push	 edi
-  004f4	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
-  004f9	83 c4 08	 add	 esp, 8
-
-; 223  : 		else
-
-  004fc	eb 09		 jmp	 SHORT $LN47@main
-$LN46@main:
-
-; 224  : 			readBitmap(inputFile);
-
-  004fe	57		 push	 edi
-  004ff	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
-  00504	83 c4 04	 add	 esp, 4
-$LN47@main:
-
-; 225  : 
-; 226  : 		if(outExt == 'j')
-
-  00507	80 fb 6a	 cmp	 bl, 106			; 0000006aH
-  0050a	75 18		 jne	 SHORT $LN48@main
-
-; 227  : 			writeJpg(outputFile, g, p);
-
-  0050c	ff 75 ec	 push	 DWORD PTR _p$[ebp]
-  0050f	ff 75 e8	 push	 DWORD PTR _g$[ebp]
-  00512	56		 push	 esi
-  00513	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
-  00518	83 c4 0c	 add	 esp, 12			; 0000000cH
-
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
-
-  0051b	33 c0		 xor	 eax, eax
-  0051d	5f		 pop	 edi
-  0051e	5e		 pop	 esi
-  0051f	5b		 pop	 ebx
-  00520	8b e5		 mov	 esp, ebp
-  00522	5d		 pop	 ebp
-  00523	c3		 ret	 0
-$LN48@main:
+  004c0	ff 75 f4	 push	 DWORD PTR _v$[ebp]
+  004c3	57		 push	 edi
+  004c4	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
+  004c9	83 c4 08	 add	 esp, 8
 
 ; 228  : 		else
-; 229  : 			writeBitmap(outputFile);
 
-  00524	56		 push	 esi
-  00525	e8 00 00 00 00	 call	 ?writeBitmap@@YAHPAD@Z	; writeBitmap
+  004cc	eb 09		 jmp	 SHORT $LN47@main
+$LN46@main:
 
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
+; 229  : 			readBitmap(inputFile);
 
-  0052a	83 c4 04	 add	 esp, 4
-  0052d	33 c0		 xor	 eax, eax
-  0052f	5f		 pop	 edi
-  00530	5e		 pop	 esi
-  00531	5b		 pop	 ebx
-  00532	8b e5		 mov	 esp, ebp
-  00534	5d		 pop	 ebp
-  00535	c3		 ret	 0
-$LN62@main:
-
-; 283  : 		return(SUCCESS);
-; 284  : 	} // if hiding
-; 285  : 
-; 286  : 	// Extracting and/or Wiping or Destroying
-; 287  : 	if(gExtractMsg || gWipeMsg || gDestroyMsg)
-; 288  : 	{
-; 289  : 		if(inExt != 'j')	// Input MUST be jpg
-
-  00536	80 ff 6a	 cmp	 bh, 106			; 0000006aH
-  00539	0f 85 cc 03 00
-	00		 jne	 $LN162@main
-
-; 293  : 		} // input must be .jpg
-; 294  : 
-; 295  : 		fptr = fopen(inputFile, "rb");
-
-  0053f	68 00 00 00 00	 push	 OFFSET ??_C@_02JDPG@rb@
-  00544	57		 push	 edi
-  00545	e8 00 00 00 00	 call	 _fopen
-  0054a	8b f8		 mov	 edi, eax
-  0054c	83 c4 08	 add	 esp, 8
-
-; 296  : 		if(fptr == NULL)
-
-  0054f	85 ff		 test	 edi, edi
-  00551	0f 84 dd 03 00
-	00		 je	 $LN163@main
-
-; 300  : 		}
-; 301  : 
-; 302  : 		// treat DC coefficeint a bit differently
-; 303  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
-; 304  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
-
-  00557	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
-  0055c	66 0f 6e c0	 movd	 xmm0, eax
-  00560	f3 0f e6 c0	 cvtdq2pd xmm0, xmm0
-  00564	c1 e8 1f	 shr	 eax, 31			; 0000001fH
-  00567	f2 0f 58 04 c5
-	00 00 00 00	 addsd	 xmm0, QWORD PTR __xmm@41f00000000000000000000000000000[eax*8]
-  00570	e8 00 00 00 00	 call	 __libm_sse2_log_precise
-  00575	f2 0f 5e 05 00
-	00 00 00	 divsd	 xmm0, QWORD PTR ?lg2@@3NA
-
-; 305  : 		lgQ = 2/lgQ;
-; 306  : 
-; 307  : 		// initialize output buffer static variables
-; 308  : 		putBitsInBuffer(0, 0, NULL, 0);
-
-  0057d	6a 00		 push	 0
-  0057f	6a 00		 push	 0
-  00581	6a 00		 push	 0
-  00583	6a 00		 push	 0
-  00585	f2 0f 10 0d 00
-	00 00 00	 movsd	 xmm1, QWORD PTR __real@4000000000000000
-  0058d	f2 0f 5e c8	 divsd	 xmm1, xmm0
-  00591	f2 0f 11 0d 00
-	00 00 00	 movsd	 QWORD PTR ?lgQ@@3NA, xmm1
-  00599	e8 00 00 00 00	 call	 ?putBitsInBuffer@@YAHIEPAEI@Z ; putBitsInBuffer
-
-; 309  : 
-; 310  : 		fileno = _fileno(fptr);
-
-  0059e	57		 push	 edi
-  0059f	e8 00 00 00 00	 call	 __fileno
-
-; 311  : 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
-
-  005a4	50		 push	 eax
-  005a5	e8 00 00 00 00	 call	 __filelength
-  005aa	8d b0 04 01 00
-	00		 lea	 esi, DWORD PTR [eax+260]
-
-; 312  : 												// the 260 is for the possible length of the filename
-; 313  : 		gMsgBuffer = (char *) malloc(size);
-
-  005b0	56		 push	 esi
-  005b1	e8 00 00 00 00	 call	 _malloc
-  005b6	83 c4 1c	 add	 esp, 28			; 0000001cH
-  005b9	a3 00 00 00 00	 mov	 DWORD PTR ?gMsgBuffer@@3PADA, eax ; gMsgBuffer
-
-; 314  : 		if(gMsgBuffer == NULL)
-
-  005be	85 c0		 test	 eax, eax
-  005c0	0f 84 86 03 00
-	00		 je	 $LN112@main
-
-; 318  : 		}
-; 319  : 		fclose(fptr); // no longer want input file open
-
-  005c6	57		 push	 edi
-  005c7	e8 00 00 00 00	 call	 _fclose
-
-; 320  : 		memset(gMsgBuffer, 0, size);
-
-  005cc	56		 push	 esi
-  005cd	6a 00		 push	 0
-  005cf	ff 35 00 00 00
-	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  005d5	e8 00 00 00 00	 call	 _memset
-
-; 321  : 		gMsgSize = size;
-; 322  : 
-; 323  : 		// if output file specified
-; 324  : 		if(outputFile != NULL)
-
-  005da	8b 5d fc	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
-  005dd	83 c4 10	 add	 esp, 16			; 00000010H
-  005e0	89 35 00 00 00
-	00		 mov	 DWORD PTR ?gMsgSize@@3IA, esi ; gMsgSize
-  005e6	85 db		 test	 ebx, ebx
-  005e8	0f 84 77 00 00
-	00		 je	 $LN106@main
-
-; 325  : 		{
-; 326  : 			x = (int) strlen(outputFile);
-
-  005ee	8b cb		 mov	 ecx, ebx
-  005f0	8d 51 01	 lea	 edx, DWORD PTR [ecx+1]
-$LL137@main:
-  005f3	8a 01		 mov	 al, BYTE PTR [ecx]
-  005f5	41		 inc	 ecx
-  005f6	84 c0		 test	 al, al
-  005f8	75 f9		 jne	 SHORT $LL137@main
-  005fa	2b ca		 sub	 ecx, edx
-
-; 327  : 			ext = outputFile + x - 4; // get extension of file name
-; 328  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
-
-  005fc	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
-  00601	83 c1 fc	 add	 ecx, -4			; fffffffcH
-  00604	03 cb		 add	 ecx, ebx
-  00606	8b c1		 mov	 eax, ecx
-$LL138@main:
-  00608	8a 18		 mov	 bl, BYTE PTR [eax]
-  0060a	3a 1a		 cmp	 bl, BYTE PTR [edx]
-  0060c	75 1a		 jne	 SHORT $LN139@main
-  0060e	84 db		 test	 bl, bl
-  00610	74 12		 je	 SHORT $LN140@main
-  00612	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
-  00615	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
-  00618	75 0e		 jne	 SHORT $LN139@main
-  0061a	83 c0 02	 add	 eax, 2
-  0061d	83 c2 02	 add	 edx, 2
-  00620	84 db		 test	 bl, bl
-  00622	75 e4		 jne	 SHORT $LL138@main
-$LN140@main:
-  00624	33 c0		 xor	 eax, eax
-  00626	eb 05		 jmp	 SHORT $LN141@main
-$LN139@main:
-  00628	1b c0		 sbb	 eax, eax
-  0062a	83 c8 01	 or	 eax, 1
-$LN141@main:
-  0062d	85 c0		 test	 eax, eax
-  0062f	74 63		 je	 SHORT $LN155@main
-
-; 329  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
-
-  00631	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
-$LL142@main:
-  00636	8a 11		 mov	 dl, BYTE PTR [ecx]
-  00638	3a 10		 cmp	 dl, BYTE PTR [eax]
-  0063a	75 1a		 jne	 SHORT $LN143@main
-  0063c	84 d2		 test	 dl, dl
-  0063e	74 12		 je	 SHORT $LN144@main
-  00640	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
-  00643	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
-  00646	75 0e		 jne	 SHORT $LN143@main
-  00648	83 c1 02	 add	 ecx, 2
-  0064b	83 c0 02	 add	 eax, 2
-  0064e	84 d2		 test	 dl, dl
-  00650	75 e4		 jne	 SHORT $LL142@main
-$LN144@main:
-  00652	33 c0		 xor	 eax, eax
-  00654	eb 05		 jmp	 SHORT $LN145@main
-$LN143@main:
-  00656	1b c0		 sbb	 eax, eax
-  00658	83 c8 01	 or	 eax, 1
-$LN145@main:
-  0065b	85 c0		 test	 eax, eax
-  0065d	0f 85 fd 02 00
-	00		 jne	 $LN43@main
-  00663	eb 2f		 jmp	 SHORT $LN155@main
-$LN106@main:
-
-; 330  : 			else
-; 331  : 			{
-; 332  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
-; 333  : 				Usage(argc, argv);
-; 334  : 			}
-; 335  : 		}
-; 336  : 
-; 337  : 		// if no output file name
-; 338  : 		if(outputFile == NULL && (gWipeMsg || gDestroyMsg) )
-
-  00665	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
-  0066c	75 09		 jne	 SHORT $LN72@main
-  0066e	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
-  00675	74 20		 je	 SHORT $LN156@main
-$LN72@main:
-
-; 339  : 		{
-; 340  : 			outputFile = gOutputFileName;		// overwrite original file
-; 341  : 			strcpy(gOutputFileName, inputFile);
-
-  00677	8b 75 f8	 mov	 esi, DWORD PTR _inputFile$1$[ebp]
-  0067a	bb 00 00 00 00	 mov	 ebx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
-  0067f	8b d3		 mov	 edx, ebx
-  00681	8b ce		 mov	 ecx, esi
-  00683	2b d6		 sub	 edx, esi
-$LL85@main:
-  00685	8a 01		 mov	 al, BYTE PTR [ecx]
-  00687	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  0068a	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
-  0068e	84 c0		 test	 al, al
-  00690	75 f3		 jne	 SHORT $LL85@main
-
-; 329  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
-
-  00692	eb 06		 jmp	 SHORT $LN71@main
-$LN155@main:
-
-; 342  : 		}
-; 343  : 
-; 344  : 		readJpg(inputFile, v);
-
-  00694	8b 5d fc	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
-$LN156@main:
-  00697	8b 75 f8	 mov	 esi, DWORD PTR _inputFile$1$[ebp]
-$LN71@main:
-  0069a	ff 75 f0	 push	 DWORD PTR _v$[ebp]
-  0069d	56		 push	 esi
-  0069e	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
-  006a3	83 c4 08	 add	 esp, 8
-
-; 345  : 
-; 346  : 		if(gWipeMsg || gDestroyMsg)
-
-  006a6	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
-  006ad	75 09		 jne	 SHORT $LN74@main
-  006af	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
-  006b6	74 0f		 je	 SHORT $LN73@main
-$LN74@main:
-
-; 347  : 			writeJpg(outputFile, g, p);
-
-  006b8	ff 75 ec	 push	 DWORD PTR _p$[ebp]
-  006bb	ff 75 e8	 push	 DWORD PTR _g$[ebp]
-  006be	53		 push	 ebx
-  006bf	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
-  006c4	83 c4 0c	 add	 esp, 12			; 0000000cH
-$LN73@main:
-
-; 348  : 
-; 349  : 		if(gExtractMsg && gMsgSize > 0) writeMsg();
-
-  006c7	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
-  006ce	74 0e		 je	 SHORT $LN152@main
-  006d0	83 3d 00 00 00
-	00 00		 cmp	 DWORD PTR ?gMsgSize@@3IA, 0 ; gMsgSize
-  006d7	76 05		 jbe	 SHORT $LN152@main
-  006d9	e8 00 00 00 00	 call	 ?writeMsg@@YAXXZ	; writeMsg
-$LN152@main:
-
-; 350  : 
-; 351  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
-
-  006de	8b 0d 00 00 00
-	00		 mov	 ecx, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
-  006e4	8b c1		 mov	 eax, ecx
-  006e6	ff 35 00 00 00
-	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  006ec	c1 e8 03	 shr	 eax, 3
-  006ef	50		 push	 eax
-  006f0	51		 push	 ecx
-  006f1	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
-  006f6	e8 00 00 00 00	 call	 _printf
-
-; 352  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
-
-  006fb	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
-  00700	83 c4 10	 add	 esp, 16			; 00000010H
-  00703	c1 e8 03	 shr	 eax, 3
-  00706	3b 05 00 00 00
-	00		 cmp	 eax, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  0070c	73 0d		 jae	 SHORT $LN60@main
-  0070e	68 00 00 00 00	 push	 OFFSET ??_C@_0DB@POJOKHKF@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
-
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
-
-  00713	e8 00 00 00 00	 call	 _printf
-  00718	83 c4 04	 add	 esp, 4
-$LN60@main:
-  0071b	5f		 pop	 edi
-  0071c	5e		 pop	 esi
-  0071d	33 c0		 xor	 eax, eax
-  0071f	5b		 pop	 ebx
-  00720	8b e5		 mov	 esp, ebp
-  00722	5d		 pop	 ebp
-  00723	c3		 ret	 0
-$LN107@main:
+  004ce	57		 push	 edi
+  004cf	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
+  004d4	83 c4 04	 add	 esp, 4
+$LN47@main:
 
 ; 230  : 
-; 231  : 		return(SUCCESS);
-; 232  : 	}
-; 233  : 
-; 234  : 	// Hiding
-; 235  : 	if(gHideMsg)
-; 236  : 	{
-; 237  : 		if(gExtractMsg || gWipeMsg || gDestroyMsg)
+; 231  : 		if(outExt == 'j')
 
-  00724	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
-  0072b	0f 85 86 02 00
-	00		 jne	 $LN52@main
-  00731	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
-  00738	0f 85 79 02 00
-	00		 jne	 $LN52@main
-  0073e	80 3d 00 00 00
-	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
-  00745	0f 85 6c 02 00
-	00		 jne	 $LN52@main
+  004d7	8b 45 f8	 mov	 eax, DWORD PTR _outputFile$1$[ebp]
+  004da	80 fb 6a	 cmp	 bl, 106			; 0000006aH
+  004dd	75 18		 jne	 SHORT $LN48@main
 
-; 241  : 		}
-; 242  : 
-; 243  : 		// treat DC coefficeint a bit differently
-; 244  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
-; 245  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
+; 232  : 			writeJpg(outputFile, g, p);
 
-  0074b	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
-  00750	66 0f 6e c0	 movd	 xmm0, eax
-  00754	f3 0f e6 c0	 cvtdq2pd xmm0, xmm0
-  00758	c1 e8 1f	 shr	 eax, 31			; 0000001fH
-  0075b	f2 0f 58 04 c5
+  004df	ff 75 f0	 push	 DWORD PTR _p$[ebp]
+  004e2	ff 75 ec	 push	 DWORD PTR _g$[ebp]
+  004e5	50		 push	 eax
+  004e6	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
+  004eb	83 c4 0c	 add	 esp, 12			; 0000000cH
+
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
+
+  004ee	33 c0		 xor	 eax, eax
+  004f0	5f		 pop	 edi
+  004f1	5e		 pop	 esi
+  004f2	5b		 pop	 ebx
+  004f3	8b e5		 mov	 esp, ebp
+  004f5	5d		 pop	 ebp
+  004f6	c3		 ret	 0
+$LN48@main:
+
+; 233  : 		else
+; 234  : 			writeBitmap(outputFile);
+
+  004f7	50		 push	 eax
+  004f8	e8 00 00 00 00	 call	 ?writeBitmap@@YAHPAD@Z	; writeBitmap
+
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
+
+  004fd	83 c4 04	 add	 esp, 4
+  00500	33 c0		 xor	 eax, eax
+  00502	5f		 pop	 edi
+  00503	5e		 pop	 esi
+  00504	5b		 pop	 ebx
+  00505	8b e5		 mov	 esp, ebp
+  00507	5d		 pop	 ebp
+  00508	c3		 ret	 0
+$LN62@main:
+
+; 288  : 		return(SUCCESS);
+; 289  : 	} // if hiding
+; 290  : 
+; 291  : 	// Extracting and/or Wiping or Destroying
+; 292  : 	if(gExtractMsg || gWipeMsg || gDestroyMsg)
+; 293  : 	{
+; 294  : 		if(inExt != 'j')	// Input MUST be jpg
+
+  00509	80 ff 6a	 cmp	 bh, 106			; 0000006aH
+  0050c	0f 85 ab 03 00
+	00		 jne	 $LN157@main
+
+; 298  : 		} // input must be .jpg
+; 299  : 
+; 300  : 		fptr = fopen(inputFile, "rb");
+
+  00512	68 00 00 00 00	 push	 OFFSET ??_C@_02JDPG@rb@
+  00517	57		 push	 edi
+  00518	e8 00 00 00 00	 call	 _fopen
+  0051d	8b d8		 mov	 ebx, eax
+  0051f	83 c4 08	 add	 esp, 8
+
+; 301  : 		if(fptr == NULL)
+
+  00522	85 db		 test	 ebx, ebx
+  00524	0f 84 bd 03 00
+	00		 je	 $LN158@main
+
+; 305  : 		}
+; 306  : 
+; 307  : 		// treat DC coefficeint a bit differently
+; 308  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
+; 309  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
+
+  0052a	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
+  0052f	66 0f 6e c0	 movd	 xmm0, eax
+  00533	f3 0f e6 c0	 cvtdq2pd xmm0, xmm0
+  00537	c1 e8 1f	 shr	 eax, 31			; 0000001fH
+  0053a	f2 0f 58 04 c5
 	00 00 00 00	 addsd	 xmm0, QWORD PTR __xmm@41f00000000000000000000000000000[eax*8]
-  00764	e8 00 00 00 00	 call	 __libm_sse2_log_precise
-
-; 246  : 		lgQ = 2/lgQ;
-; 247  : 
-; 248  : 		// if no output file name, get it from input file
-; 249  : 		if(outputFile == NULL)
-
-  00769	83 7d fc 00	 cmp	 DWORD PTR _outputFile$1$[ebp], 0
-  0076d	f2 0f 5e 05 00
+  00543	e8 00 00 00 00	 call	 __libm_sse2_log_precise
+  00548	f2 0f 5e 05 00
 	00 00 00	 divsd	 xmm0, QWORD PTR ?lg2@@3NA
-  00775	f2 0f 10 0d 00
+
+; 310  : 		lgQ = 2/lgQ;
+; 311  : 
+; 312  : 		// initialize output buffer static variables
+; 313  : 		putBitsInBuffer(0, 0, NULL, 0);
+
+  00550	6a 00		 push	 0
+  00552	6a 00		 push	 0
+  00554	6a 00		 push	 0
+  00556	6a 00		 push	 0
+  00558	f2 0f 10 0d 00
 	00 00 00	 movsd	 xmm1, QWORD PTR __real@4000000000000000
-  0077d	f2 0f 5e c8	 divsd	 xmm1, xmm0
-  00781	f2 0f 11 0d 00
+  00560	f2 0f 5e c8	 divsd	 xmm1, xmm0
+  00564	f2 0f 11 0d 00
 	00 00 00	 movsd	 QWORD PTR ?lgQ@@3NA, xmm1
-  00789	75 63		 jne	 SHORT $LN53@main
+  0056c	e8 00 00 00 00	 call	 ?putBitsInBuffer@@YAHIEPAEI@Z ; putBitsInBuffer
 
-; 250  : 		{
-; 251  : 			outputFile = gOutputFileName;
+; 314  : 
+; 315  : 		fileno = _fileno(fptr);
 
-  0078b	ba 00 00 00 00	 mov	 edx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
-  00790	c7 45 fc 00 00
-	00 00		 mov	 DWORD PTR _outputFile$1$[ebp], OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+  00571	53		 push	 ebx
+  00572	e8 00 00 00 00	 call	 __fileno
 
-; 252  : 			strcpy(gOutputFileName, inputFile);
+; 316  : 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
 
-  00797	8b cf		 mov	 ecx, edi
-  00799	2b d7		 sub	 edx, edi
-  0079b	0f 1f 44 00 00	 npad	 5
-$LL82@main:
-  007a0	8a 01		 mov	 al, BYTE PTR [ecx]
-  007a2	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  007a5	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
-  007a9	84 c0		 test	 al, al
-  007ab	75 f3		 jne	 SHORT $LL82@main
+  00577	50		 push	 eax
+  00578	e8 00 00 00 00	 call	 __filelength
+  0057d	8d b0 04 01 00
+	00		 lea	 esi, DWORD PTR [eax+260]
 
-; 253  : 			// lop off extension
-; 254  : 			gOutputFileName[x-4] = 0;
+; 317  : 												// the 260 is for the possible length of the filename
+; 318  : 		gMsgBuffer = (char *) malloc(size);
 
-  007ad	83 c6 fc	 add	 esi, -4			; fffffffcH
-  007b0	81 fe 04 01 00
+  00583	56		 push	 esi
+  00584	e8 00 00 00 00	 call	 _malloc
+  00589	83 c4 1c	 add	 esp, 28			; 0000001cH
+  0058c	a3 00 00 00 00	 mov	 DWORD PTR ?gMsgBuffer@@3PADA, eax ; gMsgBuffer
+
+; 319  : 		if(gMsgBuffer == NULL)
+
+  00591	85 c0		 test	 eax, eax
+  00593	0f 84 63 03 00
+	00		 je	 $LN108@main
+
+; 323  : 		}
+; 324  : 		fclose(fptr); // no longer want input file open
+
+  00599	53		 push	 ebx
+  0059a	e8 00 00 00 00	 call	 _fclose
+
+; 325  : 		memset(gMsgBuffer, 0, size);
+
+  0059f	56		 push	 esi
+  005a0	6a 00		 push	 0
+  005a2	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  005a8	e8 00 00 00 00	 call	 _memset
+
+; 326  : 		gMsgSize = size;
+; 327  : 
+; 328  : 		// if output file specified
+; 329  : 		if(outputFile != NULL)
+
+  005ad	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
+  005b0	83 c4 10	 add	 esp, 16			; 00000010H
+  005b3	89 35 00 00 00
+	00		 mov	 DWORD PTR ?gMsgSize@@3IA, esi ; gMsgSize
+  005b9	85 db		 test	 ebx, ebx
+  005bb	74 77		 je	 SHORT $LN102@main
+
+; 330  : 		{
+; 331  : 			x = (int) strlen(outputFile);
+
+  005bd	8b cb		 mov	 ecx, ebx
+  005bf	8d 51 01	 lea	 edx, DWORD PTR [ecx+1]
+$LL132@main:
+  005c2	8a 01		 mov	 al, BYTE PTR [ecx]
+  005c4	41		 inc	 ecx
+  005c5	84 c0		 test	 al, al
+  005c7	75 f9		 jne	 SHORT $LL132@main
+  005c9	2b ca		 sub	 ecx, edx
+
+; 332  : 			ext = outputFile + x - 4; // get extension of file name
+; 333  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
+
+  005cb	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
+  005d0	83 c1 fc	 add	 ecx, -4			; fffffffcH
+  005d3	03 cb		 add	 ecx, ebx
+  005d5	8b c1		 mov	 eax, ecx
+$LL133@main:
+  005d7	8a 18		 mov	 bl, BYTE PTR [eax]
+  005d9	3a 1a		 cmp	 bl, BYTE PTR [edx]
+  005db	75 1a		 jne	 SHORT $LN134@main
+  005dd	84 db		 test	 bl, bl
+  005df	74 12		 je	 SHORT $LN135@main
+  005e1	8a 58 01	 mov	 bl, BYTE PTR [eax+1]
+  005e4	3a 5a 01	 cmp	 bl, BYTE PTR [edx+1]
+  005e7	75 0e		 jne	 SHORT $LN134@main
+  005e9	83 c0 02	 add	 eax, 2
+  005ec	83 c2 02	 add	 edx, 2
+  005ef	84 db		 test	 bl, bl
+  005f1	75 e4		 jne	 SHORT $LL133@main
+$LN135@main:
+  005f3	33 c0		 xor	 eax, eax
+  005f5	eb 05		 jmp	 SHORT $LN136@main
+$LN134@main:
+  005f7	1b c0		 sbb	 eax, eax
+  005f9	83 c8 01	 or	 eax, 1
+$LN136@main:
+  005fc	85 c0		 test	 eax, eax
+  005fe	74 60		 je	 SHORT $LN150@main
+
+; 334  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+
+  00600	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
+$LL137@main:
+  00605	8a 11		 mov	 dl, BYTE PTR [ecx]
+  00607	3a 10		 cmp	 dl, BYTE PTR [eax]
+  00609	75 1a		 jne	 SHORT $LN138@main
+  0060b	84 d2		 test	 dl, dl
+  0060d	74 12		 je	 SHORT $LN139@main
+  0060f	8a 51 01	 mov	 dl, BYTE PTR [ecx+1]
+  00612	3a 50 01	 cmp	 dl, BYTE PTR [eax+1]
+  00615	75 0e		 jne	 SHORT $LN138@main
+  00617	83 c1 02	 add	 ecx, 2
+  0061a	83 c0 02	 add	 eax, 2
+  0061d	84 d2		 test	 dl, dl
+  0061f	75 e4		 jne	 SHORT $LL137@main
+$LN139@main:
+  00621	33 c0		 xor	 eax, eax
+  00623	eb 05		 jmp	 SHORT $LN140@main
+$LN138@main:
+  00625	1b c0		 sbb	 eax, eax
+  00627	83 c8 01	 or	 eax, 1
+$LN140@main:
+  0062a	85 c0		 test	 eax, eax
+  0062c	0f 85 de 02 00
+	00		 jne	 $LN43@main
+  00632	eb 2c		 jmp	 SHORT $LN150@main
+$LN102@main:
+
+; 335  : 			else
+; 336  : 			{
+; 337  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
+; 338  : 				Usage(argc, argv);
+; 339  : 			}
+; 340  : 		}
+; 341  : 
+; 342  : 		// if no output file name
+; 343  : 		if(outputFile == NULL && (gWipeMsg || gDestroyMsg) )
+
+  00634	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
+  0063b	75 09		 jne	 SHORT $LN72@main
+  0063d	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
+  00644	74 1d		 je	 SHORT $LN71@main
+$LN72@main:
+
+; 344  : 		{
+; 345  : 			outputFile = gOutputFileName;		// overwrite original file
+
+  00646	bb 00 00 00 00	 mov	 ebx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+
+; 346  : 			strcpy(gOutputFileName, inputFile);
+
+  0064b	8b cf		 mov	 ecx, edi
+  0064d	8b d3		 mov	 edx, ebx
+  0064f	2b d7		 sub	 edx, edi
+$LL84@main:
+  00651	8a 01		 mov	 al, BYTE PTR [ecx]
+  00653	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  00656	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
+  0065a	84 c0		 test	 al, al
+  0065c	75 f3		 jne	 SHORT $LL84@main
+
+; 334  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+
+  0065e	eb 03		 jmp	 SHORT $LN71@main
+$LN150@main:
+
+; 347  : 		}
+; 348  : 
+; 349  : 		readJpg(inputFile, v);
+
+  00660	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
+$LN71@main:
+  00663	ff 75 f4	 push	 DWORD PTR _v$[ebp]
+  00666	57		 push	 edi
+  00667	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
+  0066c	83 c4 08	 add	 esp, 8
+
+; 350  : 
+; 351  : 		if(gWipeMsg || gDestroyMsg)
+
+  0066f	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
+  00676	75 09		 jne	 SHORT $LN74@main
+  00678	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
+  0067f	74 0f		 je	 SHORT $LN73@main
+$LN74@main:
+
+; 352  : 			writeJpg(outputFile, g, p);
+
+  00681	ff 75 f0	 push	 DWORD PTR _p$[ebp]
+  00684	ff 75 ec	 push	 DWORD PTR _g$[ebp]
+  00687	53		 push	 ebx
+  00688	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
+  0068d	83 c4 0c	 add	 esp, 12			; 0000000cH
+$LN73@main:
+
+; 353  : 
+; 354  : 		if(gExtractMsg && gMsgSize > 0) writeMsg();
+
+  00690	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
+  00697	74 0e		 je	 SHORT $LN147@main
+  00699	83 3d 00 00 00
+	00 00		 cmp	 DWORD PTR ?gMsgSize@@3IA, 0 ; gMsgSize
+  006a0	76 05		 jbe	 SHORT $LN147@main
+  006a2	e8 00 00 00 00	 call	 ?writeMsg@@YAXXZ	; writeMsg
+$LN147@main:
+
+; 355  : 
+; 356  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+
+  006a7	8b 0d 00 00 00
+	00		 mov	 ecx, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
+  006ad	8b c1		 mov	 eax, ecx
+  006af	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
+  006b5	c1 e8 03	 shr	 eax, 3
+  006b8	50		 push	 eax
+  006b9	51		 push	 ecx
+  006ba	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
+  006bf	e8 00 00 00 00	 call	 _printf
+
+; 357  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
+
+  006c4	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
+  006c9	83 c4 10	 add	 esp, 16			; 00000010H
+  006cc	c1 e8 03	 shr	 eax, 3
+  006cf	3b 05 00 00 00
+	00		 cmp	 eax, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
+  006d5	73 0d		 jae	 SHORT $LN60@main
+  006d7	68 00 00 00 00	 push	 OFFSET ??_C@_0DB@POJOKHKF@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
+
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
+
+  006dc	e8 00 00 00 00	 call	 _printf
+  006e1	83 c4 04	 add	 esp, 4
+$LN60@main:
+  006e4	5f		 pop	 edi
+  006e5	5e		 pop	 esi
+  006e6	33 c0		 xor	 eax, eax
+  006e8	5b		 pop	 ebx
+  006e9	8b e5		 mov	 esp, ebp
+  006eb	5d		 pop	 ebp
+  006ec	c3		 ret	 0
+$LN103@main:
+
+; 235  : 
+; 236  : 		return(SUCCESS);
+; 237  : 	}
+; 238  : 
+; 239  : 	// Hiding
+; 240  : 	if(gHideMsg)
+; 241  : 	{
+; 242  : 		if(gExtractMsg || gWipeMsg || gDestroyMsg)
+
+  006ed	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
+  006f4	0f 85 6f 02 00
+	00		 jne	 $LN52@main
+  006fa	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
+  00701	0f 85 62 02 00
+	00		 jne	 $LN52@main
+  00707	80 3d 00 00 00
+	00 00		 cmp	 BYTE PTR ?gDestroyMsg@@3_NA, 0 ; gDestroyMsg
+  0070e	0f 85 55 02 00
+	00		 jne	 $LN52@main
+
+; 246  : 		}
+; 247  : 
+; 248  : 		// treat DC coefficeint a bit differently
+; 249  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
+; 250  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
+
+  00714	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
+  00719	66 0f 6e c0	 movd	 xmm0, eax
+  0071d	f3 0f e6 c0	 cvtdq2pd xmm0, xmm0
+  00721	c1 e8 1f	 shr	 eax, 31			; 0000001fH
+  00724	f2 0f 58 04 c5
+	00 00 00 00	 addsd	 xmm0, QWORD PTR __xmm@41f00000000000000000000000000000[eax*8]
+  0072d	e8 00 00 00 00	 call	 __libm_sse2_log_precise
+  00732	f2 0f 5e 05 00
+	00 00 00	 divsd	 xmm0, QWORD PTR ?lg2@@3NA
+
+; 251  : 		lgQ = 2/lgQ;
+; 252  : 
+; 253  : 		// if no output file name, get it from input file
+; 254  : 		if(outputFile == NULL)
+
+  0073a	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
+  0073d	f2 0f 10 0d 00
+	00 00 00	 movsd	 xmm1, QWORD PTR __real@4000000000000000
+  00745	f2 0f 5e c8	 divsd	 xmm1, xmm0
+  00749	f2 0f 11 0d 00
+	00 00 00	 movsd	 QWORD PTR ?lgQ@@3NA, xmm1
+  00751	85 db		 test	 ebx, ebx
+  00753	75 56		 jne	 SHORT $LN53@main
+
+; 255  : 		{
+; 256  : 			outputFile = gOutputFileName;
+
+  00755	bb 00 00 00 00	 mov	 ebx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+
+; 257  : 			strcpy(gOutputFileName, inputFile);
+
+  0075a	8b cf		 mov	 ecx, edi
+  0075c	8b d3		 mov	 edx, ebx
+  0075e	2b d7		 sub	 edx, edi
+$LL81@main:
+  00760	8a 01		 mov	 al, BYTE PTR [ecx]
+  00762	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  00765	88 44 11 ff	 mov	 BYTE PTR [ecx+edx-1], al
+  00769	84 c0		 test	 al, al
+  0076b	75 f3		 jne	 SHORT $LL81@main
+
+; 258  : 			// lop off extension
+; 259  : 			gOutputFileName[x-4] = 0;
+
+  0076d	83 c6 fc	 add	 esi, -4			; fffffffcH
+  00770	81 fe 04 01 00
 	00		 cmp	 esi, 260		; 00000104H
-  007b6	0f 83 cd 01 00
-	00		 jae	 $LN83@main
+  00776	0f 83 be 01 00
+	00		 jae	 $LN82@main
 
-; 255  : 			strcat(gOutputFileName, "_hidden.jpg");
+; 260  : 			strcat(gOutputFileName, "_hidden.jpg");
 
-  007bc	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
-  007c1	88 86 00 00 00
+  0077c	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
+  00781	88 86 00 00 00
 	00		 mov	 BYTE PTR ?gOutputFileName@@3PADA[esi], al
-  007c7	49		 dec	 ecx
-$LL146@main:
-  007c8	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
-  007cb	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
-  007ce	84 c0		 test	 al, al
-  007d0	75 f6		 jne	 SHORT $LL146@main
-  007d2	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@
+  00787	49		 dec	 ecx
+$LL141@main:
+  00788	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
+  0078b	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
+  0078e	84 c0		 test	 al, al
+  00790	75 f6		 jne	 SHORT $LL141@main
+  00792	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@
+  00797	89 01		 mov	 DWORD PTR [ecx], eax
+  00799	a1 04 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@+4
+  0079e	89 41 04	 mov	 DWORD PTR [ecx+4], eax
+  007a1	a1 08 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@+8
+  007a6	89 41 08	 mov	 DWORD PTR [ecx+8], eax
 
-; 256  : 			outExt = 'j';
-; 257  : 		}
-; 258  : 		else
+; 261  : 			outExt = 'j';
+; 262  : 		}
+; 263  : 		else
 
-  007d7	8b 75 fc	 mov	 esi, DWORD PTR _outputFile$1$[ebp]
-  007da	89 01		 mov	 DWORD PTR [ecx], eax
-  007dc	a1 04 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@+4
-  007e1	89 41 04	 mov	 DWORD PTR [ecx+4], eax
-  007e4	a1 08 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@+8
-  007e9	89 41 08	 mov	 DWORD PTR [ecx+8], eax
-  007ec	eb 4f		 jmp	 SHORT $LN56@main
+  007a9	eb 45		 jmp	 SHORT $LN56@main
 $LN53@main:
 
-; 259  : 		{
-; 260  : 			x = (int) strlen(outputFile);
+; 264  : 		{
+; 265  : 			x = (int) strlen(outputFile);
 
-  007ee	8b 75 fc	 mov	 esi, DWORD PTR _outputFile$1$[ebp]
-  007f1	8b d6		 mov	 edx, esi
-  007f3	8d 4a 01	 lea	 ecx, DWORD PTR [edx+1]
-$LL147@main:
-  007f6	8a 02		 mov	 al, BYTE PTR [edx]
-  007f8	42		 inc	 edx
-  007f9	84 c0		 test	 al, al
-  007fb	75 f9		 jne	 SHORT $LL147@main
-  007fd	2b d1		 sub	 edx, ecx
+  007ab	8b d3		 mov	 edx, ebx
+  007ad	8d 4a 01	 lea	 ecx, DWORD PTR [edx+1]
+$LL142@main:
+  007b0	8a 02		 mov	 al, BYTE PTR [edx]
+  007b2	42		 inc	 edx
+  007b3	84 c0		 test	 al, al
+  007b5	75 f9		 jne	 SHORT $LL142@main
+  007b7	2b d1		 sub	 edx, ecx
 
-; 261  : 			ext = outputFile + x - 4; // get extension of file name
+; 266  : 			ext = outputFile + x - 4; // get extension of file name
 
-  007ff	8d 46 fc	 lea	 eax, DWORD PTR [esi-4]
+  007b9	8d 43 fc	 lea	 eax, DWORD PTR [ebx-4]
 
-; 262  : 
-; 263  : 			if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 267  : 
+; 268  : 			if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
-  00802	b9 00 00 00 00	 mov	 ecx, OFFSET ??_C@_04GNPKBLNA@?4jpg@
-  00807	03 c2		 add	 eax, edx
-  00809	0f 1f 80 00 00
-	00 00		 npad	 7
-$LL148@main:
-  00810	8a 10		 mov	 dl, BYTE PTR [eax]
-  00812	3a 11		 cmp	 dl, BYTE PTR [ecx]
-  00814	75 1a		 jne	 SHORT $LN149@main
-  00816	84 d2		 test	 dl, dl
-  00818	74 12		 je	 SHORT $LN150@main
-  0081a	8a 50 01	 mov	 dl, BYTE PTR [eax+1]
-  0081d	3a 51 01	 cmp	 dl, BYTE PTR [ecx+1]
-  00820	75 0e		 jne	 SHORT $LN149@main
-  00822	83 c0 02	 add	 eax, 2
-  00825	83 c1 02	 add	 ecx, 2
-  00828	84 d2		 test	 dl, dl
-  0082a	75 e4		 jne	 SHORT $LL148@main
-$LN150@main:
-  0082c	33 c0		 xor	 eax, eax
-  0082e	eb 05		 jmp	 SHORT $LN151@main
-$LN149@main:
-  00830	1b c0		 sbb	 eax, eax
-  00832	83 c8 01	 or	 eax, 1
-$LN151@main:
-  00835	85 c0		 test	 eax, eax
-  00837	0f 85 51 01 00
+  007bc	b9 00 00 00 00	 mov	 ecx, OFFSET ??_C@_04GNPKBLNA@?4jpg@
+  007c1	03 c2		 add	 eax, edx
+$LL143@main:
+  007c3	8a 10		 mov	 dl, BYTE PTR [eax]
+  007c5	3a 11		 cmp	 dl, BYTE PTR [ecx]
+  007c7	75 1a		 jne	 SHORT $LN144@main
+  007c9	84 d2		 test	 dl, dl
+  007cb	74 12		 je	 SHORT $LN145@main
+  007cd	8a 50 01	 mov	 dl, BYTE PTR [eax+1]
+  007d0	3a 51 01	 cmp	 dl, BYTE PTR [ecx+1]
+  007d3	75 0e		 jne	 SHORT $LN144@main
+  007d5	83 c0 02	 add	 eax, 2
+  007d8	83 c1 02	 add	 ecx, 2
+  007db	84 d2		 test	 dl, dl
+  007dd	75 e4		 jne	 SHORT $LL143@main
+$LN145@main:
+  007df	33 c0		 xor	 eax, eax
+  007e1	eb 05		 jmp	 SHORT $LN146@main
+$LN144@main:
+  007e3	1b c0		 sbb	 eax, eax
+  007e5	83 c8 01	 or	 eax, 1
+$LN146@main:
+  007e8	85 c0		 test	 eax, eax
+  007ea	0f 85 4f 01 00
 	00		 jne	 $LN55@main
 $LN56@main:
 
-; 268  : 			}
-; 269  : 		}
-; 270  : 
-; 271  : 		if(inExt == 'j')
+; 273  : 			}
+; 274  : 		}
+; 275  : 
+; 276  : 		if(inExt == 'j')
 
-  0083d	80 ff 6a	 cmp	 bh, 106			; 0000006aH
-  00840	75 0e		 jne	 SHORT $LN57@main
+  007f0	80 7d ff 6a	 cmp	 BYTE PTR _inExt$1$[ebp], 106 ; 0000006aH
+  007f4	75 0e		 jne	 SHORT $LN57@main
 
-; 272  : 			readJpg(inputFile, v);
+; 277  : 			readJpg(inputFile, v);
 
-  00842	ff 75 f0	 push	 DWORD PTR _v$[ebp]
-  00845	57		 push	 edi
-  00846	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
-  0084b	83 c4 08	 add	 esp, 8
+  007f6	ff 75 f4	 push	 DWORD PTR _v$[ebp]
+  007f9	57		 push	 edi
+  007fa	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
+  007ff	83 c4 08	 add	 esp, 8
 
-; 273  : 		else
+; 278  : 		else
 
-  0084e	eb 09		 jmp	 SHORT $LN58@main
+  00802	eb 09		 jmp	 SHORT $LN58@main
 $LN57@main:
 
-; 274  : 			readBitmap(inputFile);
+; 279  : 			readBitmap(inputFile);
 
-  00850	57		 push	 edi
-  00851	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
-  00856	83 c4 04	 add	 esp, 4
+  00804	57		 push	 edi
+  00805	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
+  0080a	83 c4 04	 add	 esp, 4
 $LN58@main:
 
-; 275  : 
-; 276  : 		writeJpg(outputFile, g, p);
+; 280  : 
+; 281  : 		writeJpg(outputFile, g, p);
 
-  00859	ff 75 ec	 push	 DWORD PTR _p$[ebp]
-  0085c	ff 75 e8	 push	 DWORD PTR _g$[ebp]
-  0085f	56		 push	 esi
-  00860	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
+  0080d	ff 75 f0	 push	 DWORD PTR _p$[ebp]
+  00810	ff 75 ec	 push	 DWORD PTR _g$[ebp]
+  00813	53		 push	 ebx
+  00814	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
 
-; 277  : 		if(gMsgBuffer != NULL)
+; 282  : 		if(gMsgBuffer != NULL)
 
-  00865	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  0086a	83 c4 0c	 add	 esp, 12			; 0000000cH
-  0086d	85 c0		 test	 eax, eax
-  0086f	74 09		 je	 SHORT $LN59@main
+  00819	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  0081e	83 c4 0c	 add	 esp, 12			; 0000000cH
+  00821	85 c0		 test	 eax, eax
+  00823	74 09		 je	 SHORT $LN59@main
 
-; 278  : 		{
-; 279  : 			free(gMsgBuffer);
+; 283  : 		{
+; 284  : 			free(gMsgBuffer);
 
-  00871	50		 push	 eax
-  00872	e8 00 00 00 00	 call	 _free
-  00877	83 c4 04	 add	 esp, 4
+  00825	50		 push	 eax
+  00826	e8 00 00 00 00	 call	 _free
+  0082b	83 c4 04	 add	 esp, 4
 $LN59@main:
 
-; 280  : 		}
-; 281  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+; 285  : 		}
+; 286  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
 
-  0087a	8b 0d 00 00 00
+  0082e	8b 0d 00 00 00
 	00		 mov	 ecx, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
-  00880	8b c1		 mov	 eax, ecx
-  00882	ff 35 00 00 00
+  00834	8b c1		 mov	 eax, ecx
+  00836	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  00888	c1 e8 03	 shr	 eax, 3
-  0088b	50		 push	 eax
-  0088c	51		 push	 ecx
-  0088d	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
-  00892	e8 00 00 00 00	 call	 _printf
+  0083c	c1 e8 03	 shr	 eax, 3
+  0083f	50		 push	 eax
+  00840	51		 push	 ecx
+  00841	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
+  00846	e8 00 00 00 00	 call	 _printf
 
-; 282  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
+; 287  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
 
-  00897	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
-  0089c	83 c4 10	 add	 esp, 16			; 00000010H
-  0089f	c1 e8 03	 shr	 eax, 3
-  008a2	3b 05 00 00 00
+  0084b	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
+  00850	83 c4 10	 add	 esp, 16			; 00000010H
+  00853	c1 e8 03	 shr	 eax, 3
+  00856	3b 05 00 00 00
 	00		 cmp	 eax, DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  008a8	0f 83 6d fe ff
+  0085c	0f 83 82 fe ff
 	ff		 jae	 $LN60@main
-  008ae	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@KJCPHGCD@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
+  00862	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@KJCPHGCD@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
 
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
 
-  008b3	e8 00 00 00 00	 call	 _printf
-  008b8	83 c4 04	 add	 esp, 4
-  008bb	33 c0		 xor	 eax, eax
-  008bd	5f		 pop	 edi
-  008be	5e		 pop	 esi
-  008bf	5b		 pop	 ebx
-  008c0	8b e5		 mov	 esp, ebp
-  008c2	5d		 pop	 ebp
-  008c3	c3		 ret	 0
-$LN108@main:
+  00867	e8 00 00 00 00	 call	 _printf
+  0086c	83 c4 04	 add	 esp, 4
+  0086f	33 c0		 xor	 eax, eax
+  00871	5f		 pop	 edi
+  00872	5e		 pop	 esi
+  00873	5b		 pop	 ebx
+  00874	8b e5		 mov	 esp, ebp
+  00876	5d		 pop	 ebp
+  00877	c3		 ret	 0
+$LN104@main:
 
-; 167  : 	{
-; 168  : 		cerr << "MUST have an input file.\n" << endl;
+; 172  : 	{
+; 173  : 		cerr << "MUST have an input file.\n" << endl;
 
-  008c4	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  008c9	68 00 00 00 00	 push	 OFFSET ??_C@_0BK@KAGKMFJB@MUST?5have?5an?5input?5file?4?6@
-  008ce	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  008d3	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  008d8	83 c4 08	 add	 esp, 8
-  008db	8b c8		 mov	 ecx, eax
-  008dd	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  00878	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  0087d	68 00 00 00 00	 push	 OFFSET ??_C@_0BK@KAGKMFJB@MUST?5have?5an?5input?5file?4?6@
+  00882	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  00887	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  0088c	83 c4 08	 add	 esp, 8
+  0088f	8b c8		 mov	 ecx, eax
+  00891	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 169  : 		Usage(argc, argv);
+; 174  : 		Usage(argc, argv);
 
-  008e2	53		 push	 ebx
-  008e3	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  008e6	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
-$LN161@main:
+  00896	53		 push	 ebx
+  00897	56		 push	 esi
+  00898	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+$LN156@main:
 
 ; 43   : 	int test = 0, i, x, fileno, size;
 ; 44   : 	char ch, *ext, *inputFile, *outputFile, inExt, outExt;
@@ -5866,194 +5856,198 @@ $LN161@main:
 ; 49   : 
 ; 50   : 	if(argc < 2) Usage(argc, argv);
 
-  008eb	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  008ee	53		 push	 ebx
-  008ef	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
-$LN93@main:
+  0089d	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  008a0	56		 push	 esi
+  008a1	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+$LN91@main:
 
-; 116  : 				{
-; 117  : 					printf("Could not open message file %s\n\n", argv[i]);
+; 118  : 				{
+; 119  : 					printf("Could not open message file %s\n\n", argv[i]);
 
-  008f4	ff 34 bb	 push	 DWORD PTR [ebx+edi*4]
-  008f7	68 00 00 00 00	 push	 OFFSET ??_C@_0CB@HJJFPCIJ@Could?5not?5open?5message?5file?5?$CFs?6@
-  008fc	e8 00 00 00 00	 call	 _printf
-  00901	83 c4 08	 add	 esp, 8
+  008a6	ff 34 bb	 push	 DWORD PTR [ebx+edi*4]
+  008a9	68 00 00 00 00	 push	 OFFSET ??_C@_0CB@HJJFPCIJ@Could?5not?5open?5message?5file?5?$CFs?6@
+  008ae	e8 00 00 00 00	 call	 _printf
+  008b3	83 c4 08	 add	 esp, 8
 
-; 118  : 					exit(1);
+; 120  : 					exit(1);
 
-  00904	6a 01		 push	 1
-  00906	e8 00 00 00 00	 call	 _exit
-$LN162@main:
+  008b6	6a 01		 push	 1
+  008b8	e8 00 00 00 00	 call	 _exit
+$LN157@main:
 
-; 290  : 		{
-; 291  : 			cerr << "MUST have '.jpg' file as input." << endl;
+; 295  : 		{
+; 296  : 			cerr << "MUST have '.jpg' file as input." << endl;
 
-  0090b	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  00910	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@GKEIBHKG@MUST?5have?5?8?4jpg?8?5file?5as?5input?4@
-  00915	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  0091a	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  0091f	83 c4 08	 add	 esp, 8
-  00922	8b c8		 mov	 ecx, eax
-  00924	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  008bd	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  008c2	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@GKEIBHKG@MUST?5have?5?8?4jpg?8?5file?5as?5input?4@
+  008c7	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  008cc	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  008d1	83 c4 08	 add	 esp, 8
+  008d4	8b c8		 mov	 ecx, eax
+  008d6	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 292  : 			Usage(argc, argv);
+; 297  : 			Usage(argc, argv);
 
-  00929	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  0092c	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  0092f	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
-$LN163@main:
+  008db	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  008de	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
+  008e1	50		 push	 eax
+  008e2	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+$LN158@main:
 
-; 297  : 		{
-; 298  : 			printf("Could not open input file %s\n\n", inputFile);
+; 302  : 		{
+; 303  : 			printf("Could not open input file %s\n\n", inputFile);
 
-  00934	8b 75 f8	 mov	 esi, DWORD PTR _inputFile$1$[ebp]
-  00937	56		 push	 esi
-  00938	68 00 00 00 00	 push	 OFFSET ??_C@_0BP@IFGNKCJO@Could?5not?5open?5input?5file?5?$CFs?6?6@
-  0093d	e8 00 00 00 00	 call	 _printf
-  00942	83 c4 08	 add	 esp, 8
+  008e7	57		 push	 edi
+  008e8	68 00 00 00 00	 push	 OFFSET ??_C@_0BP@IFGNKCJO@Could?5not?5open?5input?5file?5?$CFs?6?6@
+  008ed	e8 00 00 00 00	 call	 _printf
+  008f2	83 c4 08	 add	 esp, 8
 
-; 299  : 			exit(1);
+; 304  : 			exit(1);
 
-  00945	6a 01		 push	 1
-  00947	e8 00 00 00 00	 call	 _exit
-$LN112@main:
+  008f5	6a 01		 push	 1
+  008f7	e8 00 00 00 00	 call	 _exit
+$LN108@main:
 
-; 315  : 		{
-; 316  : 			printf("Could not allocate memory for message file.\n\n");
+; 320  : 		{
+; 321  : 			printf("Could not allocate memory for message file.\n\n");
 
-  0094c	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@PPALOBGM@Could?5not?5allocate?5memory?5for?5m@
-  00951	e8 00 00 00 00	 call	 _printf
-  00956	83 c4 04	 add	 esp, 4
+  008fc	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@PPALOBGM@Could?5not?5allocate?5memory?5for?5m@
+  00901	e8 00 00 00 00	 call	 _printf
+  00906	83 c4 04	 add	 esp, 4
 
-; 317  : 			exit(1);
+; 322  : 			exit(1);
 
-  00959	6a 01		 push	 1
-  0095b	e8 00 00 00 00	 call	 _exit
+  00909	6a 01		 push	 1
+  0090b	e8 00 00 00 00	 call	 _exit
 $LN43@main:
 
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
 
-  00960	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  00965	68 00 00 00 00	 push	 OFFSET ??_C@_0CL@DJHOPKNI@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5ou@
-  0096a	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  0096f	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  00974	83 c4 08	 add	 esp, 8
-  00977	8b c8		 mov	 ecx, eax
-  00979	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
-  0097e	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  00981	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  00984	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
-$LN83@main:
+  00910	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  00915	68 00 00 00 00	 push	 OFFSET ??_C@_0CL@DJHOPKNI@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5ou@
+  0091a	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  0091f	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  00924	83 c4 08	 add	 esp, 8
+  00927	8b c8		 mov	 ecx, eax
+  00929	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  0092e	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  00931	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
+  00934	50		 push	 eax
+  00935	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+$LN82@main:
 
-; 253  : 			// lop off extension
-; 254  : 			gOutputFileName[x-4] = 0;
+; 258  : 			// lop off extension
+; 259  : 			gOutputFileName[x-4] = 0;
 
-  00989	e8 00 00 00 00	 call	 ___report_rangecheckfailure
+  0093a	e8 00 00 00 00	 call	 ___report_rangecheckfailure
 $LN55@main:
 
-; 264  : 			else
-; 265  : 			{
-; 266  : 				cerr << "Must use '.jpg' as output file." << endl;
+; 269  : 			else
+; 270  : 			{
+; 271  : 				cerr << "Must use '.jpg' as output file." << endl;
 
-  0098e	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  00993	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@PENGFPGN@Must?5use?5?8?4jpg?8?5as?5output?5file?4@
-  00998	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  0099d	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  009a2	83 c4 08	 add	 esp, 8
-  009a5	8b c8		 mov	 ecx, eax
-  009a7	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  0093f	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  00944	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@PENGFPGN@Must?5use?5?8?4jpg?8?5as?5output?5file?4@
+  00949	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  0094e	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  00953	83 c4 08	 add	 esp, 8
+  00956	8b c8		 mov	 ecx, eax
+  00958	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 267  : 				Usage(argc, argv);
+; 272  : 				Usage(argc, argv);
 
-  009ac	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  009af	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  009b2	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+  0095d	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  00960	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
+  00963	50		 push	 eax
+  00964	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN52@main:
 
-; 238  : 		{
-; 239  : 			cerr << "Can't hide and also extract, wipe, or destroy a message." << endl;
+; 243  : 		{
+; 244  : 			cerr << "Can't hide and also extract, wipe, or destroy a message." << endl;
 
-  009b7	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  009bc	68 00 00 00 00	 push	 OFFSET ??_C@_0DJ@EJHDBKAF@Can?8t?5hide?5and?5also?5extract?0?5wi@
-  009c1	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  009c6	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  009cb	83 c4 08	 add	 esp, 8
-  009ce	8b c8		 mov	 ecx, eax
-  009d0	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  00969	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  0096e	68 00 00 00 00	 push	 OFFSET ??_C@_0DJ@EJHDBKAF@Can?8t?5hide?5and?5also?5extract?0?5wi@
+  00973	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  00978	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  0097d	83 c4 08	 add	 esp, 8
+  00980	8b c8		 mov	 ecx, eax
+  00982	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 240  : 			Usage(argc, argv);
+; 245  : 			Usage(argc, argv);
 
-  009d5	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  009d8	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  009db	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+  00987	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  0098a	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
+  0098d	50		 push	 eax
+  0098e	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN34@main:
 
-; 176  : 	else
-; 177  : 	{
-; 178  : 		cerr << "Must use '.bmp' or '.jpg' as input files." << endl;
+; 181  : 	else
+; 182  : 	{
+; 183  : 		cerr << "Must use '.bmp' or '.jpg' as input files." << endl;
 
-  009e0	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
-  009e5	68 00 00 00 00	 push	 OFFSET ??_C@_0CK@JIMMBOAN@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5in@
-  009ea	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
-  009ef	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
-  009f4	83 c4 08	 add	 esp, 8
-  009f7	8b c8		 mov	 ecx, eax
-  009f9	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
+  00993	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
+  00998	68 00 00 00 00	 push	 OFFSET ??_C@_0CK@JIMMBOAN@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5in@
+  0099d	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
+  009a2	e8 00 00 00 00	 call	 ??$?6U?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@PBD@Z ; std::operator<<<std::char_traits<char> >
+  009a7	83 c4 08	 add	 esp, 8
+  009aa	8b c8		 mov	 ecx, eax
+  009ac	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 179  : 		Usage(argc, argv);
+; 184  : 		Usage(argc, argv);
 
-  009fe	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
-  00a01	ff 75 08	 push	 DWORD PTR _argc$[ebp]
-  00a04	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
-$LN157@main:
-  00a09	0f 1f 00	 npad	 3
-$LN164@main:
+  009b1	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
+  009b4	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
+  009b7	50		 push	 eax
+  009b8	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
+$LN151@main:
+  009bd	0f 1f 00	 npad	 3
+$LN159@main:
 
-; 353  : 	} // if extracting, wiping, or destroying
-; 354  : 
-; 355  : 	return(SUCCESS);
-; 356  : } // main
+; 358  : 	} // if extracting, wiping, or destroying
+; 359  : 
+; 360  : 	return(SUCCESS);
+; 361  : } // main
 
-  00a0c	00 00 00 00	 DD	 $LN12@main
-  00a10	00 00 00 00	 DD	 $LN22@main
-  00a14	00 00 00 00	 DD	 $LN20@main
-  00a18	00 00 00 00	 DD	 $LN9@main
-  00a1c	00 00 00 00	 DD	 $LN23@main
-  00a20	00 00 00 00	 DD	 $LN26@main
-  00a24	00 00 00 00	 DD	 $LN30@main
-  00a28	00 00 00 00	 DD	 $LN10@main
-  00a2c	00 00 00 00	 DD	 $LN15@main
-  00a30	00 00 00 00	 DD	 $LN27@main
-  00a34	00 00 00 00	 DD	 $LN11@main
-  00a38	00 00 00 00	 DD	 $LN21@main
-  00a3c	00 00 00 00	 DD	 $LN2@main
-$LN114@main:
-  00a40	00		 DB	 0
-  00a41	0c		 DB	 12			; 0000000cH
-  00a42	0c		 DB	 12			; 0000000cH
-  00a43	01		 DB	 1
-  00a44	02		 DB	 2
-  00a45	0c		 DB	 12			; 0000000cH
-  00a46	03		 DB	 3
-  00a47	04		 DB	 4
-  00a48	05		 DB	 5
-  00a49	0c		 DB	 12			; 0000000cH
-  00a4a	0c		 DB	 12			; 0000000cH
-  00a4b	0c		 DB	 12			; 0000000cH
-  00a4c	0c		 DB	 12			; 0000000cH
-  00a4d	0c		 DB	 12			; 0000000cH
-  00a4e	06		 DB	 6
-  00a4f	07		 DB	 7
-  00a50	08		 DB	 8
-  00a51	0c		 DB	 12			; 0000000cH
-  00a52	0c		 DB	 12			; 0000000cH
-  00a53	0c		 DB	 12			; 0000000cH
-  00a54	09		 DB	 9
-  00a55	0a		 DB	 10			; 0000000aH
-  00a56	0b		 DB	 11			; 0000000bH
+  009c0	00 00 00 00	 DD	 $LN12@main
+  009c4	00 00 00 00	 DD	 $LN22@main
+  009c8	00 00 00 00	 DD	 $LN20@main
+  009cc	00 00 00 00	 DD	 $LN9@main
+  009d0	00 00 00 00	 DD	 $LN23@main
+  009d4	00 00 00 00	 DD	 $LN26@main
+  009d8	00 00 00 00	 DD	 $LN30@main
+  009dc	00 00 00 00	 DD	 $LN10@main
+  009e0	00 00 00 00	 DD	 $LN15@main
+  009e4	00 00 00 00	 DD	 $LN27@main
+  009e8	00 00 00 00	 DD	 $LN11@main
+  009ec	00 00 00 00	 DD	 $LN21@main
+  009f0	00 00 00 00	 DD	 $LN2@main
+$LN110@main:
+  009f4	00		 DB	 0
+  009f5	0c		 DB	 12			; 0000000cH
+  009f6	0c		 DB	 12			; 0000000cH
+  009f7	01		 DB	 1
+  009f8	02		 DB	 2
+  009f9	0c		 DB	 12			; 0000000cH
+  009fa	03		 DB	 3
+  009fb	04		 DB	 4
+  009fc	05		 DB	 5
+  009fd	0c		 DB	 12			; 0000000cH
+  009fe	0c		 DB	 12			; 0000000cH
+  009ff	0c		 DB	 12			; 0000000cH
+  00a00	0c		 DB	 12			; 0000000cH
+  00a01	0c		 DB	 12			; 0000000cH
+  00a02	06		 DB	 6
+  00a03	07		 DB	 7
+  00a04	08		 DB	 8
+  00a05	0c		 DB	 12			; 0000000cH
+  00a06	0c		 DB	 12			; 0000000cH
+  00a07	0c		 DB	 12			; 0000000cH
+  00a08	09		 DB	 9
+  00a09	0a		 DB	 10			; 0000000aH
+  00a0a	0b		 DB	 11			; 0000000bH
 _main	ENDP
 _TEXT	ENDS
 ; Function compile flags: /Ogtp

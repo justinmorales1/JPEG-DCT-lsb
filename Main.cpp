@@ -111,7 +111,9 @@ int main(int argc, char *argv[])
 
 			case 'h':	// hide - provide message file name
 				i++;
+                char buffer[4096];
 				fptr = fopen(argv[i], "rb");
+               
 				if(fptr == NULL)
 				{
 					printf("Could not open message file %s\n\n", argv[i]);
@@ -126,17 +128,20 @@ int main(int argc, char *argv[])
 				{
 					printf("Could not allocate memory for message file.\n\n");
 					exit(1);
-				}
+				}           
 				memset(gMsgBuffer, 0, size);
 				gMsgSize = 0;
 				*(gMsgBuffer + gMsgSize++) = size >> 24;
 				*(gMsgBuffer + gMsgSize++) = (size >> 16) & 0xFF;
 				*(gMsgBuffer + gMsgSize++) = (size >> 8) & 0xFF;
 				*(gMsgBuffer + gMsgSize++) = size & 0xFF;
-				strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
-				gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
-
-				gMsgSize += (unsigned int) fread(&gMsgBuffer[gMsgSize], 1, size, fptr);	// read entire message file into memory
+				//strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
+				//gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
+                gMsgSize += (unsigned int)fread(gMsgBuffer, 1, size, fptr);	// read entire message file into memory
+				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
+                //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
+                printf("The message buffer values are %s\n", gMsgBuffer);
+                printf("The message size is %d\n", gMsgSize);
 				fclose(fptr);
 				gHideMsg = true;
 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
