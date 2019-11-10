@@ -4778,9 +4778,10 @@ $LL111@main:
 	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
   0021d	e8 00 00 00 00	 call	 _fread
 
-; 141  : 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
-; 142  :                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
-; 143  :                 printf("The message buffer values are %s\n", gMsgBuffer);
+; 141  :                 //gMsgSize += (unsigned int)fread(&gMsgBuffer[gMsgSize], 1, size, fptr);	// read entire message file into memory
+; 142  : 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
+; 143  :                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
+; 144  :                 printf("The message buffer values are %s\n", gMsgBuffer);
 
   00222	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
@@ -4789,20 +4790,20 @@ $LL111@main:
   0022e	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
   00233	e8 00 00 00 00	 call	 _printf
 
-; 144  :                 printf("The message size is %d\n", gMsgSize);
+; 145  :                 printf("The message size is %d\n", gMsgSize);
 
   00238	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
   0023e	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@NOCMBPFN@The?5message?5size?5is?5?$CFd?6@
   00243	e8 00 00 00 00	 call	 _printf
 
-; 145  : 				fclose(fptr);
+; 146  : 				fclose(fptr);
 
   00248	56		 push	 esi
   00249	e8 00 00 00 00	 call	 _fclose
 
-; 146  : 				gHideMsg = true;
-; 147  : 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
+; 147  : 				gHideMsg = true;
+; 148  : 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
 
   0024e	6a 00		 push	 0
   00250	6a 00		 push	 0
@@ -4811,35 +4812,35 @@ $LL111@main:
 	00 01		 mov	 BYTE PTR ?gHideMsg@@3_NA, 1 ; gHideMsg
   0025b	e8 00 00 00 00	 call	 ?getBitsFromBuffer@@YAEIPAEI@Z ; getBitsFromBuffer
 
-; 148  : 				break;
+; 149  : 				break;
 
   00260	8b 75 08	 mov	 esi, DWORD PTR _argc$[ebp]
   00263	83 c4 3c	 add	 esp, 60			; 0000003cH
   00266	eb 50		 jmp	 SHORT $LN2@main
 $LN26@main:
 
-; 149  : 
-; 150  : 			case 'i':	// input file name
-; 151  : 				i++;
-; 152  : 				inputFile = argv[i];
+; 150  : 
+; 151  : 			case 'i':	// input file name
+; 152  : 				i++;
+; 153  : 				inputFile = argv[i];
 
   00268	8b 44 bb 04	 mov	 eax, DWORD PTR [ebx+edi*4+4]
   0026c	47		 inc	 edi
   0026d	89 45 e4	 mov	 DWORD PTR _inputFile$1$[ebp], eax
 
-; 153  : 				break;
+; 154  : 				break;
 
   00270	eb 46		 jmp	 SHORT $LN2@main
 $LN27@main:
 
-; 154  : 
-; 155  : 			case 'u':	// setting the uniformity factor
-; 156  : 				tmpDbl = atof(argv[i+1]);
+; 155  : 
+; 156  : 			case 'u':	// setting the uniformity factor
+; 157  : 				tmpDbl = atof(argv[i+1]);
 
   00272	ff 74 bb 04	 push	 DWORD PTR [ebx+edi*4+4]
   00276	e8 00 00 00 00	 call	 _atof
 
-; 157  : 				if(tmpDbl < 1.0 || tmpDbl > 99.99) tmpDbl = 1.2; // choose default value
+; 158  : 				if(tmpDbl < 1.0 || tmpDbl > 99.99) tmpDbl = 1.2; // choose default value
 
   0027b	f2 0f 10 0d 00
 	00 00 00	 movsd	 xmm1, QWORD PTR __real@3ff0000000000000
@@ -4856,20 +4857,20 @@ $LN29@main:
 	00 00 00	 movsd	 xmm0, QWORD PTR __real@3ff3333333333333
 $LN28@main:
 
-; 158  : 				gUniformityFactor = tmpDbl;
+; 159  : 				gUniformityFactor = tmpDbl;
 
   002a6	f2 0f 11 05 00
 	00 00 00	 movsd	 QWORD PTR ?gUniformityFactor@@3NA, xmm0
 
-; 159  : 				break;
+; 160  : 				break;
 
   002ae	eb 08		 jmp	 SHORT $LN2@main
 $LN30@main:
 
-; 160  : 
-; 161  : 			case 'o':	// output file name
-; 162  : 				i++;
-; 163  : 				outputFile = argv[i];
+; 161  : 
+; 162  : 			case 'o':	// output file name
+; 163  : 				i++;
+; 164  : 				outputFile = argv[i];
 
   002b0	8b 44 bb 04	 mov	 eax, DWORD PTR [ebx+edi*4+4]
   002b4	47		 inc	 edi
@@ -4885,23 +4886,23 @@ $LN2@main:
   002bb	0f 8c 9f fd ff
 	ff		 jl	 $LL4@main
 
-; 164  : 				break;
-; 165  : 
-; 166  : 			} // switch
-; 167  : 		} // argv == '-'
-; 168  : 	} // for loop through arguments
-; 169  : 
-; 170  : 	// MUST have an input file
-; 171  : 	if(inputFile == NULL)
+; 165  : 				break;
+; 166  : 
+; 167  : 			} // switch
+; 168  : 		} // argv == '-'
+; 169  : 	} // for loop through arguments
+; 170  : 
+; 171  : 	// MUST have an input file
+; 172  : 	if(inputFile == NULL)
 
   002c1	8b 7d e4	 mov	 edi, DWORD PTR _inputFile$1$[ebp]
   002c4	85 ff		 test	 edi, edi
   002c6	0f 84 ac 05 00
 	00		 je	 $LN104@main
 
-; 175  : 	}
-; 176  : 
-; 177  : 	x = (int) strlen(inputFile);
+; 176  : 	}
+; 177  : 
+; 178  : 	x = (int) strlen(inputFile);
 
   002cc	8b f7		 mov	 esi, edi
   002ce	8d 4e 01	 lea	 ecx, DWORD PTR [esi+1]
@@ -4912,8 +4913,8 @@ $LL112@main:
   002d6	75 f9		 jne	 SHORT $LL112@main
   002d8	2b f1		 sub	 esi, ecx
 
-; 178  : 	ext = inputFile + x - 4; // get extension of file name
-; 179  : 	if(strcmp(ext, ".bmp") == 0) inExt = 'b';
+; 179  : 	ext = inputFile + x - 4; // get extension of file name
+; 180  : 	if(strcmp(ext, ".bmp") == 0) inExt = 'b';
 
   002da	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
   002df	8d 4f fc	 lea	 ecx, DWORD PTR [edi-4]
@@ -4945,7 +4946,7 @@ $LN116@main:
   00311	eb 34		 jmp	 SHORT $LN152@main
 $LN32@main:
 
-; 180  : 	else if(strcmp(ext, ".jpg") == 0) inExt = 'j';
+; 181  : 	else if(strcmp(ext, ".jpg") == 0) inExt = 'j';
 
   00313	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
 $LL117@main:
@@ -4974,11 +4975,11 @@ $LN120@main:
   00345	b7 6a		 mov	 bh, 106			; 0000006aH
 $LN152@main:
 
-; 185  : 	}
-; 186  : 
-; 187  : 	// DETERMINE THE OPERATION
-; 188  : 	// Converting
-; 189  : 	if(gHideMsg == false && gExtractMsg == false && gWipeMsg == false && gDestroyMsg == false)
+; 186  : 	}
+; 187  : 
+; 188  : 	// DETERMINE THE OPERATION
+; 189  : 	// Converting
+; 190  : 	if(gHideMsg == false && gExtractMsg == false && gWipeMsg == false && gDestroyMsg == false)
 
   00347	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gHideMsg@@3_NA, 0 ; gHideMsg
@@ -4998,23 +4999,23 @@ $LN152@main:
   00378	0f 85 8b 01 00
 	00		 jne	 $LN62@main
 
-; 190  : 	{
-; 191  : 		// if no output file name, get it from input file
-; 192  : 		if(outputFile == NULL)
+; 191  : 	{
+; 192  : 		// if no output file name, get it from input file
+; 193  : 		if(outputFile == NULL)
 
   0037e	8b 55 f8	 mov	 edx, DWORD PTR _outputFile$1$[ebp]
   00381	85 d2		 test	 edx, edx
   00383	0f 85 95 00 00
 	00		 jne	 $LN37@main
 
-; 193  : 		{
-; 194  : 			outputFile = gOutputFileName;
+; 194  : 		{
+; 195  : 			outputFile = gOutputFileName;
 
   00389	ba 00 00 00 00	 mov	 edx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
   0038e	c7 45 f8 00 00
 	00 00		 mov	 DWORD PTR _outputFile$1$[ebp], OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
 
-; 195  : 			strcpy(gOutputFileName, inputFile);
+; 196  : 			strcpy(gOutputFileName, inputFile);
 
   00395	8b cf		 mov	 ecx, edi
   00397	2b d7		 sub	 edx, edi
@@ -5027,8 +5028,8 @@ $LL78@main:
   003a9	84 c0		 test	 al, al
   003ab	75 f3		 jne	 SHORT $LL78@main
 
-; 196  : 			// lop off extension
-; 197  : 			gOutputFileName[x-4] = 0;
+; 197  : 			// lop off extension
+; 198  : 			gOutputFileName[x-4] = 0;
 
   003ad	83 c6 fc	 add	 esi, -4			; fffffffcH
   003b0	81 fe 04 01 00
@@ -5036,7 +5037,7 @@ $LL78@main:
   003b6	0f 83 7e 05 00
 	00		 jae	 $LN82@main
 
-; 198  : 			if(inExt == 'j')
+; 199  : 			if(inExt == 'j')
 
   003bc	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
   003c1	88 86 00 00 00
@@ -5045,14 +5046,14 @@ $LL78@main:
   003c8	80 ff 6a	 cmp	 bh, 106			; 0000006aH
   003cb	75 2d		 jne	 SHORT $LN39@main
 
-; 199  : 			{
-; 200  : 				outExt = 'b';
+; 200  : 			{
+; 201  : 				outExt = 'b';
 
   003cd	b3 62		 mov	 bl, 98			; 00000062H
   003cf	90		 npad	 1
 $LL121@main:
 
-; 201  : 				strcat(gOutputFileName, ".bmp");
+; 202  : 				strcat(gOutputFileName, ".bmp");
 
   003d0	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
   003d3	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
@@ -5060,7 +5061,7 @@ $LL121@main:
   003d8	75 f6		 jne	 SHORT $LL121@main
   003da	a1 00 00 00 00	 mov	 eax, DWORD PTR ??_C@_04LJDDIHIK@?4bmp@
 
-; 227  : 			readJpg(inputFile, v);
+; 228  : 			readJpg(inputFile, v);
 
   003df	ff 75 f4	 push	 DWORD PTR _v$[ebp]
   003e2	89 01		 mov	 DWORD PTR [ecx], eax
@@ -5070,21 +5071,21 @@ $LL121@main:
   003ed	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
   003f2	83 c4 08	 add	 esp, 8
 
-; 228  : 		else
+; 229  : 		else
 
   003f5	e9 dd 00 00 00	 jmp	 $LN47@main
 $LN39@main:
 
-; 202  : 			}
-; 203  : 			else
-; 204  : 			{
-; 205  : 				outExt = 'j';
+; 203  : 			}
+; 204  : 			else
+; 205  : 			{
+; 206  : 				outExt = 'j';
 
   003fa	b3 6a		 mov	 bl, 106			; 0000006aH
   003fc	0f 1f 40 00	 npad	 4
 $LL122@main:
 
-; 206  : 				strcat(gOutputFileName, ".jpg");
+; 207  : 				strcat(gOutputFileName, ".jpg");
 
   00400	8a 41 01	 mov	 al, BYTE PTR [ecx+1]
   00403	8d 49 01	 lea	 ecx, DWORD PTR [ecx+1]
@@ -5095,15 +5096,15 @@ $LL122@main:
   00411	a0 04 00 00 00	 mov	 al, BYTE PTR ??_C@_04GNPKBLNA@?4jpg@+4
   00416	88 41 04	 mov	 BYTE PTR [ecx+4], al
 
-; 207  : 			}
-; 208  : 		}
-; 209  : 		else
+; 208  : 			}
+; 209  : 		}
+; 210  : 		else
 
   00419	e9 81 00 00 00	 jmp	 $LN44@main
 $LN37@main:
 
-; 210  : 		{
-; 211  : 			x = (int) strlen(outputFile);
+; 211  : 		{
+; 212  : 			x = (int) strlen(outputFile);
 
   0041e	8b ca		 mov	 ecx, edx
   00420	8d 71 01	 lea	 esi, DWORD PTR [ecx+1]
@@ -5113,13 +5114,13 @@ $LL123@main:
   00426	84 c0		 test	 al, al
   00428	75 f9		 jne	 SHORT $LL123@main
 
-; 212  : 			ext = outputFile + x - 4; // get extension of file name
+; 213  : 			ext = outputFile + x - 4; // get extension of file name
 
   0042a	83 c2 fc	 add	 edx, -4			; fffffffcH
   0042d	2b ce		 sub	 ecx, esi
   0042f	03 ca		 add	 ecx, edx
 
-; 213  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
+; 214  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
 
   00431	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
   00436	8b c1		 mov	 eax, ecx
@@ -5149,7 +5150,7 @@ $LN127@main:
   00463	eb 3a		 jmp	 SHORT $LN44@main
 $LN41@main:
 
-; 214  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 215  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
   00465	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
   0046a	66 0f 1f 44 00
@@ -5180,19 +5181,19 @@ $LN131@main:
   0049d	b3 6a		 mov	 bl, 106			; 0000006aH
 $LN44@main:
 
-; 215  : 			else
-; 216  : 			{
-; 217  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
-; 218  : 				Usage(argc, argv);
-; 219  : 			}
-; 220  : 		}
-; 221  : 
-; 222  : 		if(inExt == outExt)	// nothing to be done
+; 216  : 			else
+; 217  : 			{
+; 218  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
+; 219  : 				Usage(argc, argv);
+; 220  : 			}
+; 221  : 		}
+; 222  : 
+; 223  : 		if(inExt == outExt)	// nothing to be done
 
   0049f	3a fb		 cmp	 bh, bl
   004a1	75 18		 jne	 SHORT $LN45@main
 
-; 223  : 			cerr << "You are converting a file to the same type - this will produce a copy." << endl;
+; 224  : 			cerr << "You are converting a file to the same type - this will produce a copy." << endl;
 
   004a3	68 00 00 00 00	 push	 OFFSET ??_C@_0EH@KEAHJBIO@You?5are?5converting?5a?5file?5to?5th@
   004a8	68 00 00 00 00	 push	 OFFSET ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A ; std::cerr
@@ -5207,38 +5208,38 @@ $LN44@main:
 $LN45@main:
 ; File c:\users\justin\desktop\jpeg-dct-lsb\main.cpp
 
-; 226  : 		if(inExt == 'j')
+; 227  : 		if(inExt == 'j')
 
   004bb	80 ff 6a	 cmp	 bh, 106			; 0000006aH
   004be	75 0e		 jne	 SHORT $LN46@main
 
-; 227  : 			readJpg(inputFile, v);
+; 228  : 			readJpg(inputFile, v);
 
   004c0	ff 75 f4	 push	 DWORD PTR _v$[ebp]
   004c3	57		 push	 edi
   004c4	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
   004c9	83 c4 08	 add	 esp, 8
 
-; 228  : 		else
+; 229  : 		else
 
   004cc	eb 09		 jmp	 SHORT $LN47@main
 $LN46@main:
 
-; 229  : 			readBitmap(inputFile);
+; 230  : 			readBitmap(inputFile);
 
   004ce	57		 push	 edi
   004cf	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
   004d4	83 c4 04	 add	 esp, 4
 $LN47@main:
 
-; 230  : 
-; 231  : 		if(outExt == 'j')
+; 231  : 
+; 232  : 		if(outExt == 'j')
 
   004d7	8b 45 f8	 mov	 eax, DWORD PTR _outputFile$1$[ebp]
   004da	80 fb 6a	 cmp	 bl, 106			; 0000006aH
   004dd	75 18		 jne	 SHORT $LN48@main
 
-; 232  : 			writeJpg(outputFile, g, p);
+; 233  : 			writeJpg(outputFile, g, p);
 
   004df	ff 75 f0	 push	 DWORD PTR _p$[ebp]
   004e2	ff 75 ec	 push	 DWORD PTR _g$[ebp]
@@ -5246,10 +5247,10 @@ $LN47@main:
   004e6	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
   004eb	83 c4 0c	 add	 esp, 12			; 0000000cH
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   004ee	33 c0		 xor	 eax, eax
   004f0	5f		 pop	 edi
@@ -5260,16 +5261,16 @@ $LN47@main:
   004f6	c3		 ret	 0
 $LN48@main:
 
-; 233  : 		else
-; 234  : 			writeBitmap(outputFile);
+; 234  : 		else
+; 235  : 			writeBitmap(outputFile);
 
   004f7	50		 push	 eax
   004f8	e8 00 00 00 00	 call	 ?writeBitmap@@YAHPAD@Z	; writeBitmap
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   004fd	83 c4 04	 add	 esp, 4
   00500	33 c0		 xor	 eax, eax
@@ -5281,21 +5282,21 @@ $LN48@main:
   00508	c3		 ret	 0
 $LN62@main:
 
-; 288  : 		return(SUCCESS);
-; 289  : 	} // if hiding
-; 290  : 
-; 291  : 	// Extracting and/or Wiping or Destroying
-; 292  : 	if(gExtractMsg || gWipeMsg || gDestroyMsg)
-; 293  : 	{
-; 294  : 		if(inExt != 'j')	// Input MUST be jpg
+; 289  : 		return(SUCCESS);
+; 290  : 	} // if hiding
+; 291  : 
+; 292  : 	// Extracting and/or Wiping or Destroying
+; 293  : 	if(gExtractMsg || gWipeMsg || gDestroyMsg)
+; 294  : 	{
+; 295  : 		if(inExt != 'j')	// Input MUST be jpg
 
   00509	80 ff 6a	 cmp	 bh, 106			; 0000006aH
   0050c	0f 85 ab 03 00
 	00		 jne	 $LN157@main
 
-; 298  : 		} // input must be .jpg
-; 299  : 
-; 300  : 		fptr = fopen(inputFile, "rb");
+; 299  : 		} // input must be .jpg
+; 300  : 
+; 301  : 		fptr = fopen(inputFile, "rb");
 
   00512	68 00 00 00 00	 push	 OFFSET ??_C@_02JDPG@rb@
   00517	57		 push	 edi
@@ -5303,17 +5304,17 @@ $LN62@main:
   0051d	8b d8		 mov	 ebx, eax
   0051f	83 c4 08	 add	 esp, 8
 
-; 301  : 		if(fptr == NULL)
+; 302  : 		if(fptr == NULL)
 
   00522	85 db		 test	 ebx, ebx
   00524	0f 84 bd 03 00
 	00		 je	 $LN158@main
 
-; 305  : 		}
-; 306  : 
-; 307  : 		// treat DC coefficeint a bit differently
-; 308  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
-; 309  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
+; 306  : 		}
+; 307  : 
+; 308  : 		// treat DC coefficeint a bit differently
+; 309  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
+; 310  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
 
   0052a	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
   0052f	66 0f 6e c0	 movd	 xmm0, eax
@@ -5325,10 +5326,10 @@ $LN62@main:
   00548	f2 0f 5e 05 00
 	00 00 00	 divsd	 xmm0, QWORD PTR ?lg2@@3NA
 
-; 310  : 		lgQ = 2/lgQ;
-; 311  : 
-; 312  : 		// initialize output buffer static variables
-; 313  : 		putBitsInBuffer(0, 0, NULL, 0);
+; 311  : 		lgQ = 2/lgQ;
+; 312  : 
+; 313  : 		// initialize output buffer static variables
+; 314  : 		putBitsInBuffer(0, 0, NULL, 0);
 
   00550	6a 00		 push	 0
   00552	6a 00		 push	 0
@@ -5341,40 +5342,40 @@ $LN62@main:
 	00 00 00	 movsd	 QWORD PTR ?lgQ@@3NA, xmm1
   0056c	e8 00 00 00 00	 call	 ?putBitsInBuffer@@YAHIEPAEI@Z ; putBitsInBuffer
 
-; 314  : 
-; 315  : 		fileno = _fileno(fptr);
+; 315  : 
+; 316  : 		fileno = _fileno(fptr);
 
   00571	53		 push	 ebx
   00572	e8 00 00 00 00	 call	 __fileno
 
-; 316  : 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
+; 317  : 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
 
   00577	50		 push	 eax
   00578	e8 00 00 00 00	 call	 __filelength
   0057d	8d b0 04 01 00
 	00		 lea	 esi, DWORD PTR [eax+260]
 
-; 317  : 												// the 260 is for the possible length of the filename
-; 318  : 		gMsgBuffer = (char *) malloc(size);
+; 318  : 												// the 260 is for the possible length of the filename
+; 319  : 		gMsgBuffer = (char *) malloc(size);
 
   00583	56		 push	 esi
   00584	e8 00 00 00 00	 call	 _malloc
   00589	83 c4 1c	 add	 esp, 28			; 0000001cH
   0058c	a3 00 00 00 00	 mov	 DWORD PTR ?gMsgBuffer@@3PADA, eax ; gMsgBuffer
 
-; 319  : 		if(gMsgBuffer == NULL)
+; 320  : 		if(gMsgBuffer == NULL)
 
   00591	85 c0		 test	 eax, eax
   00593	0f 84 63 03 00
 	00		 je	 $LN108@main
 
-; 323  : 		}
-; 324  : 		fclose(fptr); // no longer want input file open
+; 324  : 		}
+; 325  : 		fclose(fptr); // no longer want input file open
 
   00599	53		 push	 ebx
   0059a	e8 00 00 00 00	 call	 _fclose
 
-; 325  : 		memset(gMsgBuffer, 0, size);
+; 326  : 		memset(gMsgBuffer, 0, size);
 
   0059f	56		 push	 esi
   005a0	6a 00		 push	 0
@@ -5382,10 +5383,10 @@ $LN62@main:
 	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
   005a8	e8 00 00 00 00	 call	 _memset
 
-; 326  : 		gMsgSize = size;
-; 327  : 
-; 328  : 		// if output file specified
-; 329  : 		if(outputFile != NULL)
+; 327  : 		gMsgSize = size;
+; 328  : 
+; 329  : 		// if output file specified
+; 330  : 		if(outputFile != NULL)
 
   005ad	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
   005b0	83 c4 10	 add	 esp, 16			; 00000010H
@@ -5394,8 +5395,8 @@ $LN62@main:
   005b9	85 db		 test	 ebx, ebx
   005bb	74 77		 je	 SHORT $LN102@main
 
-; 330  : 		{
-; 331  : 			x = (int) strlen(outputFile);
+; 331  : 		{
+; 332  : 			x = (int) strlen(outputFile);
 
   005bd	8b cb		 mov	 ecx, ebx
   005bf	8d 51 01	 lea	 edx, DWORD PTR [ecx+1]
@@ -5406,8 +5407,8 @@ $LL132@main:
   005c7	75 f9		 jne	 SHORT $LL132@main
   005c9	2b ca		 sub	 ecx, edx
 
-; 332  : 			ext = outputFile + x - 4; // get extension of file name
-; 333  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
+; 333  : 			ext = outputFile + x - 4; // get extension of file name
+; 334  : 			if(strcmp(ext, ".bmp") == 0) outExt = 'b';
 
   005cb	ba 00 00 00 00	 mov	 edx, OFFSET ??_C@_04LJDDIHIK@?4bmp@
   005d0	83 c1 fc	 add	 ecx, -4			; fffffffcH
@@ -5436,7 +5437,7 @@ $LN136@main:
   005fc	85 c0		 test	 eax, eax
   005fe	74 60		 je	 SHORT $LN150@main
 
-; 334  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 335  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
   00600	b8 00 00 00 00	 mov	 eax, OFFSET ??_C@_04GNPKBLNA@?4jpg@
 $LL137@main:
@@ -5465,15 +5466,15 @@ $LN140@main:
   00632	eb 2c		 jmp	 SHORT $LN150@main
 $LN102@main:
 
-; 335  : 			else
-; 336  : 			{
-; 337  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
-; 338  : 				Usage(argc, argv);
-; 339  : 			}
-; 340  : 		}
-; 341  : 
-; 342  : 		// if no output file name
-; 343  : 		if(outputFile == NULL && (gWipeMsg || gDestroyMsg) )
+; 336  : 			else
+; 337  : 			{
+; 338  : 				cerr << "Must use '.bmp' or '.jpg' as output files." << endl;
+; 339  : 				Usage(argc, argv);
+; 340  : 			}
+; 341  : 		}
+; 342  : 
+; 343  : 		// if no output file name
+; 344  : 		if(outputFile == NULL && (gWipeMsg || gDestroyMsg) )
 
   00634	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
@@ -5483,12 +5484,12 @@ $LN102@main:
   00644	74 1d		 je	 SHORT $LN71@main
 $LN72@main:
 
-; 344  : 		{
-; 345  : 			outputFile = gOutputFileName;		// overwrite original file
+; 345  : 		{
+; 346  : 			outputFile = gOutputFileName;		// overwrite original file
 
   00646	bb 00 00 00 00	 mov	 ebx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
 
-; 346  : 			strcpy(gOutputFileName, inputFile);
+; 347  : 			strcpy(gOutputFileName, inputFile);
 
   0064b	8b cf		 mov	 ecx, edi
   0064d	8b d3		 mov	 edx, ebx
@@ -5500,14 +5501,14 @@ $LL84@main:
   0065a	84 c0		 test	 al, al
   0065c	75 f3		 jne	 SHORT $LL84@main
 
-; 334  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 335  : 			else if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
   0065e	eb 03		 jmp	 SHORT $LN71@main
 $LN150@main:
 
-; 347  : 		}
-; 348  : 
-; 349  : 		readJpg(inputFile, v);
+; 348  : 		}
+; 349  : 
+; 350  : 		readJpg(inputFile, v);
 
   00660	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
 $LN71@main:
@@ -5516,8 +5517,8 @@ $LN71@main:
   00667	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
   0066c	83 c4 08	 add	 esp, 8
 
-; 350  : 
-; 351  : 		if(gWipeMsg || gDestroyMsg)
+; 351  : 
+; 352  : 		if(gWipeMsg || gDestroyMsg)
 
   0066f	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gWipeMsg@@3_NA, 0 ; gWipeMsg
@@ -5527,7 +5528,7 @@ $LN71@main:
   0067f	74 0f		 je	 SHORT $LN73@main
 $LN74@main:
 
-; 352  : 			writeJpg(outputFile, g, p);
+; 353  : 			writeJpg(outputFile, g, p);
 
   00681	ff 75 f0	 push	 DWORD PTR _p$[ebp]
   00684	ff 75 ec	 push	 DWORD PTR _g$[ebp]
@@ -5536,8 +5537,8 @@ $LN74@main:
   0068d	83 c4 0c	 add	 esp, 12			; 0000000cH
 $LN73@main:
 
-; 353  : 
-; 354  : 		if(gExtractMsg && gMsgSize > 0) writeMsg();
+; 354  : 
+; 355  : 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
   00690	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
@@ -5548,8 +5549,8 @@ $LN73@main:
   006a2	e8 00 00 00 00	 call	 ?writeMsg@@YAXXZ	; writeMsg
 $LN147@main:
 
-; 355  : 
-; 356  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+; 356  : 
+; 357  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
 
   006a7	8b 0d 00 00 00
 	00		 mov	 ecx, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
@@ -5562,7 +5563,7 @@ $LN147@main:
   006ba	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
   006bf	e8 00 00 00 00	 call	 _printf
 
-; 357  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
+; 358  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 
   006c4	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
   006c9	83 c4 10	 add	 esp, 16			; 00000010H
@@ -5572,10 +5573,10 @@ $LN147@main:
   006d5	73 0d		 jae	 SHORT $LN60@main
   006d7	68 00 00 00 00	 push	 OFFSET ??_C@_0DB@POJOKHKF@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   006dc	e8 00 00 00 00	 call	 _printf
   006e1	83 c4 04	 add	 esp, 4
@@ -5589,14 +5590,14 @@ $LN60@main:
   006ec	c3		 ret	 0
 $LN103@main:
 
-; 235  : 
-; 236  : 		return(SUCCESS);
-; 237  : 	}
-; 238  : 
-; 239  : 	// Hiding
-; 240  : 	if(gHideMsg)
-; 241  : 	{
-; 242  : 		if(gExtractMsg || gWipeMsg || gDestroyMsg)
+; 236  : 
+; 237  : 		return(SUCCESS);
+; 238  : 	}
+; 239  : 
+; 240  : 	// Hiding
+; 241  : 	if(gHideMsg)
+; 242  : 	{
+; 243  : 		if(gExtractMsg || gWipeMsg || gDestroyMsg)
 
   006ed	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gExtractMsg@@3_NA, 0 ; gExtractMsg
@@ -5611,11 +5612,11 @@ $LN103@main:
   0070e	0f 85 55 02 00
 	00		 jne	 $LN52@main
 
-; 246  : 		}
-; 247  : 
-; 248  : 		// treat DC coefficeint a bit differently
-; 249  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
-; 250  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
+; 247  : 		}
+; 248  : 
+; 249  : 		// treat DC coefficeint a bit differently
+; 250  : 		// this calculates lg2 of quality factor less hiding in DC coeffcients
+; 251  : 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
 
   00714	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gImageQuality@@3IA ; gImageQuality
   00719	66 0f 6e c0	 movd	 xmm0, eax
@@ -5627,10 +5628,10 @@ $LN103@main:
   00732	f2 0f 5e 05 00
 	00 00 00	 divsd	 xmm0, QWORD PTR ?lg2@@3NA
 
-; 251  : 		lgQ = 2/lgQ;
-; 252  : 
-; 253  : 		// if no output file name, get it from input file
-; 254  : 		if(outputFile == NULL)
+; 252  : 		lgQ = 2/lgQ;
+; 253  : 
+; 254  : 		// if no output file name, get it from input file
+; 255  : 		if(outputFile == NULL)
 
   0073a	8b 5d f8	 mov	 ebx, DWORD PTR _outputFile$1$[ebp]
   0073d	f2 0f 10 0d 00
@@ -5641,12 +5642,12 @@ $LN103@main:
   00751	85 db		 test	 ebx, ebx
   00753	75 56		 jne	 SHORT $LN53@main
 
-; 255  : 		{
-; 256  : 			outputFile = gOutputFileName;
+; 256  : 		{
+; 257  : 			outputFile = gOutputFileName;
 
   00755	bb 00 00 00 00	 mov	 ebx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
 
-; 257  : 			strcpy(gOutputFileName, inputFile);
+; 258  : 			strcpy(gOutputFileName, inputFile);
 
   0075a	8b cf		 mov	 ecx, edi
   0075c	8b d3		 mov	 edx, ebx
@@ -5658,8 +5659,8 @@ $LL81@main:
   00769	84 c0		 test	 al, al
   0076b	75 f3		 jne	 SHORT $LL81@main
 
-; 258  : 			// lop off extension
-; 259  : 			gOutputFileName[x-4] = 0;
+; 259  : 			// lop off extension
+; 260  : 			gOutputFileName[x-4] = 0;
 
   0076d	83 c6 fc	 add	 esi, -4			; fffffffcH
   00770	81 fe 04 01 00
@@ -5667,7 +5668,7 @@ $LL81@main:
   00776	0f 83 be 01 00
 	00		 jae	 $LN82@main
 
-; 260  : 			strcat(gOutputFileName, "_hidden.jpg");
+; 261  : 			strcat(gOutputFileName, "_hidden.jpg");
 
   0077c	b9 00 00 00 00	 mov	 ecx, OFFSET ?gOutputFileName@@3PADA ; gOutputFileName
   00781	88 86 00 00 00
@@ -5685,15 +5686,15 @@ $LL141@main:
   007a1	a1 08 00 00 00	 mov	 eax, DWORD PTR ??_C@_0M@OHFJMEJJ@_hidden?4jpg@+8
   007a6	89 41 08	 mov	 DWORD PTR [ecx+8], eax
 
-; 261  : 			outExt = 'j';
-; 262  : 		}
-; 263  : 		else
+; 262  : 			outExt = 'j';
+; 263  : 		}
+; 264  : 		else
 
   007a9	eb 45		 jmp	 SHORT $LN56@main
 $LN53@main:
 
-; 264  : 		{
-; 265  : 			x = (int) strlen(outputFile);
+; 265  : 		{
+; 266  : 			x = (int) strlen(outputFile);
 
   007ab	8b d3		 mov	 edx, ebx
   007ad	8d 4a 01	 lea	 ecx, DWORD PTR [edx+1]
@@ -5704,12 +5705,12 @@ $LL142@main:
   007b5	75 f9		 jne	 SHORT $LL142@main
   007b7	2b d1		 sub	 edx, ecx
 
-; 266  : 			ext = outputFile + x - 4; // get extension of file name
+; 267  : 			ext = outputFile + x - 4; // get extension of file name
 
   007b9	8d 43 fc	 lea	 eax, DWORD PTR [ebx-4]
 
-; 267  : 
-; 268  : 			if(strcmp(ext, ".jpg") == 0) outExt = 'j';
+; 268  : 
+; 269  : 			if(strcmp(ext, ".jpg") == 0) outExt = 'j';
 
   007bc	b9 00 00 00 00	 mov	 ecx, OFFSET ??_C@_04GNPKBLNA@?4jpg@
   007c1	03 c2		 add	 eax, edx
@@ -5738,58 +5739,58 @@ $LN146@main:
 	00		 jne	 $LN55@main
 $LN56@main:
 
-; 273  : 			}
-; 274  : 		}
-; 275  : 
-; 276  : 		if(inExt == 'j')
+; 274  : 			}
+; 275  : 		}
+; 276  : 
+; 277  : 		if(inExt == 'j')
 
   007f0	80 7d ff 6a	 cmp	 BYTE PTR _inExt$1$[ebp], 106 ; 0000006aH
   007f4	75 0e		 jne	 SHORT $LN57@main
 
-; 277  : 			readJpg(inputFile, v);
+; 278  : 			readJpg(inputFile, v);
 
   007f6	ff 75 f4	 push	 DWORD PTR _v$[ebp]
   007f9	57		 push	 edi
   007fa	e8 00 00 00 00	 call	 ?readJpg@@YAHPAD_N@Z	; readJpg
   007ff	83 c4 08	 add	 esp, 8
 
-; 278  : 		else
+; 279  : 		else
 
   00802	eb 09		 jmp	 SHORT $LN58@main
 $LN57@main:
 
-; 279  : 			readBitmap(inputFile);
+; 280  : 			readBitmap(inputFile);
 
   00804	57		 push	 edi
   00805	e8 00 00 00 00	 call	 ?readBitmap@@YAHPAD@Z	; readBitmap
   0080a	83 c4 04	 add	 esp, 4
 $LN58@main:
 
-; 280  : 
-; 281  : 		writeJpg(outputFile, g, p);
+; 281  : 
+; 282  : 		writeJpg(outputFile, g, p);
 
   0080d	ff 75 f0	 push	 DWORD PTR _p$[ebp]
   00810	ff 75 ec	 push	 DWORD PTR _g$[ebp]
   00813	53		 push	 ebx
   00814	e8 00 00 00 00	 call	 ?writeJpg@@YAHPAD_N1@Z	; writeJpg
 
-; 282  : 		if(gMsgBuffer != NULL)
+; 283  : 		if(gMsgBuffer != NULL)
 
   00819	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
   0081e	83 c4 0c	 add	 esp, 12			; 0000000cH
   00821	85 c0		 test	 eax, eax
   00823	74 09		 je	 SHORT $LN59@main
 
-; 283  : 		{
-; 284  : 			free(gMsgBuffer);
+; 284  : 		{
+; 285  : 			free(gMsgBuffer);
 
   00825	50		 push	 eax
   00826	e8 00 00 00 00	 call	 _free
   0082b	83 c4 04	 add	 esp, 4
 $LN59@main:
 
-; 285  : 		}
-; 286  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+; 286  : 		}
+; 287  : 		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
 
   0082e	8b 0d 00 00 00
 	00		 mov	 ecx, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
@@ -5802,7 +5803,7 @@ $LN59@main:
   00841	68 00 00 00 00	 push	 OFFSET ??_C@_0DP@LIAGEMN@?6?6Storage?5Capacity?3?5?$CFd?5bits?5?$CI?$CFd@
   00846	e8 00 00 00 00	 call	 _printf
 
-; 287  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
+; 288  : 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
 
   0084b	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gBitCapacity@@3IA ; gBitCapacity
   00850	83 c4 10	 add	 esp, 16			; 00000010H
@@ -5813,10 +5814,10 @@ $LN59@main:
 	ff		 jae	 $LN60@main
   00862	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@KJCPHGCD@?6?6WARNING?$CB?5ENTIRE?5MESSAGE?5WAS?5N@
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   00867	e8 00 00 00 00	 call	 _printf
   0086c	83 c4 04	 add	 esp, 4
@@ -5829,8 +5830,8 @@ $LN59@main:
   00877	c3		 ret	 0
 $LN104@main:
 
-; 172  : 	{
-; 173  : 		cerr << "MUST have an input file.\n" << endl;
+; 173  : 	{
+; 174  : 		cerr << "MUST have an input file.\n" << endl;
 
   00878	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   0087d	68 00 00 00 00	 push	 OFFSET ??_C@_0BK@KAGKMFJB@MUST?5have?5an?5input?5file?4?6@
@@ -5840,7 +5841,7 @@ $LN104@main:
   0088f	8b c8		 mov	 ecx, eax
   00891	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 174  : 		Usage(argc, argv);
+; 175  : 		Usage(argc, argv);
 
   00896	53		 push	 ebx
   00897	56		 push	 esi
@@ -5875,8 +5876,8 @@ $LN91@main:
   008b8	e8 00 00 00 00	 call	 _exit
 $LN157@main:
 
-; 295  : 		{
-; 296  : 			cerr << "MUST have '.jpg' file as input." << endl;
+; 296  : 		{
+; 297  : 			cerr << "MUST have '.jpg' file as input." << endl;
 
   008bd	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   008c2	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@GKEIBHKG@MUST?5have?5?8?4jpg?8?5file?5as?5input?4@
@@ -5886,7 +5887,7 @@ $LN157@main:
   008d4	8b c8		 mov	 ecx, eax
   008d6	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 297  : 			Usage(argc, argv);
+; 298  : 			Usage(argc, argv);
 
   008db	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
   008de	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
@@ -5894,37 +5895,37 @@ $LN157@main:
   008e2	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN158@main:
 
-; 302  : 		{
-; 303  : 			printf("Could not open input file %s\n\n", inputFile);
+; 303  : 		{
+; 304  : 			printf("Could not open input file %s\n\n", inputFile);
 
   008e7	57		 push	 edi
   008e8	68 00 00 00 00	 push	 OFFSET ??_C@_0BP@IFGNKCJO@Could?5not?5open?5input?5file?5?$CFs?6?6@
   008ed	e8 00 00 00 00	 call	 _printf
   008f2	83 c4 08	 add	 esp, 8
 
-; 304  : 			exit(1);
+; 305  : 			exit(1);
 
   008f5	6a 01		 push	 1
   008f7	e8 00 00 00 00	 call	 _exit
 $LN108@main:
 
-; 320  : 		{
-; 321  : 			printf("Could not allocate memory for message file.\n\n");
+; 321  : 		{
+; 322  : 			printf("Could not allocate memory for message file.\n\n");
 
   008fc	68 00 00 00 00	 push	 OFFSET ??_C@_0CO@PPALOBGM@Could?5not?5allocate?5memory?5for?5m@
   00901	e8 00 00 00 00	 call	 _printf
   00906	83 c4 04	 add	 esp, 4
 
-; 322  : 			exit(1);
+; 323  : 			exit(1);
 
   00909	6a 01		 push	 1
   0090b	e8 00 00 00 00	 call	 _exit
 $LN43@main:
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   00910	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   00915	68 00 00 00 00	 push	 OFFSET ??_C@_0CL@DJHOPKNI@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5ou@
@@ -5939,15 +5940,15 @@ $LN43@main:
   00935	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN82@main:
 
-; 258  : 			// lop off extension
-; 259  : 			gOutputFileName[x-4] = 0;
+; 259  : 			// lop off extension
+; 260  : 			gOutputFileName[x-4] = 0;
 
   0093a	e8 00 00 00 00	 call	 ___report_rangecheckfailure
 $LN55@main:
 
-; 269  : 			else
-; 270  : 			{
-; 271  : 				cerr << "Must use '.jpg' as output file." << endl;
+; 270  : 			else
+; 271  : 			{
+; 272  : 				cerr << "Must use '.jpg' as output file." << endl;
 
   0093f	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   00944	68 00 00 00 00	 push	 OFFSET ??_C@_0CA@PENGFPGN@Must?5use?5?8?4jpg?8?5as?5output?5file?4@
@@ -5957,7 +5958,7 @@ $LN55@main:
   00956	8b c8		 mov	 ecx, eax
   00958	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 272  : 				Usage(argc, argv);
+; 273  : 				Usage(argc, argv);
 
   0095d	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
   00960	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
@@ -5965,8 +5966,8 @@ $LN55@main:
   00964	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN52@main:
 
-; 243  : 		{
-; 244  : 			cerr << "Can't hide and also extract, wipe, or destroy a message." << endl;
+; 244  : 		{
+; 245  : 			cerr << "Can't hide and also extract, wipe, or destroy a message." << endl;
 
   00969	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   0096e	68 00 00 00 00	 push	 OFFSET ??_C@_0DJ@EJHDBKAF@Can?8t?5hide?5and?5also?5extract?0?5wi@
@@ -5976,7 +5977,7 @@ $LN52@main:
   00980	8b c8		 mov	 ecx, eax
   00982	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 245  : 			Usage(argc, argv);
+; 246  : 			Usage(argc, argv);
 
   00987	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
   0098a	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
@@ -5984,9 +5985,9 @@ $LN52@main:
   0098e	e8 00 00 00 00	 call	 ?Usage@@YAXHQAPAD@Z	; Usage
 $LN34@main:
 
-; 181  : 	else
-; 182  : 	{
-; 183  : 		cerr << "Must use '.bmp' or '.jpg' as input files." << endl;
+; 182  : 	else
+; 183  : 	{
+; 184  : 		cerr << "Must use '.bmp' or '.jpg' as input files." << endl;
 
   00993	68 00 00 00 00	 push	 OFFSET ??$endl@DU?$char_traits@D@std@@@std@@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@0@AAV10@@Z ; std::endl<char,std::char_traits<char> >
   00998	68 00 00 00 00	 push	 OFFSET ??_C@_0CK@JIMMBOAN@Must?5use?5?8?4bmp?8?5or?5?8?4jpg?8?5as?5in@
@@ -5996,7 +5997,7 @@ $LN34@main:
   009aa	8b c8		 mov	 ecx, eax
   009ac	e8 00 00 00 00	 call	 ??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z ; std::basic_ostream<char,std::char_traits<char> >::operator<<
 
-; 184  : 		Usage(argc, argv);
+; 185  : 		Usage(argc, argv);
 
   009b1	ff 75 0c	 push	 DWORD PTR _argv$[ebp]
   009b4	8b 45 08	 mov	 eax, DWORD PTR _argc$[ebp]
@@ -6006,10 +6007,10 @@ $LN151@main:
   009bd	0f 1f 00	 npad	 3
 $LN159@main:
 
-; 358  : 	} // if extracting, wiping, or destroying
-; 359  : 
-; 360  : 	return(SUCCESS);
-; 361  : } // main
+; 359  : 	} // if extracting, wiping, or destroying
+; 360  : 
+; 361  : 	return(SUCCESS);
+; 362  : } // main
 
   009c0	00 00 00 00	 DD	 $LN12@main
   009c4	00 00 00 00	 DD	 $LN22@main

@@ -61,7 +61,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
-
+    printf("The message buffer values are %s\n", gMsgBuffer);
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
 		{

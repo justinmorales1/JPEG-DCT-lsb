@@ -97,6 +97,7 @@ PUBLIC	?gJpgDecoder@@3VJpegDecoder@@A			; gJpgDecoder
 PUBLIC	?gBitmapEncoder@@3VBmpEncoder@@A		; gBitmapEncoder
 PUBLIC	?gBitmapDecoder@@3VBmpDecoder@@A		; gBitmapDecoder
 PUBLIC	?gImage@@3VBitmapImage@@A			; gImage
+PUBLIC	??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@ ; `string'
 PUBLIC	??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@ ; `string'
 PUBLIC	??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@	; `string'
 PUBLIC	__real@0000000000000000
@@ -141,6 +142,11 @@ CONST	ENDS
 CONST	SEGMENT
 ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@ DB 'The valu'
 	DB	'es was a 0 or it was a 1', 0aH, 00H		; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
+CONST	SEGMENT
+??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@ DB 'The messa'
+	DB	'ge buffer values are %s', 0aH, 00H		; `string'
 CONST	ENDS
 CRT$XCU	SEGMENT
 ?gJpgDecoder$initializer$@@3P6AXXZA DD FLAT:??__EgJpgDecoder@@YAXXZ ; gJpgDecoder$initializer$
@@ -202,80 +208,84 @@ _qt$ = 12						; size = 4
 
   00003	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gHideMsg@@3_NA, 0 ; gHideMsg
-  0000a	74 61		 je	 SHORT $LN3@hideInBloc
+  0000a	74 79		 je	 SHORT $LN3@hideInBloc
 
-; 64   : 
-; 65   : 	for(row = 0; row < JpegSampleWidth; row++)
+; 64   :     printf("The message buffer values are %s\n", gMsgBuffer);
 
-  0000c	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
-  0000f	53		 push	 ebx
-  00010	56		 push	 esi
-  00011	57		 push	 edi
-  00012	33 db		 xor	 ebx, ebx
+  0000c	53		 push	 ebx
+  0000d	56		 push	 esi
+  0000e	57		 push	 edi
+  0000f	ff 35 00 00 00
+	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  00015	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
+  0001a	e8 00 00 00 00	 call	 _printf
+  0001f	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
+  00022	83 c4 08	 add	 esp, 8
+  00025	33 db		 xor	 ebx, ebx
 $LL4@hideInBloc:
 
 ; 66   : 		for(col = 0; col < JpegSampleWidth; col++)
 
-  00014	33 f6		 xor	 esi, esi
-  00016	8b f8		 mov	 edi, eax
+  00027	33 f6		 xor	 esi, esi
+  00029	8b f8		 mov	 edi, eax
+  0002b	0f 1f 44 00 00	 npad	 5
 $LL7@hideInBloc:
 
 ; 67   : 		{
 ; 68   :           
 ; 69   : 			qt.GetDataValue(row*JpegSampleWidth+col);   
 
-  00018	8b 4d 0c	 mov	 ecx, DWORD PTR _qt$[ebp]
-  0001b	8d 04 33	 lea	 eax, DWORD PTR [ebx+esi]
-  0001e	50		 push	 eax
-  0001f	e8 00 00 00 00	 call	 ?GetDataValue@JpegEncoderQuantizationTable@@QAEGH@Z ; JpegEncoderQuantizationTable::GetDataValue
+  00030	8b 4d 0c	 mov	 ecx, DWORD PTR _qt$[ebp]
+  00033	8d 04 33	 lea	 eax, DWORD PTR [ebx+esi]
+  00036	50		 push	 eax
+  00037	e8 00 00 00 00	 call	 ?GetDataValue@JpegEncoderQuantizationTable@@QAEGH@Z ; JpegEncoderQuantizationTable::GetDataValue
 
 ; 70   :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
-  00024	0f b7 07	 movzx	 eax, WORD PTR [edi]
-  00027	66 85 c0	 test	 ax, ax
-  0002a	74 20		 je	 SHORT $LN21@hideInBloc
-  0002c	66 83 f8 01	 cmp	 ax, 1
-  00030	74 1a		 je	 SHORT $LN21@hideInBloc
+  0003c	0f b7 07	 movzx	 eax, WORD PTR [edi]
+  0003f	66 85 c0	 test	 ax, ax
+  00042	74 20		 je	 SHORT $LN21@hideInBloc
+  00044	66 83 f8 01	 cmp	 ax, 1
+  00048	74 1a		 je	 SHORT $LN21@hideInBloc
 
 ; 72   :                 break;
 ; 73   :             }
 ; 74   :             else {
 ; 75   :                 printf("The value is: %d\n", (*data)[row][col]);
 
-  00032	98		 cwde
-  00033	50		 push	 eax
-  00034	68 00 00 00 00	 push	 OFFSET ??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@
-  00039	e8 00 00 00 00	 call	 _printf
-  0003e	46		 inc	 esi
-  0003f	83 c4 08	 add	 esp, 8
-  00042	83 c7 02	 add	 edi, 2
-  00045	83 fe 08	 cmp	 esi, 8
-  00048	72 ce		 jb	 SHORT $LL7@hideInBloc
+  0004a	98		 cwde
+  0004b	50		 push	 eax
+  0004c	68 00 00 00 00	 push	 OFFSET ??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@
+  00051	e8 00 00 00 00	 call	 _printf
+  00056	46		 inc	 esi
+  00057	83 c4 08	 add	 esp, 8
+  0005a	83 c7 02	 add	 edi, 2
+  0005d	83 fe 08	 cmp	 esi, 8
+  00060	72 ce		 jb	 SHORT $LL7@hideInBloc
 
 ; 70   :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
-  0004a	eb 0d		 jmp	 SHORT $LN2@hideInBloc
+  00062	eb 0d		 jmp	 SHORT $LN2@hideInBloc
 $LN21@hideInBloc:
 
 ; 71   :                 printf("The values was a 0 or it was a 1\n");
 
-  0004c	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
-  00051	e8 00 00 00 00	 call	 _printf
-  00056	83 c4 04	 add	 esp, 4
+  00064	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
+  00069	e8 00 00 00 00	 call	 _printf
+  0006e	83 c4 04	 add	 esp, 4
 $LN2@hideInBloc:
 
-; 64   : 
 ; 65   : 	for(row = 0; row < JpegSampleWidth; row++)
 
-  00059	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
-  0005c	83 c3 08	 add	 ebx, 8
-  0005f	83 c0 10	 add	 eax, 16			; 00000010H
-  00062	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
-  00065	83 fb 40	 cmp	 ebx, 64			; 00000040H
-  00068	72 aa		 jb	 SHORT $LL4@hideInBloc
-  0006a	5f		 pop	 edi
-  0006b	5e		 pop	 esi
-  0006c	5b		 pop	 ebx
+  00071	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
+  00074	83 c3 08	 add	 ebx, 8
+  00077	83 c0 10	 add	 eax, 16			; 00000010H
+  0007a	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
+  0007d	83 fb 40	 cmp	 ebx, 64			; 00000040H
+  00080	72 a5		 jb	 SHORT $LL4@hideInBloc
+  00082	5f		 pop	 edi
+  00083	5e		 pop	 esi
+  00084	5b		 pop	 ebx
 $LN3@hideInBloc:
 
 ; 76   :                 //(*data)[row][col] = 0xff;
@@ -289,8 +299,8 @@ $LN3@hideInBloc:
 ; 84   : 	return;
 ; 85   : } // hideInBlock
 
-  0006d	5d		 pop	 ebp
-  0006e	c3		 ret	 0
+  00085	5d		 pop	 ebp
+  00086	c3		 ret	 0
 ?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z ENDP ; hideInBlock
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
