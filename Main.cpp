@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
 				//strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
 				//gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
                 gMsgSize += (unsigned int)fread(gMsgBuffer, 1, size, fptr);	// read entire message file into memory
+                //gMsgSize += (unsigned int)fread(&gMsgBuffer[gMsgSize], 1, size, fptr);	// read entire message file into memory
 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
                 printf("The message buffer values are %s\n", gMsgBuffer);
