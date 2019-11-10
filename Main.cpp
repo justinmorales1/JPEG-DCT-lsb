@@ -40,7 +40,6 @@ void Usage (int argc, char *argv [])
 
 int main(int argc, char *argv[])
 {
-    printf("Hello world");
 	int test = 0, i, x, fileno, size;
 	char ch, *ext, *inputFile, *outputFile, inExt, outExt;
 	bool g, p, v;

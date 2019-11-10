@@ -58,17 +58,27 @@ double getUniformity_E(JpegEncoderCoefficientBlock data)
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
 {
 	unsigned int row, col;
-
+    signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
 
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
-			qt.GetDataValue(row*JpegSampleWidth+col);
+          
+			qt.GetDataValue(row*JpegSampleWidth+col);   
+            if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
+                printf("The values was a 0 or it was a 1");
+                break;
+            }
+            else {
+                printf("The value is: %d", (*data)[row][col]);
+            }
 			(*data)[row][col] &= 0;
 			(*data)[row][col] |= 0;	// hide data in coefficients
 		}
+
+    
 	return;
 } // hideInBlock
 

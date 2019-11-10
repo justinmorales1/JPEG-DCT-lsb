@@ -144,4 +144,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Final Semester\CS4593\CS4593\Homework\2019 08 CS 4593 Steganography - HW3\cover.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Final Semester\CS4593\CS4593\Homework\2019 08 CS 4593 Steganography - HW3\data.txt" />
+  </ItemGroup>
 </Project>
