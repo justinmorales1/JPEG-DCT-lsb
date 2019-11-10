@@ -54,6 +54,33 @@ double getUniformity_E(JpegEncoderCoefficientBlock data)
 	return(0);
 } // getUniformity_E
 
+typedef struct _MESSAGE
+{
+    union
+    {
+        unsigned char bit1 : 1;
+        unsigned char bit2 : 2;
+        unsigned char bit3 : 3;
+        unsigned char bit4 : 4;
+        unsigned char bit5 : 5;
+        unsigned char bit6 : 6;
+        unsigned char bit7 : 7;
+        unsigned char bit8 : 8;
+    } BYTE;
+} MESSAGE;
+
+void readMsg()
+{
+    MESSAGE tMsg;
+
+    tMsg.BYTE.bit8 = 0xE7;
+
+    printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
+        tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
+        tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
+    return;
+}
+
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
 {
@@ -73,6 +100,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
             }
             else {
                 printf("The value is: %d\n", (*data)[row][col]);
+                readMsg();
                 //(*data)[row][col] = 0xff;
                 //printf("The new value is: %d\n", (*data)[row][col]);
             }
@@ -116,33 +144,10 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
 } // extractFromBlock
 
 
-/*
-typedef struct _MESSAGE
-{
-	union
-	{
-		unsigned char bit1:1;
-		unsigned char bit2:2;
-		unsigned char bit3:3;
-		unsigned char bit4:4;
-		unsigned char bit5:5;
-		unsigned char bit6:6;
-		unsigned char bit7:7;
-		unsigned char bit8:8;
-	} BYTE;
-} MESSAGE;
 
- bitfield read message
-void readMsg()
-{
-	MESSAGE tMsg;
 
-	tMsg.BYTE.bit8 = 0xE7;
 
-	printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n", 
-		tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4, 
-		tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
-	return;
-}
-//*/
+ //bitfield read message
+
+
 

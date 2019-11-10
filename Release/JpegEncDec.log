@@ -1,6 +1,4 @@
 ﻿  Hide.cpp
-  Main.cpp
-  Generating Code...
 jpdequan.obj : warning LNK4229: invalid directive '/COMMENT:Copyright 1997 Colosseum Builders Inc.' encountered; ignored
 jpegenco.obj : warning LNK4229: invalid directive '/COMMENT:Copyright 1998 Colosseum Builders Inc.' encountered; ignored
   JpegEncDec.vcxproj -> C:\Users\Justin\Desktop\JPEG-DCT-lsb\Release\JpegEncDec.exe
