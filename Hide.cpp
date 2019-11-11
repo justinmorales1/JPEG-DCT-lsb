@@ -15,7 +15,7 @@ unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0
 unsigned int gBitCapacity = 0;
 
 char *gMsgBuffer = NULL;
-unsigned int gMsgSize = 0;
+unsigned int gMsgSize;
 double gAlpha = 1.0;			// jpenquan.h
 double gUniformityFactor = 1.2;
 unsigned int gImageQuality = 50;
@@ -69,11 +69,12 @@ typedef struct _MESSAGE
     } BYTE;
 } MESSAGE;
 
-void readMsg()
+void readMsg(unsigned char hexValue)
 {
     MESSAGE tMsg;
 
-    tMsg.BYTE.bit8 = 0xE7;
+    //tMsg.BYTE.bit8 = 0xE7;
+    tMsg.BYTE.bit8 = hexValue;
 
     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
@@ -88,6 +89,10 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
+
+    printf("The file size is %d\n", gMsgSize);
+    
+    //printf("The file size is %s\n", gMsgSize);
     printf("The message buffer values are %s\n", gMsgBuffer);
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
@@ -98,9 +103,9 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 printf("The values was a 0 or it was a 1\n");
                 break;
             }
-            else {
+            else {         
                 printf("The value is: %d\n", (*data)[row][col]);
-                readMsg();
+                readMsg(0xE7);
                 //(*data)[row][col] = 0xff;
                 //printf("The new value is: %d\n", (*data)[row][col]);
             }
