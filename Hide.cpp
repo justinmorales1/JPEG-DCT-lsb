@@ -54,40 +54,44 @@ double getUniformity_E(JpegEncoderCoefficientBlock data)
 	return(0);
 } // getUniformity_E
 
-typedef struct _MESSAGE
+struct BITS
 {
-    union
-    {
-        unsigned char bit1 : 1;
-        unsigned char bit2 : 2;
-        unsigned char bit3 : 3;
-        unsigned char bit4 : 4;
-        unsigned char bit5 : 5;
-        unsigned char bit6 : 6;
-        unsigned char bit7 : 7;
-        unsigned char bit8 : 8;
-    } BYTE;
-} MESSAGE;
+    unsigned char bit0 : 1; //This is the lsb for first byte.
+    unsigned char bit1 : 1; 
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+    unsigned char bit4 : 1; //This is the lsb for second byte byte.
+    unsigned char bit5 : 1;
+    unsigned char bit6 : 1;
+    unsigned char bit7 : 1;
+};
 
-void readMsg(unsigned char hexValue1, unsigned char hexValue2, unsigned char hexValue3, unsigned char hexValue4, unsigned char hexValue5, unsigned char hexValue6, unsigned char hexValue7, unsigned char hexValue8)
+union
+{
+                struct BITS bitValue;
+                unsigned char byteValue;
+
+} VAR;
+
+
+/*void readMsg(unsigned char bitValue1, unsigned char bitValue2, unsigned char bitValue3, unsigned char bitValue4, unsigned char bitValue5, unsigned char bitValue6, unsigned char bitValue7, unsigned char bitValue8)
 {
     MESSAGE tMsg;
-
     //tMsg.BYTE.bit8 = 0xE7;
-    tMsg.BYTE.bit8 = hexValue1;
-    tMsg.BYTE.bit8 = hexValue2;
-    tMsg.BYTE.bit8 = hexValue3;
-    tMsg.BYTE.bit8 = hexValue4;
-    tMsg.BYTE.bit8 = hexValue5;
-    tMsg.BYTE.bit8 = hexValue6;
-    tMsg.BYTE.bit8 = hexValue7;
-    tMsg.BYTE.bit8 = hexValue8;
+    tMsg.BYTE.bit1 = bitValue1; 
+    tMsg.BYTE.bit2 = bitValue2;
+    tMsg.BYTE.bit3 = bitValue3;
+    tMsg.BYTE.bit4 = bitValue4;
+    tMsg.BYTE.bit5 = bitValue5;
+    tMsg.BYTE.bit6 = bitValue6;
+    tMsg.BYTE.bit7 = bitValue7;
+    tMsg.BYTE.bit8 = bitValue8;
 
     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
         tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
     return;
-}
+}*/
 
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
@@ -96,11 +100,20 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
-
-    printf("The file size is %d\n", gMsgSize);
+    VAR.byteValue = 0x4f;
+    printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
+    printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
+    printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
+    printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
+    printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
+    printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
+    printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
+    printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
     
-    //printf("The file size is %s\n", gMsgSize);
+    
+    printf("The file size is %d\n", gMsgSize);
     printf("The message buffer values are %s\n", gMsgBuffer);
+
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
