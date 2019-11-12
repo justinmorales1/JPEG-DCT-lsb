@@ -88,7 +88,7 @@ PUBLIC	?writeMsg@@YAXXZ				; writeMsg
 PUBLIC	?getBitsFromBuffer@@YAEIPAEI@Z			; getBitsFromBuffer
 PUBLIC	?putBitsInBuffer@@YAHIEPAEI@Z			; putBitsInBuffer
 PUBLIC	?getUniformity_E@@YANVJpegEncoderCoefficientBlock@@@Z ; getUniformity_E
-PUBLIC	?readMsg@@YAXE@Z				; readMsg
+PUBLIC	?readMsg@@YAXEEEEEEEE@Z				; readMsg
 PUBLIC	?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z ; hideInBlock
 PUBLIC	?setMsgSize@@YAXXZ				; setMsgSize
 PUBLIC	?getUniformity_D@@YANQAY07F@Z			; getUniformity_D
@@ -102,7 +102,8 @@ PUBLIC	??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0
 PUBLIC	??_C@_0BF@CDJIAIFA@The?5file?5size?5is?5?$CFd?6@ ; `string'
 PUBLIC	??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@ ; `string'
 PUBLIC	??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@ ; `string'
-PUBLIC	??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@	; `string'
+PUBLIC	??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@ ; `string'
+PUBLIC	??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@ ; `string'
 PUBLIC	__real@0000000000000000
 EXTRN	_atexit:PROC
 EXTRN	___acrt_iob_func:PROC
@@ -137,9 +138,16 @@ CRT$XCU	ENDS
 CONST	SEGMENT
 __real@0000000000000000 DQ 00000000000000000r	; 0
 CONST	ENDS
-;	COMDAT ??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@
+;	COMDAT ??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@
 CONST	SEGMENT
-??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@ DB 'The value is: %d', 0aH, 00H ; `string'
+??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@ DB 'The first h'
+	DB	'ex value byte from the data.txt is %i and the literal value i'
+	DB	's %c', 00H					; `string'
+CONST	ENDS
+;	COMDAT ??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@
+CONST	SEGMENT
+??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@ DB 'The JPEG co'
+	DB	'efficient value is : %d', 0aH, 00H		; `string'
 CONST	ENDS
 ;	COMDAT ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
 CONST	SEGMENT
@@ -180,11 +188,11 @@ _TEXT	SEGMENT
 _data$ = 8						; size = 4
 ?getUniformity_D@@YANQAY07F@Z PROC			; getUniformity_D, COMDAT
 
-; 141  : 	return(0);
+; 153  : 	return(0);
 
   00000	d9 ee		 fldz
 
-; 142  : } // getUniformity_D
+; 154  : } // getUniformity_D
 
   00002	c3		 ret	 0
 ?getUniformity_D@@YANQAY07F@Z ENDP			; getUniformity_D
@@ -195,8 +203,8 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 ?setMsgSize@@YAXXZ PROC					; setMsgSize, COMDAT
 
-; 129  : 	return;
-; 130  : } // setMsgSize
+; 141  : 	return;
+; 142  : } // setMsgSize
 
   00000	c3		 ret	 0
 ?setMsgSize@@YAXXZ ENDP					; setMsgSize
@@ -209,23 +217,23 @@ _data$ = 8						; size = 4
 _qt$ = 12						; size = 4
 ?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z PROC ; hideInBlock, COMDAT
 
-; 87   : {
+; 94   : {
 
   00000	55		 push	 ebp
   00001	8b ec		 mov	 ebp, esp
 
-; 88   : 	unsigned int row, col;
-; 89   :     signed int number;
-; 90   : 	// check for simple conversions - no hiding/extracting
-; 91   : 	if(gHideMsg == false) return;
+; 95   : 	unsigned int row, col;
+; 96   :     signed int number;
+; 97   : 	// check for simple conversions - no hiding/extracting
+; 98   : 	if(gHideMsg == false) return;
 
   00003	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gHideMsg@@3_NA, 0 ; gHideMsg
-  0000a	0f 84 a6 00 00
+  0000a	0f 84 9e 00 00
 	00		 je	 $LN3@hideInBloc
 
-; 92   : 
-; 93   :     printf("The file size is %d\n", gMsgSize);
+; 99   : 
+; 100  :     printf("The file size is %d\n", gMsgSize);
 
   00010	53		 push	 ebx
   00011	56		 push	 esi
@@ -235,9 +243,9 @@ _qt$ = 12						; size = 4
   00019	68 00 00 00 00	 push	 OFFSET ??_C@_0BF@CDJIAIFA@The?5file?5size?5is?5?$CFd?6@
   0001e	e8 00 00 00 00	 call	 _printf
 
-; 94   :     
-; 95   :     //printf("The file size is %s\n", gMsgSize);
-; 96   :     printf("The message buffer values are %s\n", gMsgBuffer);
+; 101  :     
+; 102  :     //printf("The file size is %s\n", gMsgSize);
+; 103  :     printf("The message buffer values are %s\n", gMsgBuffer);
 
   00023	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
@@ -249,113 +257,111 @@ _qt$ = 12						; size = 4
   0003b	0f 1f 44 00 00	 npad	 5
 $LL4@hideInBloc:
 
-; 98   : 		for(col = 0; col < JpegSampleWidth; col++)
+; 105  : 		for(col = 0; col < JpegSampleWidth; col++)
 
   00040	33 f6		 xor	 esi, esi
   00042	8b f8		 mov	 edi, eax
 $LL7@hideInBloc:
 
-; 99   : 		{
-; 100  :           
-; 101  : 			qt.GetDataValue(row*JpegSampleWidth+col);   
+; 106  : 		{
+; 107  :           
+; 108  : 			qt.GetDataValue(row*JpegSampleWidth+col);   
 
   00044	8b 4d 0c	 mov	 ecx, DWORD PTR _qt$[ebp]
   00047	8d 04 33	 lea	 eax, DWORD PTR [ebx+esi]
   0004a	50		 push	 eax
   0004b	e8 00 00 00 00	 call	 ?GetDataValue@JpegEncoderQuantizationTable@@QAEGH@Z ; JpegEncoderQuantizationTable::GetDataValue
 
-; 102  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
+; 109  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
   00050	0f b7 07	 movzx	 eax, WORD PTR [edi]
   00053	66 85 c0	 test	 ax, ax
-  00056	74 3d		 je	 SHORT $LN23@hideInBloc
+  00056	74 35		 je	 SHORT $LN21@hideInBloc
   00058	66 83 f8 01	 cmp	 ax, 1
-  0005c	74 37		 je	 SHORT $LN23@hideInBloc
+  0005c	74 2f		 je	 SHORT $LN21@hideInBloc
 
-; 104  :                 break;
-; 105  :             }
-; 106  :             else {         
-; 107  :                 printf("The value is: %d\n", (*data)[row][col]);
+; 111  :                 break;
+; 112  :             }
+; 113  :             else {         
+; 114  :                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
 
   0005e	98		 cwde
   0005f	50		 push	 eax
-  00060	68 00 00 00 00	 push	 OFFSET ??_C@_0BC@NLEJHKEH@The?5value?5is?3?5?$CFd?6@
+  00060	68 00 00 00 00	 push	 OFFSET ??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@
   00065	e8 00 00 00 00	 call	 _printf
 
-; 79   :     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
+; 115  :                 printf("The first hex value byte from the data.txt is %i and the literal value is %c", gMsgBuffer[col], gMsgBuffer[col]);
 
-  0006a	68 e7 00 00 00	 push	 231			; 000000e7H
-  0006f	6a 67		 push	 103			; 00000067H
-  00071	6a 27		 push	 39			; 00000027H
-  00073	6a 07		 push	 7
-  00075	6a 07		 push	 7
-  00077	6a 07		 push	 7
-  00079	6a 03		 push	 3
-  0007b	6a 01		 push	 1
-  0007d	68 00 00 00 00	 push	 OFFSET ??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0?55?$DN?$CFx?0?56@
-  00082	e8 00 00 00 00	 call	 _printf
+  0006a	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  0006f	0f be 04 30	 movsx	 eax, BYTE PTR [eax+esi]
+  00073	50		 push	 eax
+  00074	50		 push	 eax
+  00075	68 00 00 00 00	 push	 OFFSET ??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@
+  0007a	e8 00 00 00 00	 call	 _printf
+  0007f	46		 inc	 esi
+  00080	83 c4 14	 add	 esp, 20			; 00000014H
+  00083	83 c7 02	 add	 edi, 2
+  00086	83 fe 08	 cmp	 esi, 8
+  00089	72 b9		 jb	 SHORT $LL7@hideInBloc
 
-; 98   : 		for(col = 0; col < JpegSampleWidth; col++)
+; 109  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
-  00087	46		 inc	 esi
+  0008b	eb 0d		 jmp	 SHORT $LN2@hideInBloc
+$LN21@hideInBloc:
 
-; 79   :     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
+; 110  :                 printf("The values was a 0 or it was a 1\n");
 
-  00088	83 c4 2c	 add	 esp, 44			; 0000002cH
-
-; 98   : 		for(col = 0; col < JpegSampleWidth; col++)
-
-  0008b	83 c7 02	 add	 edi, 2
-  0008e	83 fe 08	 cmp	 esi, 8
-  00091	72 b1		 jb	 SHORT $LL7@hideInBloc
-
-; 102  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
-
-  00093	eb 0d		 jmp	 SHORT $LN2@hideInBloc
-$LN23@hideInBloc:
-
-; 103  :                 printf("The values was a 0 or it was a 1\n");
-
-  00095	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
-  0009a	e8 00 00 00 00	 call	 _printf
-  0009f	83 c4 04	 add	 esp, 4
+  0008d	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
+  00092	e8 00 00 00 00	 call	 _printf
+  00097	83 c4 04	 add	 esp, 4
 $LN2@hideInBloc:
 
-; 97   : 	for(row = 0; row < JpegSampleWidth; row++)
+; 104  : 	for(row = 0; row < JpegSampleWidth; row++)
 
-  000a2	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
-  000a5	83 c3 08	 add	 ebx, 8
-  000a8	83 c0 10	 add	 eax, 16			; 00000010H
-  000ab	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
-  000ae	83 fb 40	 cmp	 ebx, 64			; 00000040H
-  000b1	72 8d		 jb	 SHORT $LL4@hideInBloc
-  000b3	5f		 pop	 edi
-  000b4	5e		 pop	 esi
-  000b5	5b		 pop	 ebx
+  0009a	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
+  0009d	83 c3 08	 add	 ebx, 8
+  000a0	83 c0 10	 add	 eax, 16			; 00000010H
+  000a3	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
+  000a6	83 fb 40	 cmp	 ebx, 64			; 00000040H
+  000a9	72 95		 jb	 SHORT $LL4@hideInBloc
+  000ab	5f		 pop	 edi
+  000ac	5e		 pop	 esi
+  000ad	5b		 pop	 ebx
 $LN3@hideInBloc:
 
-; 108  :                 readMsg(0xE7);
-; 109  :                 //(*data)[row][col] = 0xff;
-; 110  :                 //printf("The new value is: %d\n", (*data)[row][col]);
-; 111  :             }
-; 112  : 			//(*data)[row][col] &= 0;
-; 113  : 			//(*data)[row][col] |= 0;	// hide data in coefficients
-; 114  : 		}
-; 115  : 
-; 116  :     
-; 117  : 	return;
-; 118  : } // hideInBlock
+; 116  :                 char byte = gMsgBuffer[col];
+; 117  :                 //byte = byte >> 4;
+; 118  :                 
+; 119  :                 //readMsg(0xE7);
+; 120  :                 //(*data)[row][col] = 0xff;
+; 121  :                 //printf("The new value is: %d\n", (*data)[row][col]);
+; 122  :             }
+; 123  : 			//(*data)[row][col] &= 0;
+; 124  : 			//(*data)[row][col] |= 0;	// hide data in coefficients
+; 125  : 
+; 126  : 		}
+; 127  : 
+; 128  :     
+; 129  : 	return;
+; 130  : } // hideInBlock
 
-  000b6	5d		 pop	 ebp
-  000b7	c3		 ret	 0
+  000ae	5d		 pop	 ebp
+  000af	c3		 ret	 0
 ?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z ENDP ; hideInBlock
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ; File c:\users\justin\desktop\jpeg-dct-lsb\hide.cpp
-;	COMDAT ?readMsg@@YAXE@Z
+;	COMDAT ?readMsg@@YAXEEEEEEEE@Z
 _TEXT	SEGMENT
-_hexValue$ = 8						; size = 1
-?readMsg@@YAXE@Z PROC					; readMsg, COMDAT
+_hexValue1$ = 8						; size = 1
+_hexValue2$ = 12					; size = 1
+_hexValue3$ = 16					; size = 1
+_hexValue4$ = 20					; size = 1
+_hexValue5$ = 24					; size = 1
+_hexValue6$ = 28					; size = 1
+_hexValue7$ = 32					; size = 1
+_hexValue8$ = 36					; size = 1
+?readMsg@@YAXEEEEEEEE@Z PROC				; readMsg, COMDAT
 
 ; 73   : {
 
@@ -365,11 +371,18 @@ _hexValue$ = 8						; size = 1
 ; 74   :     MESSAGE tMsg;
 ; 75   : 
 ; 76   :     //tMsg.BYTE.bit8 = 0xE7;
-; 77   :     tMsg.BYTE.bit8 = hexValue;
-; 78   : 
-; 79   :     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
+; 77   :     tMsg.BYTE.bit8 = hexValue1;
+; 78   :     tMsg.BYTE.bit8 = hexValue2;
+; 79   :     tMsg.BYTE.bit8 = hexValue3;
+; 80   :     tMsg.BYTE.bit8 = hexValue4;
+; 81   :     tMsg.BYTE.bit8 = hexValue5;
+; 82   :     tMsg.BYTE.bit8 = hexValue6;
+; 83   :     tMsg.BYTE.bit8 = hexValue7;
+; 84   :     tMsg.BYTE.bit8 = hexValue8;
+; 85   : 
+; 86   :     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
 
-  00003	0f b6 4d 08	 movzx	 ecx, BYTE PTR _hexValue$[ebp]
+  00003	0f b6 4d 24	 movzx	 ecx, BYTE PTR _hexValue8$[ebp]
   00007	51		 push	 ecx
   00008	8b c1		 mov	 eax, ecx
   0000a	83 e0 7f	 and	 eax, 127		; 0000007fH
@@ -395,14 +408,14 @@ _hexValue$ = 8						; size = 1
   00035	e8 00 00 00 00	 call	 _printf
   0003a	83 c4 24	 add	 esp, 36			; 00000024H
 
-; 80   :         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
-; 81   :         tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
-; 82   :     return;
-; 83   : }
+; 87   :         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
+; 88   :         tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
+; 89   :     return;
+; 90   : }
 
   0003d	5d		 pop	 ebp
   0003e	c3		 ret	 0
-?readMsg@@YAXE@Z ENDP					; readMsg
+?readMsg@@YAXEEEEEEEE@Z ENDP				; readMsg
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ; File c:\users\justin\desktop\jpeg-dct-lsb\hide.cpp
@@ -557,11 +570,11 @@ _outBuffer$ = 16					; size = 4
 _outBufferLength$ = 20					; size = 4
 ?putBitsInBuffer@@YAHIEPAEI@Z PROC			; putBitsInBuffer, COMDAT
 
-; 135  : 	return(SUCCESS);
+; 147  : 	return(SUCCESS);
 
   00000	33 c0		 xor	 eax, eax
 
-; 136  : } // putBitsInBuffer
+; 148  : } // putBitsInBuffer
 
   00002	c3		 ret	 0
 ?putBitsInBuffer@@YAHIEPAEI@Z ENDP			; putBitsInBuffer
@@ -591,8 +604,8 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 ?writeMsg@@YAXXZ PROC					; writeMsg, COMDAT
 
-; 123  : 	return;
-; 124  : } // writeMsg
+; 135  : 	return;
+; 136  : } // writeMsg
 
   00000	c3		 ret	 0
 ?writeMsg@@YAXXZ ENDP					; writeMsg
@@ -605,9 +618,9 @@ _data$ = 8						; size = 4
 _qt$ = 12						; size = 4
 ?extractFromBlock@@YAXQAY07FABVJpegDecoderQuantizationTable@@@Z PROC ; extractFromBlock, COMDAT
 
-; 147  : 
-; 148  : 	return;
-; 149  : } // extractFromBlock
+; 159  : 
+; 160  : 	return;
+; 161  : } // extractFromBlock
 
   00000	c3		 ret	 0
 ?extractFromBlock@@YAXQAY07FABVJpegDecoderQuantizationTable@@@Z ENDP ; extractFromBlock

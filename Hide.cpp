@@ -69,12 +69,19 @@ typedef struct _MESSAGE
     } BYTE;
 } MESSAGE;
 
-void readMsg(unsigned char hexValue)
+void readMsg(unsigned char hexValue1, unsigned char hexValue2, unsigned char hexValue3, unsigned char hexValue4, unsigned char hexValue5, unsigned char hexValue6, unsigned char hexValue7, unsigned char hexValue8)
 {
     MESSAGE tMsg;
 
     //tMsg.BYTE.bit8 = 0xE7;
-    tMsg.BYTE.bit8 = hexValue;
+    tMsg.BYTE.bit8 = hexValue1;
+    tMsg.BYTE.bit8 = hexValue2;
+    tMsg.BYTE.bit8 = hexValue3;
+    tMsg.BYTE.bit8 = hexValue4;
+    tMsg.BYTE.bit8 = hexValue5;
+    tMsg.BYTE.bit8 = hexValue6;
+    tMsg.BYTE.bit8 = hexValue7;
+    tMsg.BYTE.bit8 = hexValue8;
 
     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
@@ -104,13 +111,18 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 break;
             }
             else {         
-                printf("The value is: %d\n", (*data)[row][col]);
-                readMsg(0xE7);
+                printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
+                printf("The first hex value byte from the data.txt is %i and the literal value is %c", gMsgBuffer[col], gMsgBuffer[col]);
+                char byte = gMsgBuffer[col];
+                //byte = byte >> 4;
+                
+                //readMsg(0xE7);
                 //(*data)[row][col] = 0xff;
                 //printf("The new value is: %d\n", (*data)[row][col]);
             }
 			//(*data)[row][col] &= 0;
 			//(*data)[row][col] |= 0;	// hide data in coefficients
+
 		}
 
     
