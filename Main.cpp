@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <stdio.h>
 #include <io.h>
 #include "include\Hide.h"
 
@@ -33,6 +34,28 @@ union
 
 
 } DataVAR;
+
+struct MessageSizeInBits
+{
+    unsigned char bit0 : 1; //This is the lsb for first byte.
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+    unsigned char bit4 : 1; //This is the lsb for second byte byte.
+    unsigned char bit5 : 1;
+    unsigned char bit6 : 1;
+    unsigned char bit7 : 1;
+};
+
+union
+{
+    struct MessageSizeInBits bitValue;
+    unsigned char byteValue;
+    int count = 0;
+
+
+} MessageDataVAR;
+
 
 void Usage (int argc, char *argv [])
 {
@@ -166,7 +189,29 @@ int main(int argc, char *argv[])
 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
                 printf("The message buffer values are %s\n", gMsgBuffer);
-                printf("The message size is %d\n", gMsgSize);
+                printf("The message size in hex is %x and the decimal value size is %d \n", gMsgSize, gMsgSize);
+                MessageDataVAR.byteValue = gMsgSize;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit7;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit6;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit5;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit4;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit3;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
+
+                printf("The bit value 7 is %d \n", MessageDataVAR.bitValue.bit7);
+                printf("The bit value 6 is %d \n", MessageDataVAR.bitValue.bit6);
+                printf("The bit value 5 is %d \n", MessageDataVAR.bitValue.bit5);
+                printf("The bit value 4 is %d \n", MessageDataVAR.bitValue.bit4);
+                printf("The bit value 3 is %d \n", MessageDataVAR.bitValue.bit3);
+                printf("The bit value 2 is %d \n", MessageDataVAR.bitValue.bit2);
+                printf("The bit value 1 is %d \n", MessageDataVAR.bitValue.bit1);
+                printf("The bit value 0 is %d \n", MessageDataVAR.bitValue.bit0);
+
+                for (int i = 0; i < dataCount; i++) {
+                    printf("%d", gMsgBufferInBinary[i]);
+                }
 
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary

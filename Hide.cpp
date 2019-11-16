@@ -130,7 +130,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 
                 VAR.byteValue = byte;
 
-                printf("The bit from the msge buffer in binary is %d \n", messageBits);
+                printf("The bit from the msge buffer in binary is %d \n", gMsgBufferInBinary[messageIndexValue]);
 
                 /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
                 printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
