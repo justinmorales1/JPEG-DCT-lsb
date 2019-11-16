@@ -12,7 +12,7 @@ unsigned char gBitMask1[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff };
 unsigned short gBitMask1_2[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff };
 unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0, 0xFF80, 0xFF00 };
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
-unsigned int gBitCapacity = 0;
+unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 char *gMsgBuffer = NULL;
 char *gMsgBufferInBinary = NULL;
@@ -76,6 +76,26 @@ union
 
 } VAR;
 
+struct ChangedBITS
+{
+    unsigned char bit0 : 1; //This is the lsb for first byte.
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+    unsigned char bit4 : 1; //This is the lsb for second byte byte.
+    unsigned char bit5 : 1;
+    unsigned char bit6 : 1;
+    unsigned char bit7 : 1;
+};
+
+union
+{
+    struct ChangedBITS bitValue;
+    unsigned char byteValue;
+
+
+} CBits;
+
 
 /*void readMsg(unsigned char bitValue1, unsigned char bitValue2, unsigned char bitValue3, unsigned char bitValue4, unsigned char bitValue5, unsigned char bitValue6, unsigned char bitValue7, unsigned char bitValue8)
 {
@@ -110,26 +130,41 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
-
-
+    
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
-          
+            if (gBitCapacity == messageIndexValue) {
+                /*printf("The message Index value is %d \n", messageIndexValue);
+                printf("The gBitCapacity is %d \n", gBitCapacity);*/
+                return;
+            }
+
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 break;
-            } else {    
-               
-                printf("The message Index value is %d \n", messageIndexValue);
+            } else {
+                           
                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
                 unsigned char byte = (*data)[row][col];
-                unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
-
                 VAR.byteValue = byte;
+                unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
+                //printf("The message Index value is %d \n", messageBits);
 
-                printf("The bit from the msg buffer in binary is %d \n", gMsgBufferInBinary[messageIndexValue]);
+                /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
+                printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
+                printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
+                printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
+                printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
+                printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
+                printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
+                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
+                printf("\n");
+                //VAR.byteValue = byte;
+                VAR.bitValue.bit0 = gMsgBufferInBinary[messageIndexValue];
+                (*data)[row][col] = VAR.byteValue;
 
+                /*printf("The NEW JPEG coefficient value is : %d\n", (*data)[row][col]);
                 printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
                 printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
                 printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
@@ -137,28 +172,11 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
                 printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
                 printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
-                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
+                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
+                printf("\n");
+                
 
-
-                //byte = byte >> 4;              
-                //readMsg(0xE7);
-                //(*data)[row][col] = 0xff;
-                //printf("The new value is: %d\n", (*data)[row][col]);
-                (*data)[row][col] &= 0xFE;
-                (*data)[row][col] |= gMsgBufferInBinary[messageIndexValue];	// hide data in coefficients
-
-                VAR.byteValue = (*data)[row][col];
-                printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
-                printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
-                printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
-                printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
-                printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
-                printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
-                printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
-                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
-
-                printf("TheNEW JPEG coefficient value is : %d\n", (*data)[row][col]);
-
+            
                 messageIndexValue += 1;
             }
 			//(*data)[row][col] &= 0;
