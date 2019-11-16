@@ -14,6 +14,7 @@ unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
 unsigned int gBitCapacity;
 unsigned int messageIndexValue;
+unsigned int jpegImageTotalSize;
 char *gMsgBuffer = NULL;
 char *gMsgBufferInBinary = NULL;
 unsigned int gMsgSize;
@@ -134,6 +135,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
+            jpegImageTotalSize++;
             if (gBitCapacity == messageIndexValue) {
                 /*printf("The message Index value is %d \n", messageIndexValue);
                 printf("The gBitCapacity is %d \n", gBitCapacity);*/
@@ -159,7 +161,6 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
                 printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
                 printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
-                printf("\n");
                 //VAR.byteValue = byte;
                 VAR.bitValue.bit0 = gMsgBufferInBinary[messageIndexValue];
                 (*data)[row][col] = VAR.byteValue;
@@ -173,10 +174,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
                 printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
                 printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
-                printf("\n");
-                
-
-            
+                         
                 messageIndexValue += 1;
             }
 			//(*data)[row][col] &= 0;
