@@ -27,6 +27,7 @@
 // Global Variables
 extern char gOutputFileName[260];
 extern char *gMsgBuffer;
+extern char *gMsgBufferInBinary;
 extern unsigned int gMsgSize;
 extern double gAlpha;
 extern double gUniformityFactor;

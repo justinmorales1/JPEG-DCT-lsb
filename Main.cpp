@@ -13,6 +13,27 @@
 
 using namespace std ;
 
+struct DataBits
+{
+    unsigned char bit0 : 1; //This is the lsb for first byte.
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+    unsigned char bit4 : 1; //This is the lsb for second byte byte.
+    unsigned char bit5 : 1;
+    unsigned char bit6 : 1;
+    unsigned char bit7 : 1;
+};
+
+union
+{
+    struct DataBits bitValue;
+    unsigned char byteValue;
+    int count = 0;
+
+
+} DataVAR;
+
 void Usage (int argc, char *argv [])
 {
   char *file ;
@@ -41,6 +62,7 @@ void Usage (int argc, char *argv [])
 int main(int argc, char *argv[])
 {
 	int test = 0, i, x, fileno, size;
+    int dataCount = 0;
 	char ch, *ext, *inputFile, *outputFile, inExt, outExt;
 	bool g, p, v;
 	double tmpDbl;
@@ -124,12 +146,14 @@ int main(int argc, char *argv[])
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (char *) malloc(size);
+                gMsgBufferInBinary = (char *)malloc(size);
 				if(gMsgBuffer == NULL)
 				{
 					printf("Could not allocate memory for message file.\n\n");
 					exit(1);
 				}           
 				memset(gMsgBuffer, 0, size);
+                memset(gMsgBufferInBinary, 0, size);
 				gMsgSize = 0;
 				*(gMsgBuffer + gMsgSize++) = size >> 24;
 				*(gMsgBuffer + gMsgSize++) = (size >> 16) & 0xFF;
@@ -143,6 +167,34 @@ int main(int argc, char *argv[])
                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
                 printf("The message buffer values are %s\n", gMsgBuffer);
                 printf("The message size is %d\n", gMsgSize);
+
+                for (int i = 0; i < gMsgSize; i++) {
+                    unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
+                    printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
+                    DataVAR.byteValue = byte;
+
+                    printf("The bit value 0 is %d \n", DataVAR.bitValue.bit0);
+                    printf("The bit value 1 is %d \n", DataVAR.bitValue.bit1);
+                    printf("The bit value 2 is %d \n", DataVAR.bitValue.bit2);
+                    printf("The bit value 3 is %d \n", DataVAR.bitValue.bit3);
+                    printf("The bit value 4 is %d \n", DataVAR.bitValue.bit4);
+                    printf("The bit value 5 is %d \n", DataVAR.bitValue.bit5);
+                    printf("The bit value 6 is %d \n", DataVAR.bitValue.bit6);
+                    printf("The bit value 7 is %d \n", DataVAR.bitValue.bit7);
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit5;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit4;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit3;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit2;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
+                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
+
+
+                }
+                for (int i = 0; i < dataCount; i++) {
+                    printf("%d", gMsgBufferInBinary[i]);
+                }
 				fclose(fptr);
 				gHideMsg = true;
 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables

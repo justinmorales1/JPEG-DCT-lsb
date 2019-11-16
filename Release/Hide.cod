@@ -90,7 +90,6 @@ PUBLIC	?writeMsg@@YAXXZ				; writeMsg
 PUBLIC	?getBitsFromBuffer@@YAEIPAEI@Z			; getBitsFromBuffer
 PUBLIC	?putBitsInBuffer@@YAHIEPAEI@Z			; putBitsInBuffer
 PUBLIC	?getUniformity_E@@YANVJpegEncoderCoefficientBlock@@@Z ; getUniformity_E
-PUBLIC	?readMsg@@YAXEEEEEEEE@Z				; readMsg
 PUBLIC	?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z ; hideInBlock
 PUBLIC	?setMsgSize@@YAXXZ				; setMsgSize
 PUBLIC	?getUniformity_D@@YANQAY07F@Z			; getUniformity_D
@@ -100,7 +99,6 @@ PUBLIC	?gJpgDecoder@@3VJpegDecoder@@A			; gJpgDecoder
 PUBLIC	?gBitmapEncoder@@3VBmpEncoder@@A		; gBitmapEncoder
 PUBLIC	?gBitmapDecoder@@3VBmpDecoder@@A		; gBitmapDecoder
 PUBLIC	?gImage@@3VBitmapImage@@A			; gImage
-PUBLIC	??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0?55?$DN?$CFx?0?56@ ; `string'
 PUBLIC	??_C@_0BI@IJAOPADF@The?5bit?5value?50?5is?5?$CFd?5?6@ ; `string'
 PUBLIC	??_C@_0BI@GGMMJLAL@The?5bit?5value?51?5is?5?$CFd?5?6@ ; `string'
 PUBLIC	??_C@_0BI@INPLCAAI@The?5bit?5value?52?5is?5?$CFd?5?6@ ; `string'
@@ -216,11 +214,6 @@ CONST	SEGMENT
 ??_C@_0BI@IJAOPADF@The?5bit?5value?50?5is?5?$CFd?5?6@ DB 'The bit value 0'
 	DB	' is %d ', 0aH, 00H				; `string'
 CONST	ENDS
-;	COMDAT ??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0?55?$DN?$CFx?0?56@
-CONST	SEGMENT
-??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0?55?$DN?$CFx?0?56@ DB '1'
-	DB	'=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x ', 0aH, 00H ; `string'
-CONST	ENDS
 CRT$XCU	SEGMENT
 ?gJpgDecoder$initializer$@@3P6AXXZA DD FLAT:??__EgJpgDecoder@@YAXXZ ; gJpgDecoder$initializer$
 CRT$XCU	ENDS
@@ -240,11 +233,11 @@ _TEXT	SEGMENT
 _data$ = 8						; size = 4
 ?getUniformity_D@@YANQAY07F@Z PROC			; getUniformity_D, COMDAT
 
-; 182  : 	return(0);
+; 167  : 	return(0);
 
   00000	d9 ee		 fldz
 
-; 183  : } // getUniformity_D
+; 168  : } // getUniformity_D
 
   00002	c3		 ret	 0
 ?getUniformity_D@@YANQAY07F@Z ENDP			; getUniformity_D
@@ -255,8 +248,8 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 ?setMsgSize@@YAXXZ PROC					; setMsgSize, COMDAT
 
-; 170  : 	return;
-; 171  : } // setMsgSize
+; 155  : 	return;
+; 156  : } // setMsgSize
 
   00000	c3		 ret	 0
 ?setMsgSize@@YAXXZ ENDP					; setMsgSize
@@ -269,28 +262,28 @@ _data$ = 8						; size = 4
 _qt$ = 12						; size = 4
 ?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z PROC ; hideInBlock, COMDAT
 
-; 113  : {
+; 98   : {
 
   00000	55		 push	 ebp
   00001	8b ec		 mov	 ebp, esp
 
-; 114  : 	unsigned int row, col;
-; 115  :     signed int number;
-; 116  : 	// check for simple conversions - no hiding/extracting
-; 117  : 	if(gHideMsg == false) return;
+; 99   : 	unsigned int row, col;
+; 100  :     signed int number;
+; 101  : 	// check for simple conversions - no hiding/extracting
+; 102  : 	if(gHideMsg == false) return;
 
   00003	80 3d 00 00 00
 	00 00		 cmp	 BYTE PTR ?gHideMsg@@3_NA, 0 ; gHideMsg
-  0000a	0f 84 5a 01 00
+  0000a	0f 84 6a 01 00
 	00		 je	 $LN3@hideInBloc
 
-; 118  :     VAR.byteValue = 0x4f;
+; 103  :     VAR.byteValue = 0x4f;
 
   00010	53		 push	 ebx
   00011	56		 push	 esi
   00012	57		 push	 edi
 
-; 119  :     printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
+; 104  :     printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
 
   00013	6a 01		 push	 1
   00015	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@IJAOPADF@The?5bit?5value?50?5is?5?$CFd?5?6@
@@ -298,7 +291,7 @@ _qt$ = 12						; size = 4
 	00 4f		 mov	 BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A, 79 ; VAR, 0000004fH
   00021	e8 00 00 00 00	 call	 _printf
 
-; 120  :     printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
+; 105  :     printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
 
   00026	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -308,7 +301,7 @@ _qt$ = 12						; size = 4
   00033	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@GGMMJLAL@The?5bit?5value?51?5is?5?$CFd?5?6@
   00038	e8 00 00 00 00	 call	 _printf
 
-; 121  :     printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
+; 106  :     printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
 
   0003d	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -318,7 +311,7 @@ _qt$ = 12						; size = 4
   0004b	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@INPLCAAI@The?5bit?5value?52?5is?5?$CFd?5?6@
   00050	e8 00 00 00 00	 call	 _printf
 
-; 122  :     printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
+; 107  :     printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
 
   00055	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -328,7 +321,7 @@ _qt$ = 12						; size = 4
   00063	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@GCDJELDG@The?5bit?5value?53?5is?5?$CFd?5?6@
   00068	e8 00 00 00 00	 call	 _printf
 
-; 123  :     printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
+; 108  :     printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
 
   0006d	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -338,7 +331,7 @@ _qt$ = 12						; size = 4
   0007b	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@IAOFFAEP@The?5bit?5value?54?5is?5?$CFd?5?6@
   00080	e8 00 00 00 00	 call	 _printf
 
-; 124  :     printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
+; 109  :     printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
 
   00085	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -348,7 +341,7 @@ _qt$ = 12						; size = 4
   00093	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@GPCHDLHB@The?5bit?5value?55?5is?5?$CFd?5?6@
   00098	e8 00 00 00 00	 call	 _printf
 
-; 125  :     printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
+; 110  :     printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
 
   0009d	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -358,7 +351,7 @@ _qt$ = 12						; size = 4
   000ab	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@IEBAIAHC@The?5bit?5value?56?5is?5?$CFd?5?6@
   000b0	e8 00 00 00 00	 call	 _printf
 
-; 126  :     printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
+; 111  :     printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
 
   000b5	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A ; VAR
@@ -366,190 +359,131 @@ _qt$ = 12						; size = 4
   000bf	50		 push	 eax
   000c0	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@GLNCOLEM@The?5bit?5value?57?5is?5?$CFd?5?6@
   000c5	e8 00 00 00 00	 call	 _printf
-  000ca	83 c4 40	 add	 esp, 64			; 00000040H
 
-; 127  :     
-; 128  :     
-; 129  :     printf("The file size is %d\n", gMsgSize);
+; 112  :     VAR.bitValue.bit0 = 0;
 
-  000cd	ff 35 00 00 00
+  000ca	80 25 00 00 00
+	00 fe		 and	 BYTE PTR ?VAR@@3T<unnamed-type-VAR>@@A, 254 ; VAR, 000000feH
+  000d1	83 c4 40	 add	 esp, 64			; 00000040H
+
+; 113  :     printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
+
+  000d4	6a 00		 push	 0
+  000d6	68 00 00 00 00	 push	 OFFSET ??_C@_0BI@IJAOPADF@The?5bit?5value?50?5is?5?$CFd?5?6@
+  000db	e8 00 00 00 00	 call	 _printf
+
+; 114  :     
+; 115  :     printf("The file size is %d\n", gMsgSize);
+
+  000e0	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgSize@@3IA ; gMsgSize
-  000d3	68 00 00 00 00	 push	 OFFSET ??_C@_0BF@CDJIAIFA@The?5file?5size?5is?5?$CFd?6@
-  000d8	e8 00 00 00 00	 call	 _printf
+  000e6	68 00 00 00 00	 push	 OFFSET ??_C@_0BF@CDJIAIFA@The?5file?5size?5is?5?$CFd?6@
+  000eb	e8 00 00 00 00	 call	 _printf
 
-; 130  :     
-; 131  :     //printf("The file size is %s\n", gMsgSize);
-; 132  :     printf("The message buffer values are %s\n", gMsgBuffer);
+; 116  :     printf("The message buffer values are %s\n", gMsgBuffer);
 
-  000dd	ff 35 00 00 00
+  000f0	ff 35 00 00 00
 	00		 push	 DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  000e3	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
-  000e8	e8 00 00 00 00	 call	 _printf
-  000ed	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
-  000f0	83 c4 10	 add	 esp, 16			; 00000010H
-  000f3	33 db		 xor	 ebx, ebx
+  000f6	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@KGEAPMCN@The?5message?5buffer?5values?5are?5?$CF@
+  000fb	e8 00 00 00 00	 call	 _printf
+  00100	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
+  00103	83 c4 18	 add	 esp, 24			; 00000018H
+  00106	33 db		 xor	 ebx, ebx
 $LL4@hideInBloc:
 
-; 134  : 		for(col = 0; col < JpegSampleWidth; col++)
+; 119  : 		for(col = 0; col < JpegSampleWidth; col++)
 
-  000f5	33 f6		 xor	 esi, esi
-  000f7	8b f8		 mov	 edi, eax
-  000f9	0f 1f 80 00 00
-	00 00		 npad	 7
+  00108	33 f6		 xor	 esi, esi
+  0010a	8b f8		 mov	 edi, eax
+  0010c	0f 1f 40 00	 npad	 4
 $LL7@hideInBloc:
 
-; 135  : 		{
-; 136  :           
-; 137  : 			qt.GetDataValue(row*JpegSampleWidth+col);   
+; 120  : 		{
+; 121  :           
+; 122  : 			qt.GetDataValue(row*JpegSampleWidth+col);   
 
-  00100	8b 4d 0c	 mov	 ecx, DWORD PTR _qt$[ebp]
-  00103	8d 04 33	 lea	 eax, DWORD PTR [ebx+esi]
-  00106	50		 push	 eax
-  00107	e8 00 00 00 00	 call	 ?GetDataValue@JpegEncoderQuantizationTable@@QAEGH@Z ; JpegEncoderQuantizationTable::GetDataValue
+  00110	8b 4d 0c	 mov	 ecx, DWORD PTR _qt$[ebp]
+  00113	8d 04 33	 lea	 eax, DWORD PTR [ebx+esi]
+  00116	50		 push	 eax
+  00117	e8 00 00 00 00	 call	 ?GetDataValue@JpegEncoderQuantizationTable@@QAEGH@Z ; JpegEncoderQuantizationTable::GetDataValue
 
-; 138  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
+; 123  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
-  0010c	0f b7 07	 movzx	 eax, WORD PTR [edi]
-  0010f	66 85 c0	 test	 ax, ax
-  00112	74 35		 je	 SHORT $LN21@hideInBloc
-  00114	66 83 f8 01	 cmp	 ax, 1
-  00118	74 2f		 je	 SHORT $LN21@hideInBloc
+  0011c	0f b7 07	 movzx	 eax, WORD PTR [edi]
+  0011f	66 85 c0	 test	 ax, ax
+  00122	74 35		 je	 SHORT $LN21@hideInBloc
+  00124	66 83 f8 01	 cmp	 ax, 1
+  00128	74 2f		 je	 SHORT $LN21@hideInBloc
 
-; 140  :                 break;
-; 141  :             }
-; 142  :             else {         
-; 143  :                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
+; 125  :                 break;
+; 126  :             }
+; 127  :             else {         
+; 128  :                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
 
-  0011a	98		 cwde
-  0011b	50		 push	 eax
-  0011c	68 00 00 00 00	 push	 OFFSET ??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@
-  00121	e8 00 00 00 00	 call	 _printf
+  0012a	98		 cwde
+  0012b	50		 push	 eax
+  0012c	68 00 00 00 00	 push	 OFFSET ??_C@_0CE@PJAJAIKP@The?5JPEG?5coefficient?5value?5is?5?3@
+  00131	e8 00 00 00 00	 call	 _printf
 
-; 144  :                 printf("The first hex value byte from the data.txt is %i and the literal value is %c", gMsgBuffer[col], gMsgBuffer[col]);
+; 129  :                 printf("The first hex value byte from the data.txt is %i and the literal value is %c", gMsgBuffer[col], gMsgBuffer[col]);
 
-  00126	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
-  0012b	0f be 04 30	 movsx	 eax, BYTE PTR [eax+esi]
-  0012f	50		 push	 eax
-  00130	50		 push	 eax
-  00131	68 00 00 00 00	 push	 OFFSET ??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@
-  00136	e8 00 00 00 00	 call	 _printf
-  0013b	46		 inc	 esi
-  0013c	83 c4 14	 add	 esp, 20			; 00000014H
-  0013f	83 c7 02	 add	 edi, 2
-  00142	83 fe 08	 cmp	 esi, 8
-  00145	72 b9		 jb	 SHORT $LL7@hideInBloc
+  00136	a1 00 00 00 00	 mov	 eax, DWORD PTR ?gMsgBuffer@@3PADA ; gMsgBuffer
+  0013b	0f be 04 30	 movsx	 eax, BYTE PTR [eax+esi]
+  0013f	50		 push	 eax
+  00140	50		 push	 eax
+  00141	68 00 00 00 00	 push	 OFFSET ??_C@_0EN@CGBPCMIE@The?5first?5hex?5value?5byte?5from?5t@
+  00146	e8 00 00 00 00	 call	 _printf
+  0014b	46		 inc	 esi
+  0014c	83 c4 14	 add	 esp, 20			; 00000014H
+  0014f	83 c7 02	 add	 edi, 2
+  00152	83 fe 08	 cmp	 esi, 8
+  00155	72 b9		 jb	 SHORT $LL7@hideInBloc
 
-; 138  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
+; 123  :             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
 
-  00147	eb 0d		 jmp	 SHORT $LN2@hideInBloc
+  00157	eb 0d		 jmp	 SHORT $LN2@hideInBloc
 $LN21@hideInBloc:
 
-; 139  :                 printf("The values was a 0 or it was a 1\n");
+; 124  :                 printf("The values was a 0 or it was a 1\n");
 
-  00149	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
-  0014e	e8 00 00 00 00	 call	 _printf
-  00153	83 c4 04	 add	 esp, 4
+  00159	68 00 00 00 00	 push	 OFFSET ??_C@_0CC@HAOHFCOO@The?5values?5was?5a?50?5or?5it?5was?5a?5@
+  0015e	e8 00 00 00 00	 call	 _printf
+  00163	83 c4 04	 add	 esp, 4
 $LN2@hideInBloc:
 
-; 133  : 	for(row = 0; row < JpegSampleWidth; row++)
+; 117  : 
+; 118  : 	for(row = 0; row < JpegSampleWidth; row++)
 
-  00156	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
-  00159	83 c3 08	 add	 ebx, 8
-  0015c	83 c0 10	 add	 eax, 16			; 00000010H
-  0015f	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
-  00162	83 fb 40	 cmp	 ebx, 64			; 00000040H
-  00165	72 8e		 jb	 SHORT $LL4@hideInBloc
-  00167	5f		 pop	 edi
-  00168	5e		 pop	 esi
-  00169	5b		 pop	 ebx
+  00166	8b 45 08	 mov	 eax, DWORD PTR _data$[ebp]
+  00169	83 c3 08	 add	 ebx, 8
+  0016c	83 c0 10	 add	 eax, 16			; 00000010H
+  0016f	89 45 08	 mov	 DWORD PTR _data$[ebp], eax
+  00172	83 fb 40	 cmp	 ebx, 64			; 00000040H
+  00175	72 91		 jb	 SHORT $LL4@hideInBloc
+  00177	5f		 pop	 edi
+  00178	5e		 pop	 esi
+  00179	5b		 pop	 ebx
 $LN3@hideInBloc:
 
-; 145  :                 char byte = gMsgBuffer[col];
-; 146  :                 //byte = byte >> 4;
-; 147  :                 
-; 148  :                 //readMsg(0xE7);
-; 149  :                 //(*data)[row][col] = 0xff;
-; 150  :                 //printf("The new value is: %d\n", (*data)[row][col]);
-; 151  :             }
-; 152  : 			//(*data)[row][col] &= 0;
-; 153  : 			//(*data)[row][col] |= 0;	// hide data in coefficients
-; 154  : 
-; 155  : 		}
-; 156  : 
-; 157  :     
-; 158  : 	return;
-; 159  : } // hideInBlock
+; 130  :                 char byte = gMsgBuffer[col];
+; 131  :                 //byte = byte >> 4;
+; 132  :                 
+; 133  :                 //readMsg(0xE7);
+; 134  :                 //(*data)[row][col] = 0xff;
+; 135  :                 //printf("The new value is: %d\n", (*data)[row][col]);
+; 136  :             }
+; 137  : 			//(*data)[row][col] &= 0;
+; 138  : 			//(*data)[row][col] |= 0;	// hide data in coefficients
+; 139  : 
+; 140  : 		}
+; 141  : 
+; 142  :     
+; 143  : 	return;
+; 144  : } // hideInBlock
 
-  0016a	5d		 pop	 ebp
-  0016b	c3		 ret	 0
+  0017a	5d		 pop	 ebp
+  0017b	c3		 ret	 0
 ?hideInBlock@@YAXPAVJpegEncoderCoefficientBlock@@AAVJpegEncoderQuantizationTable@@@Z ENDP ; hideInBlock
-_TEXT	ENDS
-; Function compile flags: /Ogtp
-; File c:\users\justin\desktop\jpeg-dct-lsb\hide.cpp
-;	COMDAT ?readMsg@@YAXEEEEEEEE@Z
-_TEXT	SEGMENT
-_bitValue1$ = 8						; size = 1
-_bitValue2$ = 12					; size = 1
-_bitValue3$ = 16					; size = 1
-_bitValue4$ = 20					; size = 1
-_bitValue5$ = 24					; size = 1
-_bitValue6$ = 28					; size = 1
-_bitValue7$ = 32					; size = 1
-_bitValue8$ = 36					; size = 1
-?readMsg@@YAXEEEEEEEE@Z PROC				; readMsg, COMDAT
-
-; 93   : {
-
-  00000	55		 push	 ebp
-  00001	8b ec		 mov	 ebp, esp
-
-; 94   :     MESSAGE tMsg;
-; 95   :     //tMsg.BYTE.bit8 = 0xE7;
-; 96   :     tMsg.BYTE.bit1 = bitValue1;
-; 97   :     tMsg.BYTE.bit2 = bitValue2;
-; 98   :     tMsg.BYTE.bit3 = bitValue3;
-; 99   :     tMsg.BYTE.bit4 = bitValue4;
-; 100  :     tMsg.BYTE.bit5 = bitValue5;
-; 101  :     tMsg.BYTE.bit6 = bitValue6;
-; 102  :     tMsg.BYTE.bit7 = bitValue7;
-; 103  :     tMsg.BYTE.bit8 = bitValue8;
-; 104  : 
-; 105  :     printf("1=%x, 2=%x, 3=%x, 4=%x, 5=%x, 6=%x, 7=%x, 8=%x \n",
-
-  00003	0f b6 4d 24	 movzx	 ecx, BYTE PTR _bitValue8$[ebp]
-  00007	51		 push	 ecx
-  00008	8b c1		 mov	 eax, ecx
-  0000a	83 e0 7f	 and	 eax, 127		; 0000007fH
-  0000d	50		 push	 eax
-  0000e	8b c1		 mov	 eax, ecx
-  00010	83 e0 3f	 and	 eax, 63			; 0000003fH
-  00013	50		 push	 eax
-  00014	8b c1		 mov	 eax, ecx
-  00016	83 e0 1f	 and	 eax, 31			; 0000001fH
-  00019	50		 push	 eax
-  0001a	8b c1		 mov	 eax, ecx
-  0001c	83 e0 0f	 and	 eax, 15			; 0000000fH
-  0001f	50		 push	 eax
-  00020	8b c1		 mov	 eax, ecx
-  00022	83 e0 07	 and	 eax, 7
-  00025	50		 push	 eax
-  00026	8b c1		 mov	 eax, ecx
-  00028	83 e1 01	 and	 ecx, 1
-  0002b	83 e0 03	 and	 eax, 3
-  0002e	50		 push	 eax
-  0002f	51		 push	 ecx
-  00030	68 00 00 00 00	 push	 OFFSET ??_C@_0DB@JMICHMIA@1?$DN?$CFx?0?52?$DN?$CFx?0?53?$DN?$CFx?0?54?$DN?$CFx?0?55?$DN?$CFx?0?56@
-  00035	e8 00 00 00 00	 call	 _printf
-  0003a	83 c4 24	 add	 esp, 36			; 00000024H
-
-; 106  :         tMsg.BYTE.bit1, tMsg.BYTE.bit2, tMsg.BYTE.bit3, tMsg.BYTE.bit4,
-; 107  :         tMsg.BYTE.bit5, tMsg.BYTE.bit6, tMsg.BYTE.bit7, tMsg.BYTE.bit8);
-; 108  :     return;
-; 109  : }
-
-  0003d	5d		 pop	 ebp
-  0003e	c3		 ret	 0
-?readMsg@@YAXEEEEEEEE@Z ENDP				; readMsg
 _TEXT	ENDS
 ; Function compile flags: /Ogtp
 ; File c:\users\justin\desktop\jpeg-dct-lsb\hide.cpp
@@ -704,11 +638,11 @@ _outBuffer$ = 16					; size = 4
 _outBufferLength$ = 20					; size = 4
 ?putBitsInBuffer@@YAHIEPAEI@Z PROC			; putBitsInBuffer, COMDAT
 
-; 176  : 	return(SUCCESS);
+; 161  : 	return(SUCCESS);
 
   00000	33 c0		 xor	 eax, eax
 
-; 177  : } // putBitsInBuffer
+; 162  : } // putBitsInBuffer
 
   00002	c3		 ret	 0
 ?putBitsInBuffer@@YAHIEPAEI@Z ENDP			; putBitsInBuffer
@@ -738,8 +672,8 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 ?writeMsg@@YAXXZ PROC					; writeMsg, COMDAT
 
-; 164  : 	return;
-; 165  : } // writeMsg
+; 149  : 	return;
+; 150  : } // writeMsg
 
   00000	c3		 ret	 0
 ?writeMsg@@YAXXZ ENDP					; writeMsg
@@ -752,9 +686,9 @@ _data$ = 8						; size = 4
 _qt$ = 12						; size = 4
 ?extractFromBlock@@YAXQAY07FABVJpegDecoderQuantizationTable@@@Z PROC ; extractFromBlock, COMDAT
 
-; 188  : 
-; 189  : 	return;
-; 190  : } // extractFromBlock
+; 173  : 
+; 174  : 	return;
+; 175  : } // extractFromBlock
 
   00000	c3		 ret	 0
 ?extractFromBlock@@YAXQAY07FABVJpegDecoderQuantizationTable@@@Z ENDP ; extractFromBlock
