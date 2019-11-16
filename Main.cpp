@@ -433,7 +433,7 @@ int main(int argc, char *argv[])
 
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
-		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\n The Message Size:  %d bits %d (bytes)\n", gBitCapacity, gBitCapacity/8, gMsgSize * 8 , gMsgSize);
+		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", gBitCapacity, gBitCapacity/8, gMsgSize * 8 , gMsgSize);
 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 	} // if extracting, wiping, or destroying
 
