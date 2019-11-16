@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (char *) malloc(size);
-                gMsgBufferInBinary = (char *)malloc(size);
+                gMsgBufferInBinary = (char *)malloc(4096);
 				if(gMsgBuffer == NULL)
 				{
 					printf("Could not allocate memory for message file.\n\n");
