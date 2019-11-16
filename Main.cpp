@@ -172,15 +172,16 @@ int main(int argc, char *argv[])
                     unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
                     printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
                     DataVAR.byteValue = byte;
-
-                    printf("The bit value 0 is %d \n", DataVAR.bitValue.bit0);
-                    printf("The bit value 1 is %d \n", DataVAR.bitValue.bit1);
-                    printf("The bit value 2 is %d \n", DataVAR.bitValue.bit2);
-                    printf("The bit value 3 is %d \n", DataVAR.bitValue.bit3);
-                    printf("The bit value 4 is %d \n", DataVAR.bitValue.bit4);
-                    printf("The bit value 5 is %d \n", DataVAR.bitValue.bit5);
-                    printf("The bit value 6 is %d \n", DataVAR.bitValue.bit6);
+               
                     printf("The bit value 7 is %d \n", DataVAR.bitValue.bit7);
+                    printf("The bit value 6 is %d \n", DataVAR.bitValue.bit6);
+                    printf("The bit value 5 is %d \n", DataVAR.bitValue.bit5);
+                    printf("The bit value 4 is %d \n", DataVAR.bitValue.bit4);
+                    printf("The bit value 3 is %d \n", DataVAR.bitValue.bit3);
+                    printf("The bit value 2 is %d \n", DataVAR.bitValue.bit2);
+                    printf("The bit value 1 is %d \n", DataVAR.bitValue.bit1);
+                    printf("The bit value 0 is %d \n", DataVAR.bitValue.bit0);
+                                       
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit5;

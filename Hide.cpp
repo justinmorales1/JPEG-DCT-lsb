@@ -13,7 +13,7 @@ unsigned short gBitMask1_2[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff
 unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0, 0xFF80, 0xFF00 };
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
 unsigned int gBitCapacity = 0;
-
+unsigned int messageIndexValue;
 char *gMsgBuffer = NULL;
 char *gMsgBufferInBinary = NULL;
 unsigned int gMsgSize;
@@ -110,10 +110,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
-
-    VAR.byteValue = 0x4f;
-    
-    
+  
     //printf("The file size is %d\n", gMsgSize);
     //printf("The message buffer values are %s\n", gMsgBuffer);
 
@@ -124,10 +121,22 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 break;
-            } else {         
+            } else {    
+                messageIndexValue += 1;
+                printf("The message Index value is %d \n", messageIndexValue);
                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
-                printf("The first hex value byte from the data.txt is %i and the literal value is %c", gMsgBuffer[row], gMsgBuffer[row]);
-               
+                unsigned char byte = (*data)[row][col];
+                VAR.byteValue = byte;
+                /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
+                printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
+                printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
+                printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
+                printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
+                printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
+                printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
+                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
+
+
                 //byte = byte >> 4;              
                 //readMsg(0xE7);
                 //(*data)[row][col] = 0xff;

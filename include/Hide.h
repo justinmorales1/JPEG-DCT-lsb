@@ -29,6 +29,7 @@ extern char gOutputFileName[260];
 extern char *gMsgBuffer;
 extern char *gMsgBufferInBinary;
 extern unsigned int gMsgSize;
+extern unsigned int messageIndexValue;
 extern double gAlpha;
 extern double gUniformityFactor;
 extern unsigned int gImageQuality;
