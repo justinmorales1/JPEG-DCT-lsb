@@ -122,11 +122,16 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 break;
             } else {    
-                messageIndexValue += 1;
+               
                 printf("The message Index value is %d \n", messageIndexValue);
                 printf("The JPEG coefficient value is : %d\n", (*data)[row][col]);
                 unsigned char byte = (*data)[row][col];
+                unsigned char messageBits;
+
                 VAR.byteValue = byte;
+
+                printf("The bit from the msge buffer in binary is %d \n", gMsgBufferInBinary[messageIndexValue]);
+
                 /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
                 printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
                 printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
@@ -141,6 +146,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 //readMsg(0xE7);
                 //(*data)[row][col] = 0xff;
                 //printf("The new value is: %d\n", (*data)[row][col]);
+                messageIndexValue += 1;
             }
 			//(*data)[row][col] &= 0;
 			//(*data)[row][col] |= 0;	// hide data in coefficients

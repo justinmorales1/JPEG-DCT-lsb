@@ -190,9 +190,8 @@ int main(int argc, char *argv[])
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit2;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
-
-
                 }
+
                 for (int i = 0; i < dataCount; i++) {
                     printf("%d", gMsgBufferInBinary[i]);
                 }
