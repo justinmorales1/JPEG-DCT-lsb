@@ -185,6 +185,7 @@ int main(int argc, char *argv[])
 				//strcpy( (gMsgBuffer+4) , argv[i]); // copy the filename as part of the message
 				//gMsgSize += (int) strlen(&gMsgBuffer[4]) + 1; // 1 for NULL
                 gMsgSize += (unsigned int)fread(gMsgBuffer, 1, size, fptr);	// read entire message file into memory
+
                 //gMsgSize += (unsigned int)fread(&gMsgBuffer[gMsgSize], 1, size, fptr);	// read entire message file into memory
 				//gMsgSize += (unsigned int) fread(buffer, 1, size, fptr);	// read entire message file into memory
                 //printf("The message buffer values for the file name is %s\n", gMsgBuffer[4]);
@@ -200,30 +201,10 @@ int main(int argc, char *argv[])
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
 
-                printf("The bit value 7 is %d \n", MessageDataVAR.bitValue.bit7);
-                printf("The bit value 6 is %d \n", MessageDataVAR.bitValue.bit6);
-                printf("The bit value 5 is %d \n", MessageDataVAR.bitValue.bit5);
-                printf("The bit value 4 is %d \n", MessageDataVAR.bitValue.bit4);
-                printf("The bit value 3 is %d \n", MessageDataVAR.bitValue.bit3);
-                printf("The bit value 2 is %d \n", MessageDataVAR.bitValue.bit2);
-                printf("The bit value 1 is %d \n", MessageDataVAR.bitValue.bit1);
-                printf("The bit value 0 is %d \n", MessageDataVAR.bitValue.bit0);
-
-
-
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
                     printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
                     DataVAR.byteValue = byte;
-               
-                    printf("The bit value 7 is %d \n", DataVAR.bitValue.bit7);
-                    printf("The bit value 6 is %d \n", DataVAR.bitValue.bit6);
-                    printf("The bit value 5 is %d \n", DataVAR.bitValue.bit5);
-                    printf("The bit value 4 is %d \n", DataVAR.bitValue.bit4);
-                    printf("The bit value 3 is %d \n", DataVAR.bitValue.bit3);
-                    printf("The bit value 2 is %d \n", DataVAR.bitValue.bit2);
-                    printf("The bit value 1 is %d \n", DataVAR.bitValue.bit1);
-                    printf("The bit value 0 is %d \n", DataVAR.bitValue.bit0);
                                        
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
@@ -238,7 +219,7 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < dataCount; i++) {
                     printf("%d", gMsgBufferInBinary[i]);
                 }
-                
+                gBitCapacity = dataCount;
 				fclose(fptr);
 				gHideMsg = true;
 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables
@@ -380,8 +361,10 @@ int main(int argc, char *argv[])
 		{
 			free(gMsgBuffer);
 		}
-		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
-		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
+		//printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", jpegImageTotalSize, jpegImageTotalSize /8, gMsgSize);
+        printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, gMsgSize * 8, gMsgSize);
+
+		if( (jpegImageTotalSize /8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
 		return(SUCCESS);
 	} // if hiding
 
@@ -450,7 +433,7 @@ int main(int argc, char *argv[])
 
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
-		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", gBitCapacity, gBitCapacity/8, gMsgSize * 8 , gMsgSize);
 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 	} // if extracting, wiping, or destroying
 
