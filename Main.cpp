@@ -361,7 +361,9 @@ int main(int argc, char *argv[])
 		{
 			free(gMsgBuffer);
 		}
-		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", jpegImageTotalSize, jpegImageTotalSize /8, gMsgSize);
+		//printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", jpegImageTotalSize, jpegImageTotalSize /8, gMsgSize);
+        printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, gMsgSize * 8, gMsgSize);
+
 		if( (jpegImageTotalSize /8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
 		return(SUCCESS);
 	} // if hiding
@@ -431,7 +433,7 @@ int main(int argc, char *argv[])
 
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
-		printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", gBitCapacity, gBitCapacity/8, gMsgSize);
+		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\n The Message Size:  %d bits %d (bytes)\n", gBitCapacity, gBitCapacity/8, gMsgSize * 8 , gMsgSize);
 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 	} // if extracting, wiping, or destroying
 
