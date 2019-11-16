@@ -209,9 +209,7 @@ int main(int argc, char *argv[])
                 printf("The bit value 1 is %d \n", MessageDataVAR.bitValue.bit1);
                 printf("The bit value 0 is %d \n", MessageDataVAR.bitValue.bit0);
 
-                for (int i = 0; i < dataCount; i++) {
-                    printf("%d", gMsgBufferInBinary[i]);
-                }
+
 
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
@@ -240,6 +238,7 @@ int main(int argc, char *argv[])
                 for (int i = 0; i < dataCount; i++) {
                     printf("%d", gMsgBufferInBinary[i]);
                 }
+                
 				fclose(fptr);
 				gHideMsg = true;
 				getBitsFromBuffer(0, NULL, 0);	// reset buffer static variables

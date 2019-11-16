@@ -110,9 +110,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
     signed int number;
 	// check for simple conversions - no hiding/extracting
 	if(gHideMsg == false) return;
-  
-    //printf("The file size is %d\n", gMsgSize);
-    //printf("The message buffer values are %s\n", gMsgBuffer);
+
 
 	for(row = 0; row < JpegSampleWidth; row++)
 		for(col = 0; col < JpegSampleWidth; col++)
@@ -130,22 +128,37 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 
                 VAR.byteValue = byte;
 
-                printf("The bit from the msge buffer in binary is %d \n", gMsgBufferInBinary[messageIndexValue]);
+                printf("The bit from the msg buffer in binary is %d \n", gMsgBufferInBinary[messageIndexValue]);
 
-                /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
+                printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
                 printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
                 printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
                 printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
                 printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
                 printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
                 printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
-                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
+                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
 
 
                 //byte = byte >> 4;              
                 //readMsg(0xE7);
                 //(*data)[row][col] = 0xff;
                 //printf("The new value is: %d\n", (*data)[row][col]);
+                (*data)[row][col] &= 0xFE;
+                (*data)[row][col] |= gMsgBufferInBinary[messageIndexValue];	// hide data in coefficients
+
+                VAR.byteValue = (*data)[row][col];
+                printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
+                printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
+                printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
+                printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
+                printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
+                printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
+                printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
+                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);
+
+                printf("TheNEW JPEG coefficient value is : %d\n", (*data)[row][col]);
+
                 messageIndexValue += 1;
             }
 			//(*data)[row][col] &= 0;
