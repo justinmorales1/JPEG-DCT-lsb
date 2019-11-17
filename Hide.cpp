@@ -16,8 +16,9 @@ unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;//extractMessageSize
 unsigned int extractMessageSize;
-char *gMsgBuffer = NULL;
-char *gMsgBufferInBinary = NULL;
+char *hexBuffer;
+char *gMsgBuffer;
+char *gMsgBufferInBinary;
 char str[8];
 unsigned int gMsgSize;
 double gAlpha = 1.0;			// jpenquan.h
@@ -248,7 +249,6 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
     signed int number;
     int dataCount = 0;
     // check for simple conversions - no hiding/extracting   
-    printf("\n");
     for (row = 0; row < JpegSampleWidth; row++)
         for (col = 0; col < JpegSampleWidth; col++)
         {
@@ -264,7 +264,6 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5
                     , CBits.bitValue.bit3, CBits.bitValue.bit2, CBits.bitValue.bit1, CBits.bitValue.bit0);*/
                if (extractMessageSize != 8) {
-                    printf("The extractMessageSize is %d \n", extractMessageSize);
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
                     str[extractMessageSize] = CBits.bitValue.bit0;
                     extractMessageSize++;

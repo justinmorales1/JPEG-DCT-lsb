@@ -56,7 +56,26 @@ union
 
 } MessageDataVAR;
 
+struct ConvertBitsToHex
+{
 
+    unsigned char bit4 : 1; //This is the lsb for second byte byte.
+    unsigned char bit5 : 1;
+    unsigned char bit6 : 1;
+    unsigned char bit7 : 1;
+    unsigned char bit0 : 1; //This is the lsb for first byte.
+    unsigned char bit1 : 1;
+    unsigned char bit2 : 1;
+    unsigned char bit3 : 1;
+};
+
+union
+{
+    struct ConvertBitsToHex bitValue;
+    unsigned char byteValue;
+
+
+} BitsToHex;
 
 
 void Usage (int argc, char *argv [])
@@ -88,6 +107,7 @@ int main(int argc, char *argv[])
 {
 	int test = 0, i, x, fileno, size;
     int dataCount = 0;
+    int dataCounts = 8;
 	char ch, *ext, *inputFile, *outputFile, inExt, outExt;
 	bool g, p, v;
 	double tmpDbl;
@@ -145,8 +165,10 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'e':	// extract a message
+              
 				gExtractMsg = true;
                 gMsgBufferInBinary = (char *)malloc(4096);
+                hexBuffer = (char *)malloc(4096);
 				break;
 
 			case 'w':	// wipe a message (replaces message with zeros)
@@ -434,13 +456,34 @@ int main(int argc, char *argv[])
 			writeJpg(outputFile, g, p);
 
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
-        printf("\n");
-        for (int i = 0; i < 248; i++) {
-            printf("%d", gMsgBufferInBinary[i]);   // printf("The hex value is %d \n", str[extractMessageSize]);   
+
+        //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
+        for (int i = 1; i < 240; i++) {
+            printf("%d", gMsgBufferInBinary[i]);    
+           
+            BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit2 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit1 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit0 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit7 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit6 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit5 = gMsgBufferInBinary[dataCounts++];
+            BitsToHex.bitValue.bit4 = gMsgBufferInBinary[dataCounts++];
+            hexBuffer[i] = BitsToHex.byteValue;       
         }
+
+        for (int i = 0; i < 30; i++) {
+            printf("The values in the buffer are %x \n", hexBuffer[i]);
+        }
+
+        FILE *outputFile;
+        outputFile = fopen("extractedData.txt", "wb");
+
+        fwrite(hexBuffer, 7, sizeof(hexBuffer), outputFile);
+        fclose(outputFile);
+        free(gMsgBufferInBinary);
         
-        
-		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", gBitCapacity, gBitCapacity/8, gMsgSize * 8 , gMsgSize);
+		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits  ( %d bytes)\n", gMsgSize , gMsgSize /8, gMsgSize * 8 , gMsgSize * 8);
 		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 	} // if extracting, wiping, or destroying
 

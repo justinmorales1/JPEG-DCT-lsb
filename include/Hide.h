@@ -29,6 +29,7 @@ extern char gOutputFileName[260];
 extern char *gMsgBuffer;
 extern char *gMsgBufferInBinary;
 extern char *extractedBuffer;
+extern char *hexBuffer;
 extern char str[8];
 extern unsigned int gMsgSize;
 extern unsigned int extractMessageSize;

@@ -9,7 +9,7 @@ void Enc_Progress (BitmapImageCoder &coder,
                unsigned int progress,
                bool &cancel)
 {
-  cout << currentpass << " of " << passcount << " " << progress << "%             \r" << flush ;
+  //cout << currentpass << " of " << passcount << " " << progress << "%             \r" << flush ;
   return ;
 }
 
@@ -20,7 +20,7 @@ void Dec_Progress (BitmapImageCoder &coder,
                unsigned int progress,
                bool &cancel)
 {
-  cout << currentpass << " of " << passcount << " " <<  progress << "%           \r" << flush ;
+  //cout << currentpass << " of " << passcount << " " <<  progress << "%           \r" << flush ;
   return ;
 }
 
