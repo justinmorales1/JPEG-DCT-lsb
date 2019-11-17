@@ -161,7 +161,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 //    , VAR.bitValue.bit3, VAR.bitValue.bit2, VAR.bitValue.bit1, VAR.bitValue.bit0);
                          
                 messageIndexValue += 1;
-                printf("The message index value is %d", messageIndexValue);
+                //printf("The message index value is %d", messageIndexValue);
             }
 
 		}
