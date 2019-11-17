@@ -203,10 +203,10 @@ int main(int argc, char *argv[])
 
 				//if extracting we need to get the input file into binary to take LSBs easily
 				//if hiding we want our message in binary to embed easily
-				/*if (ch == 'e') {
+				if (ch == 'e') {
 					printf("In extraction mode, not filling gMsgBufferInBinary...\n");
 				}
-				else */if (ch == 'h') {
+				else if (ch == 'h') {
 					for (int i = 0; i < gMsgSize; i++) {
 						unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
 						printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);

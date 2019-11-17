@@ -201,8 +201,12 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
             else {
 				unsigned char byte = (data)[row][col];
 				VAR.byteValue = byte;
-				gMsgBufferInBinary[messageIndexValue] = VAR.bitValue.bit0;
+				gMsgBufferInBinary[messageIndexValue] = VAR.bitValue.bit0;//crashing here on extract
 				messageIndexValue++;
+				//the idea is that we can easily take the current coefficient byte and immediately get the first LSB
+				//and put it in our gMsgBufferInBinary. Right now it should go on for the whole file but it should work
+				//once this crash is fixed. Next problem is where do we tell it to output the message? This function is
+				//repeated over and over so maybe Main.cpp we convert the binary to full on characters and output the file.
             }
         }
 	return;
