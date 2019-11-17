@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
         FILE *outputFile;
         outputFile = fopen("extractedData.txt", "wb");
 
-        fwrite(hexBuffer, 7, sizeof(hexBuffer), outputFile);
+        fwrite(hexBuffer + 1, 7, sizeof(hexBuffer), outputFile);
         fclose(outputFile);
         free(gMsgBufferInBinary);
         
