@@ -121,8 +121,8 @@ union
 
 } MessageSizeBits;
 
-//Note - Use these values for embedding when debugging - i cover.jpg - h data.txt
-//Note - Use these values for extraction when debugging - -e - i cover_hidden.jpg > extractingOutput.txt
+//Note - Use these values for embedding when debugging -i cover.jpg -h data.txt > embeddingOutput.txt
+//Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractingOutput.txt
 
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
@@ -156,9 +156,9 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 VAR.bitValue.bit0 = gMsgBufferInBinary[messageIndexValue];
                 (*data)[row][col] = VAR.byteValue;
 
-                printf("The NEW JPEG coefficient value is : %d\n", (*data)[row][col]);
-                printf("The NEW JPEG coefficient binary values are  %d%d%d%d %d%d%d%d \n", VAR.bitValue.bit7, VAR.bitValue.bit6, VAR.bitValue.bit5, VAR.bitValue.bit5
-                    , VAR.bitValue.bit3, VAR.bitValue.bit2, VAR.bitValue.bit1, VAR.bitValue.bit0);
+                //printf("The NEW JPEG coefficient value is : %d\n", (*data)[row][col]);
+                //printf("The NEW JPEG coefficient binary values are  %d%d%d%d %d%d%d%d \n", VAR.bitValue.bit7, VAR.bitValue.bit6, VAR.bitValue.bit5, VAR.bitValue.bit5
+                //    , VAR.bitValue.bit3, VAR.bitValue.bit2, VAR.bitValue.bit1, VAR.bitValue.bit0);
                          
                 messageIndexValue += 1;
             }
