@@ -201,24 +201,33 @@ int main(int argc, char *argv[])
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
 
-                for (int i = 0; i < gMsgSize; i++) {
-                    unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
-                    printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
-                    DataVAR.byteValue = byte;
-                                       
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit5;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit4;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit3;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit2;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
-                    gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
-                }
+				//if extracting we need to get the input file into binary to take LSBs easily
+				//if hiding we want our message in binary to embed easily
+				/*if (ch == 'e') {
+					printf("In extraction mode, not filling gMsgBufferInBinary...\n");
+				}
+				else */if (ch == 'h') {
+					for (int i = 0; i < gMsgSize; i++) {
+						unsigned char byte = gMsgBuffer[i];//gMsgBufferInBinary
+						printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
+						DataVAR.byteValue = byte;
+
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit5;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit4;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit3;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit2;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
+						gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
+					}
+				}
 
                 for (int i = 0; i < dataCount; i++) {
                     printf("%d", gMsgBufferInBinary[i]);
                 }
+				printf("\n");
+
                 gBitCapacity = dataCount;
 				fclose(fptr);
 				gHideMsg = true;

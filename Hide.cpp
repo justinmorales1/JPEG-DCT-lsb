@@ -126,15 +126,15 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
                 //printf("The message Index value is %d \n", messageBits);
 
-                /*printf("The bit value 7 is %d \n", VAR.bitValue.bit7);
-                printf("The bit value 6 is %d \n", VAR.bitValue.bit6);
-                printf("The bit value 5 is %d \n", VAR.bitValue.bit5);
-                printf("The bit value 4 is %d \n", VAR.bitValue.bit4);
-                printf("The bit value 3 is %d \n", VAR.bitValue.bit3);
-                printf("The bit value 2 is %d \n", VAR.bitValue.bit2);
-                printf("The bit value 1 is %d \n", VAR.bitValue.bit1);
-                printf("The bit value 0 is %d \n", VAR.bitValue.bit0);*/
-                //VAR.byteValue = byte;
+				/*
+				printf("7 is %d, ", VAR.bitValue.bit7);
+				printf("6 is %d, ", VAR.bitValue.bit6);
+				printf("5 is %d, ", VAR.bitValue.bit5);
+				printf("4 is %d, ", VAR.bitValue.bit4);
+				printf("3 is %d, ", VAR.bitValue.bit3);
+				printf("2 is %d, ", VAR.bitValue.bit2);
+				printf("1 is %d, ", VAR.bitValue.bit1);
+				printf("0 is %d \n", VAR.bitValue.bit0);//*/
                 VAR.bitValue.bit0 = gMsgBufferInBinary[messageIndexValue];
                 (*data)[row][col] = VAR.byteValue;
 
@@ -199,9 +199,10 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                 break;
             }
             else {
-                printf("The JPEG coefficient value is : %d\n", (data)[row][col]);
-                //(*data)[row][col] &= 0;
-                //(*data)[row][col] |= 0;	// hide data in coefficients
+				unsigned char byte = (data)[row][col];
+				VAR.byteValue = byte;
+				gMsgBufferInBinary[messageIndexValue] = VAR.bitValue.bit0;
+				messageIndexValue++;
             }
         }
 	return;
