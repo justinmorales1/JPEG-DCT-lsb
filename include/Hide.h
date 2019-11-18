@@ -33,6 +33,7 @@ extern char *hexBuffer;
 extern char str[8];
 extern unsigned int gMsgSize;
 extern unsigned int extractMessageSize;
+extern unsigned int embeddedMessageSize;
 extern unsigned int jpegImageTotalSize;
 extern unsigned int dataCount;
 extern unsigned int messageIndexValue;

@@ -12,6 +12,7 @@ unsigned char gBitMask1[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff };
 unsigned short gBitMask1_2[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff };
 unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0, 0xFF80, 0xFF00 };
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
+unsigned int embeddedMessageSize = 0;
 unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;//extractMessageSize
@@ -265,6 +266,8 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                 CBits.byteValue = (data)[row][col];
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5
                     , CBits.bitValue.bit3, CBits.bitValue.bit2, CBits.bitValue.bit1, CBits.bitValue.bit0);*/
+
+               //This if statement is adding the size of the embedded data into a buffer called str.
                if (extractMessageSize != 8) {
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
                     str[extractMessageSize] = CBits.bitValue.bit0;
@@ -272,8 +275,8 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     //continue;
                }
                else {
-                   gMsgBufferInBinary[messageIndexValue] = CBits.bitValue.bit0;
-       
+                   //This message buffer contains binary values
+                   gMsgBufferInBinary[messageIndexValue] = CBits.bitValue.bit0;       
                }
 
                 //The code below here is setting the byte value for the message size.
@@ -288,9 +291,11 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     MessageSizeBits.bitValue.bit4 = str[7];
                     /*printf("The total message size binary values are  %d%d%d%d %d%d%d%d \n", MessageSizeBits.bitValue.bit7,
                         MessageSizeBits.bitValue.bit6, MessageSizeBits.bitValue.bit5, MessageSizeBits.bitValue.bit5
-                        , MessageSizeBits.bitValue.bit3, MessageSizeBits.bitValue.bit2, MessageSizeBits.bitValue.bit1, MessageSizeBits.bitValue.bit0);
+                        , MessageSizeBits.bitValue.bit3, MessageSizeBits.bitValue.bit2,
+                        MessageSizeBits.bitValue.bit1, MessageSizeBits.bitValue.bit0);*/
                     printf("The FINAL hex value is %x \n", MessageSizeBits.byteValue);
-                    printf("\n")*/;
+                    embeddedMessageSize = MessageSizeBits.byteValue;
+                    printf("The Hex value is %x \n", embeddedMessageSize);
                 }
 
                 messageIndexValue++;
