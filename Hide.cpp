@@ -15,7 +15,8 @@ unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0
 unsigned int embeddedMessageSize = 0;
 unsigned int gBitCapacity;
 unsigned int messageIndexValue;
-unsigned int jpegImageTotalSize;//extractMessageSize
+unsigned int jpegImageTotalSize;
+unsigned int coverMessageTotalSize;
 unsigned int extractMessageSize;
 char *hexBuffer;
 char *gMsgBuffer;
@@ -216,6 +217,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
     for (row = 0; row < JpegSampleWidth; row++)
         for (col = 0; col < JpegSampleWidth; col++)
         {
+            jpegImageTotalSize++;
             if (messageIndexValue == 248) {
                 return;
             }

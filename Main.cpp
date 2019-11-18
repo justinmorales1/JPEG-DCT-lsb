@@ -458,7 +458,7 @@ int main(int argc, char *argv[])
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
         //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
-        for (int i = 1; i < 240; i++) {
+        for (int i = 1; i < (embeddedMessageSize * 8); i++) {
             printf("%d", gMsgBufferInBinary[i]);    
            
             BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
@@ -483,8 +483,8 @@ int main(int argc, char *argv[])
         fclose(outputFile);
         free(gMsgBufferInBinary);
         
-		printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits  ( %d bytes)\n", gMsgSize , gMsgSize /8, gMsgSize * 8 , gMsgSize * 8);
-		if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
+        printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits  ( %d bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, embeddedMessageSize * 8, (embeddedMessageSize * 8) / 8);
+        if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
 	} // if extracting, wiping, or destroying
 
 	return(SUCCESS);
