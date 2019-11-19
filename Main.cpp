@@ -167,8 +167,8 @@ int main(int argc, char *argv[])
 			case 'e':	// extract a message
               
 				gExtractMsg = true;
-                gMsgBufferInBinary = (char *)malloc(4096);
-                hexBuffer = (char *)malloc(4096);
+                gMsgBufferInBinary = (char *)malloc(65536);
+                hexBuffer = (char *)malloc(65536);
 				break;
 
 			case 'w':	// wipe a message (replaces message with zeros)
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 
 			case 'h':	// hide - provide message file name
 				i++;
-                char buffer[4096];
+                char buffer[65536];
 				fptr = fopen(argv[i], "rb");
                
 				if(fptr == NULL)
@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (char *) malloc(size);
-                gMsgBufferInBinary = (char *)malloc(4096);
+                gMsgBufferInBinary = (char *)malloc(65536);
 				if(gMsgBuffer == NULL)
 				{
 					printf("Could not allocate memory for message file.\n\n");
@@ -223,11 +223,11 @@ int main(int argc, char *argv[])
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
-
+                //printf("The first hex value in gMsgBufferInBinary %x", MessageDataVAR.byteValue);
                 //This code here is turning the entire message into binary and then adding it into the messageBuffer.
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];
-                    //printf("The first hex value byte from the data.txt is %x and the literal value is %c \n", gMsgBuffer[i], gMsgBuffer[i]);
+                    //printf("%x", gMsgBuffer[i]);
                     DataVAR.byteValue = byte;
                                        
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
@@ -239,9 +239,10 @@ int main(int argc, char *argv[])
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
                 }
+                printf("\n");
                 //This is just printing out all of the binary data in the buffer. This can be used for debugging purposes.
-                for (int i = 0; i < dataCount; i++) {
-                    printf("%d", gMsgBufferInBinary[i]);
+                for (int i = 0; i < gMsgSize * 8; i++) {
+                    //printf("%d", gMsgBufferInBinary[i]);
                 }
                 gBitCapacity = dataCount;
 				fclose(fptr);
@@ -458,8 +459,8 @@ int main(int argc, char *argv[])
 		if(gExtractMsg && gMsgSize > 0) writeMsg();
 
         //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
-        for (int i = 1; i < (embeddedMessageSize * 8); i++) {
-            printf("%d", gMsgBufferInBinary[i]);    
+        for (int i = 1; i < gMsgSize; i++) {
+            //printf("%d", gMsgBufferInBinary[i]);    
            
             BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit2 = gMsgBufferInBinary[dataCounts++];
@@ -470,16 +471,17 @@ int main(int argc, char *argv[])
             BitsToHex.bitValue.bit5 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit4 = gMsgBufferInBinary[dataCounts++];
             hexBuffer[i] = BitsToHex.byteValue;       
+
         }
 
         for (int i = 0; i < embeddedMessageSize; i++) {
-            printf("The values in the buffer are %x \n", hexBuffer[i]);
+            //printf("The values in the buffer are %x \n", hexBuffer[i]);
         }
 
         FILE *outputFile;
         outputFile = fopen("extractedData.txt", "wb");
 
-        fwrite(hexBuffer + 1, embeddedMessageSize / 4, sizeof(hexBuffer), outputFile);
+        fwrite(hexBuffer + 1, 49, sizeof(hexBuffer), outputFile);
         fclose(outputFile);
         free(gMsgBufferInBinary);
         

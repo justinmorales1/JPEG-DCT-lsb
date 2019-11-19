@@ -138,16 +138,11 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
             jpegImageTotalSize++;
-            if (gBitCapacity == messageIndexValue) {
-                /*printf("The message Index value is %d \n", messageIndexValue);
-                printf("The gBitCapacity is %d \n", gBitCapacity);*/
-                return;
-            }
 
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 break;
-            } else if ((*data)[row][col] > 5) {
+            } else {
                 //printf("The embedding JPEG coefficient value is : %d\n", (*data)[row][col]);
                 VAR.byteValue = (*data)[row][col];
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
@@ -218,14 +213,11 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
         for (col = 0; col < JpegSampleWidth; col++)
         {
             jpegImageTotalSize++;
-            if (messageIndexValue == 248) {
-                return;
-            }
 
             if ((data)[row][col] == 0 || (data)[row][col] == 1) {
                 break;
             }
-            else if ((data)[row][col] > 5) {
+            else {
                 //printf("The JPEG extracted coefficient value is : %d\n", (data)[row][col]);
                 CBits.byteValue = (data)[row][col];
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5
