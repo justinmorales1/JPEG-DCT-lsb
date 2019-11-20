@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
                 printf("\n");
                 //This is just printing out all of the binary data in the buffer. This can be used for debugging purposes.
                 for (int i = 0; i < gMsgSize * 8; i++) {
-                    //printf("%d", gMsgBufferInBinary[i]);
+                    printf("%d", gMsgBufferInBinary[i]);
                 }
                 gBitCapacity = dataCount;
 				fclose(fptr);
@@ -414,9 +414,6 @@ int main(int argc, char *argv[])
 		lgQ = log( (double) gImageQuality)/lg2; // lgQ==1 will nullify effect
 		lgQ = 2/lgQ;
 
-		// initialize output buffer static variables
-		putBitsInBuffer(0, 0, NULL, 0);
-
 		fileno = _fileno(fptr);
 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
 												// the 260 is for the possible length of the filename
@@ -456,8 +453,6 @@ int main(int argc, char *argv[])
 		if(gWipeMsg || gDestroyMsg)
 			writeJpg(outputFile, g, p);
 
-		if(gExtractMsg && gMsgSize > 0) writeMsg();
-
         //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
         for (int i = 1; i < gMsgSize; i++) {
             //printf("%d", gMsgBufferInBinary[i]);    
@@ -477,11 +472,11 @@ int main(int argc, char *argv[])
         for (int i = 0; i < embeddedMessageSize; i++) {
             //printf("The values in the buffer are %x \n", hexBuffer[i]);
         }
-
+        int bufsize = strlen(hexBuffer) + 1;
         FILE *outputFile;
         outputFile = fopen("extractedData.txt", "wb");
 
-        fwrite(hexBuffer + 1, 49, sizeof(hexBuffer), outputFile);
+        fwrite(hexBuffer + 1, bufsize, 1, outputFile);
         fclose(outputFile);
         free(gMsgBufferInBinary);
         

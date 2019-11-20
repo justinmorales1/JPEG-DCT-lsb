@@ -142,7 +142,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 break;
-            } else {
+            } else  {
                 //printf("The embedding JPEG coefficient value is : %d\n", (*data)[row][col]);
                 VAR.byteValue = (*data)[row][col];
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
@@ -167,36 +167,6 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 	return;
 } // hideInBlock
 
-// C++ program to convert hexadecimal to decimal 
-#include<iostream> 
-#include<string.h> 
-using namespace std;
-
-
-
-// takes the biffer, extracts a filename, and writes the rest of the data to disk
-void writeMsg()
-{
-	return;
-} // writeMsg
-
-// uses the first 4 bytes in the message buffer to set the actual size of the message
-void setMsgSize()
-{
-	return;
-} // setMsgSize
-
-// takes some number of bits and places them in a inBufferfer
-int putBitsInBuffer(unsigned int numBits, unsigned char bits, unsigned char *outBuffer, unsigned int outBufferLength)
-{
-	return(SUCCESS);
-} // putBitsInBuffer
-
-// this function gets the Uniformity Factor
-double getUniformity_D(JpegDecoderCoefficientBlock data)
-{
-	return(0);
-} // getUniformity_D
 
 // this function removes the bits from a block
 void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantizationTable &qt)
