@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
                 printf("\n");
                 //This is just printing out all of the binary data in the buffer. This can be used for debugging purposes.
                 for (int i = 0; i < gMsgSize * 8; i++) {
-                    printf("%d", gMsgBufferInBinary[i]);
+                    //printf("%d", gMsgBufferInBinary[i]);
                 }
                 gBitCapacity = dataCount;
 				fclose(fptr);
