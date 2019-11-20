@@ -13,6 +13,7 @@ unsigned short gBitMask1_2[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff
 unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0, 0xFF80, 0xFF00 };
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
 unsigned int embeddedMessageSize = 0;
+unsigned int tempEmbeddedMessageSize = 0;
 unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;
@@ -123,7 +124,7 @@ union
 
 } MessageSizeBits;
 
-//Note - Use these values for embedding when debugging -i cover.jpg -h data.txt > embeddingOutput.txt
+//Note - Use these values for embedding when debugging -i cover.jpg -h Message.txt > embeddingOutput.txt
 //Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractingOutput.txt
 
 // hide the data in a block of coefficients
@@ -207,6 +208,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
 
                 //The code below here is setting the byte value for the message size.
                 if (extractMessageSize == 7) {
+					//unsure how extractMessageSize is used here. Though here we'll just add the other size byte
                     MessageSizeBits.bitValue.bit3 = str[0];
                     MessageSizeBits.bitValue.bit2 = str[1];
                     MessageSizeBits.bitValue.bit1 = str[2];

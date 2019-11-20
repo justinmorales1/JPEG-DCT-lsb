@@ -214,7 +214,10 @@ int main(int argc, char *argv[])
                 printf("The message size in hex is %x and the decimal value size is %d \n", gMsgSize, gMsgSize);
 
                 //This code here is embedding the binary message size into the messageBuffer
-                MessageDataVAR.byteValue = gMsgSize;
+				//*
+				unsigned int tempGMsgSize;
+				tempGMsgSize = gMsgSize >> 8;
+				MessageDataVAR.byteValue = tempGMsgSize;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit7;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit6;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit5;
@@ -222,7 +225,16 @@ int main(int argc, char *argv[])
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit3;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
-                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;//*/
+				MessageDataVAR.byteValue = gMsgSize;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit7;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit6;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit5;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit4;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit3;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
+				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
                 //printf("The first hex value in gMsgBufferInBinary %x", MessageDataVAR.byteValue);
                 //This code here is turning the entire message into binary and then adding it into the messageBuffer.
                 for (int i = 0; i < gMsgSize; i++) {
