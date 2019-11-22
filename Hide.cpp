@@ -22,7 +22,7 @@ unsigned int extractMessageSize;
 char *hexBuffer;
 char *gMsgBuffer;
 char *gMsgBufferInBinary;
-char str[8];
+char str[16];
 unsigned int gMsgSize;
 double gAlpha = 1.0;			// jpenquan.h
 double gUniformityFactor = 1.2;
@@ -124,6 +124,14 @@ union
 
 } MessageSizeBits;
 
+union
+{
+	struct MessageSize bitValue;
+	unsigned char byteValue;
+
+
+} TempMessageSizeBits;
+
 //Note - Use these values for embedding when debugging -i cover.jpg -h Message.txt > embeddingOutput.txt
 //Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractingOutput.txt
 
@@ -195,7 +203,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     , CBits.bitValue.bit3, CBits.bitValue.bit2, CBits.bitValue.bit1, CBits.bitValue.bit0);*/
 
                //This if statement is adding the size of the embedded data into a buffer called str.
-               if (extractMessageSize != 8) {
+               if (extractMessageSize != 16) {
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
                     str[extractMessageSize] = CBits.bitValue.bit0;
                     extractMessageSize++;
@@ -207,7 +215,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                }
 
                 //The code below here is setting the byte value for the message size.
-                if (extractMessageSize == 7) {
+                if (extractMessageSize == 15) {
 					//unsure how extractMessageSize is used here. Though here we'll just add the other size byte
                     MessageSizeBits.bitValue.bit3 = str[0];
                     MessageSizeBits.bitValue.bit2 = str[1];
@@ -217,12 +225,24 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     MessageSizeBits.bitValue.bit6 = str[5];
                     MessageSizeBits.bitValue.bit5 = str[6];
                     MessageSizeBits.bitValue.bit4 = str[7];
+
+					TempMessageSizeBits.bitValue.bit3 = str[8];
+					TempMessageSizeBits.bitValue.bit2 = str[9];
+					TempMessageSizeBits.bitValue.bit1 = str[10];
+					TempMessageSizeBits.bitValue.bit0 = str[11];
+					TempMessageSizeBits.bitValue.bit7 = str[12];
+					TempMessageSizeBits.bitValue.bit6 = str[13];
+					TempMessageSizeBits.bitValue.bit5 = str[14];
+					TempMessageSizeBits.bitValue.bit4 = str[15];
+					tempEmbeddedMessageSize = TempMessageSizeBits.byteValue | MessageSizeBits.byteValue << 8;
                     /*printf("The total message size binary values are  %d%d%d%d %d%d%d%d \n", MessageSizeBits.bitValue.bit7,
                         MessageSizeBits.bitValue.bit6, MessageSizeBits.bitValue.bit5, MessageSizeBits.bitValue.bit5
                         , MessageSizeBits.bitValue.bit3, MessageSizeBits.bitValue.bit2,
                         MessageSizeBits.bitValue.bit1, MessageSizeBits.bitValue.bit0);*/
-                    printf("The FINAL hex value is %x \n", MessageSizeBits.byteValue);
-                    embeddedMessageSize = MessageSizeBits.byteValue;
+                    printf("The FINAL MSB hex value is %x \n", MessageSizeBits.byteValue);
+					printf("The FINAL tMSB hex value is %x \n", TempMessageSizeBits.byteValue);
+                    //embeddedMessageSize = MessageSizeBits.byteValue;
+					embeddedMessageSize = tempEmbeddedMessageSize;
                     printf("The Hex value is %x \n", embeddedMessageSize);
                 }
 

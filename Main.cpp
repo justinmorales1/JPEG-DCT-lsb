@@ -482,7 +482,7 @@ int main(int argc, char *argv[])
         }
 
         for (int i = 0; i < embeddedMessageSize; i++) {
-            //printf("The values in the buffer are %x \n", hexBuffer[i]);
+            printf("The values in the buffer are %x \n", hexBuffer[i]);
         }
         int bufsize = strlen(hexBuffer) + 1;
         FILE *outputFile;

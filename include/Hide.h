@@ -30,7 +30,7 @@ extern char *gMsgBuffer;
 extern char *gMsgBufferInBinary;
 extern char *extractedBuffer;
 extern char *hexBuffer;
-extern char str[8];
+extern char str[16];
 extern unsigned int gMsgSize;
 extern unsigned int extractMessageSize;
 extern unsigned int embeddedMessageSize;
