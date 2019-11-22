@@ -168,6 +168,7 @@ int main(int argc, char *argv[])
               
 				gExtractMsg = true;
                 gMsgBufferInBinary = (char *)malloc(65536);
+				memset(gMsgBufferInBinary, 0, 65536);
                 hexBuffer = (char *)malloc(65536);
 				break;
 
