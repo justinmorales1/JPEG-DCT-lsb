@@ -203,7 +203,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     , CBits.bitValue.bit3, CBits.bitValue.bit2, CBits.bitValue.bit1, CBits.bitValue.bit0);*/
 
                //This if statement is adding the size of the embedded data into a buffer called str.
-               if (extractMessageSize != 16) {
+               if (extractMessageSize != 16 && extractMessageSize < 16) {
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
                     str[extractMessageSize] = CBits.bitValue.bit0;
                     extractMessageSize++;
@@ -215,7 +215,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                }
 
                 //The code below here is setting the byte value for the message size.
-                if (extractMessageSize == 15) {
+                if (extractMessageSize == 16) {
 					//unsure how extractMessageSize is used here. Though here we'll just add the other size byte
                     MessageSizeBits.bitValue.bit3 = str[0];
                     MessageSizeBits.bitValue.bit2 = str[1];
@@ -244,6 +244,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     //embeddedMessageSize = MessageSizeBits.byteValue;
 					embeddedMessageSize = tempEmbeddedMessageSize;
                     printf("The Hex value is %x \n", embeddedMessageSize);
+					extractMessageSize++;
                 }
 
                 messageIndexValue++;
