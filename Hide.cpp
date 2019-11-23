@@ -151,7 +151,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 continue;
-            } else  {
+            } else if ((*data)[row][col] > 1) {
                 //printf("The embedding JPEG coefficient value is : %d\n", (*data)[row][col]);
                 VAR.byteValue = (*data)[row][col];
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
@@ -196,7 +196,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
             if ((data)[row][col] == 0 || (data)[row][col] == 1) {
                 continue;
             }
-            else {
+            else if ((data)[row][col] > 1) {
                 //printf("The JPEG extracted coefficient value is : %d\n", (data)[row][col]);
                 CBits.byteValue = (data)[row][col];
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5

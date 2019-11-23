@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 				gExtractMsg = true;
                 gMsgBufferInBinary = (char *)malloc(5000000);
 				memset(gMsgBufferInBinary, 0, 65536);
-                hexBuffer = (char *)malloc(65536);
+                hexBuffer = (char *)malloc(5000000);
 				break;
 
 			case 'w':	// wipe a message (replaces message with zeros)
