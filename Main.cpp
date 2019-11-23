@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 			case 'e':	// extract a message
               
 				gExtractMsg = true;
-                gMsgBufferInBinary = (char *)malloc(65536);
+                gMsgBufferInBinary = (char *)malloc(500000);
 				memset(gMsgBufferInBinary, 0, 65536);
                 hexBuffer = (char *)malloc(65536);
 				break;
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (char *) malloc(size);
-                gMsgBufferInBinary = (char *)malloc(65536);
+                gMsgBufferInBinary = (char *)malloc(500000);
 				if(gMsgBuffer == NULL)
 				{
 					printf("Could not allocate memory for message file.\n\n");
