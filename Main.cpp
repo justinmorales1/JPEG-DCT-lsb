@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
                 //This code here is turning the entire message into binary and then adding it into the messageBuffer.
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];
-                    //printf("%x", gMsgBuffer[i]);
+                    printf("%x", gMsgBuffer[i]);
                     DataVAR.byteValue = byte;
                                        
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
@@ -467,8 +467,8 @@ int main(int argc, char *argv[])
 			writeJpg(outputFile, g, p);
 
         //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
-        for (int i = 1; i < gMsgSize; i++) {
-            //printf("%d", gMsgBufferInBinary[i]);    
+        for (int i = 0; i < embeddedMessageSize; i++) {
+            printf("%d", gMsgBufferInBinary[i]);    
            
             BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit2 = gMsgBufferInBinary[dataCounts++];
@@ -481,9 +481,9 @@ int main(int argc, char *argv[])
             hexBuffer[i] = BitsToHex.byteValue;       
 
         }
-
+        printf("\n");
         for (int i = 0; i < embeddedMessageSize; i++) {
-            printf("The values in the buffer are %x \n", hexBuffer[i]);
+            printf("%x", hexBuffer[i]);
         }
         int bufsize = strlen(hexBuffer) + 1;
         FILE *outputFile;

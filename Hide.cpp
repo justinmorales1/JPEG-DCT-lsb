@@ -18,7 +18,7 @@ unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;
 unsigned int coverMessageTotalSize;
-unsigned int extractMessageSize;
+unsigned int extractMessageSize = 0;
 char *hexBuffer;
 char *gMsgBuffer;
 char *gMsgBufferInBinary;
@@ -133,7 +133,7 @@ union
 } TempMessageSizeBits;
 
 //Note - Use these values for embedding when debugging -i cover.jpg -h Message.txt > embeddingOutput.txt
-//Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractingOutput.txt
+//Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractedOutput.txt
 
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
@@ -151,7 +151,7 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
                 continue;
-            } else if ((*data)[row][col] > 1) {
+            } else  {
                 //printf("The embedding JPEG coefficient value is : %d\n", (*data)[row][col]);
                 VAR.byteValue = (*data)[row][col];
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
@@ -196,7 +196,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
             if ((data)[row][col] == 0 || (data)[row][col] == 1) {
                 continue;
             }
-            else if ((data)[row][col] > 1) {
+            else {
                 //printf("The JPEG extracted coefficient value is : %d\n", (data)[row][col]);
                 CBits.byteValue = (data)[row][col];
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5
@@ -204,9 +204,13 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
 
                //This if statement is adding the size of the embedded data into a buffer called str.
                if (extractMessageSize != 16 && extractMessageSize < 16) {
+                    
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
+                    printf("%d", CBits.bitValue.bit0);
+                    printf("The extract message size is %d \n", extractMessageSize);
                     str[extractMessageSize] = CBits.bitValue.bit0;
                     extractMessageSize++;
+                    
                     //continue;
                }
                else {
@@ -241,6 +245,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                         MessageSizeBits.bitValue.bit1, MessageSizeBits.bitValue.bit0);*/
                     printf("The FINAL MSB hex value is %x \n", MessageSizeBits.byteValue);
 					printf("The FINAL tMSB hex value is %x \n", TempMessageSizeBits.byteValue);
+                    printf("The FINAL tempEmbeddedSize is %x \n", tempEmbeddedMessageSize);
                     //embeddedMessageSize = MessageSizeBits.byteValue;
 					embeddedMessageSize = tempEmbeddedMessageSize;
                     printf("The Hex value is %x \n", embeddedMessageSize);
