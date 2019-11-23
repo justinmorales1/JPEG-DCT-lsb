@@ -468,7 +468,7 @@ int main(int argc, char *argv[])
         printf("\n");
         //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
         for (int i = 0; i <  (embeddedMessageSize * 8) + 1; i++) {
-            printf("%d", gMsgBufferInBinary[i]);    
+            //printf("%d", gMsgBufferInBinary[i]);    
            
             BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit2 = gMsgBufferInBinary[dataCounts++];
@@ -483,7 +483,7 @@ int main(int argc, char *argv[])
         }
         printf("\n");
         printf("\n");
-        for (int i = 1; i < embeddedMessageSize + 1; i++) {
+        for (int i = 1; i < embeddedMessageSize - 3; i++) {
             printf("%x", hexBuffer[i]);
         }
         long bufsize = strlen(hexBuffer) + 1;
