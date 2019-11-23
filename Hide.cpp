@@ -132,8 +132,8 @@ union
 
 } TempMessageSizeBits;
 
-//Note - Use these values for embedding when debugging -i cover.jpg -h Message.txt > embeddingOutput.txt
-//Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractedOutput.txt
+//Note - Use these values for embedding when debugging -i cover2.jpg -h Message.txt > embeddingOutput.txt
+//Note - Use these values for extraction when debugging -e -i cover2_hidden.jpg > extractedOutput.txt
 
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
