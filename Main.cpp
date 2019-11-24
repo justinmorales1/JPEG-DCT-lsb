@@ -492,8 +492,8 @@ int main(int argc, char *argv[])
         }
         long bufsize = strlen(hexSizeBuffer) + 1;
         FILE *outputFile;
-        printf("\n");
-        outputFile = fopen("extractedData.txt", "wb");
+
+        outputFile = fopen(argv[4], "wb");
 
         fwrite(hexBuffer + 1, embeddedMessageSize-3, 1, outputFile);
         fclose(outputFile);
