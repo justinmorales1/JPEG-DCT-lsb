@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 				fileno = _fileno(fptr);
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
-				gMsgBuffer = (char *) malloc(size);
+				gMsgBuffer = (unsigned char *) malloc(size);
                 gMsgBufferInBinary = (char *)malloc(5000000);
 				if(gMsgBuffer == NULL)
 				{
@@ -431,7 +431,7 @@ int main(int argc, char *argv[])
 		fileno = _fileno(fptr);
 		size = (int) _filelength(fileno) + 260;	// get length of input jpg for max size of message
 												// the 260 is for the possible length of the filename
-		gMsgBuffer = (char *) malloc(size);
+		gMsgBuffer = (unsigned char *) malloc(size);
 		if(gMsgBuffer == NULL)
 		{
 			printf("Could not allocate memory for message file.\n\n");

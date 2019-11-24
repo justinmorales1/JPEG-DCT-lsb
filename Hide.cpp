@@ -20,7 +20,7 @@ unsigned int jpegImageTotalSize;
 unsigned int coverMessageTotalSize;
 unsigned int extractMessageSize = 0;
 char *hexBuffer;
-char *gMsgBuffer;
+unsigned char *gMsgBuffer;
 char *gMsgBufferInBinary;
 char str[16];
 unsigned int gMsgSize;
