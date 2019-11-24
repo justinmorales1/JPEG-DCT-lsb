@@ -13,15 +13,17 @@ unsigned short gBitMask1_2[8] = { 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff
 unsigned short gBitMask2_2[8] = { 0xFFFE, 0xFFFC, 0xFFF8, 0xFFF0, 0xFFE0, 0xFFC0, 0xFF80, 0xFF00 };
 //unsigned char gBitMask3[8] = { 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
 unsigned int embeddedMessageSize = 0;
+unsigned int tempEmbeddedMessageSize = 0;
 unsigned int gBitCapacity;
 unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;
 unsigned int coverMessageTotalSize;
-unsigned int extractMessageSize;
-char *hexBuffer;
-char *gMsgBuffer;
-char *gMsgBufferInBinary;
-char str[8];
+unsigned int extractMessageSize = 0;
+unsigned char *hexBuffer;
+char *hexSizeBuffer;
+unsigned char *gMsgBuffer;
+unsigned char *gMsgBufferInBinary;
+char str[16];
 unsigned int gMsgSize;
 double gAlpha = 1.0;			// jpenquan.h
 double gUniformityFactor = 1.2;
@@ -123,8 +125,16 @@ union
 
 } MessageSizeBits;
 
-//Note - Use these values for embedding when debugging -i cover.jpg -h data.txt > embeddingOutput.txt
-//Note - Use these values for extraction when debugging -e -i cover_hidden.jpg > extractingOutput.txt
+union
+{
+	struct MessageSize bitValue;
+	unsigned char byteValue;
+
+
+} TempMessageSizeBits;
+
+//Note - Use these values for embedding when debugging -i cover2.jpg -h Message.txt > embeddingOutput.txt
+//Note - Use these values for extraction when debugging -e -i cover2_hidden.jpg > extractedOutput.txt
 
 // hide the data in a block of coefficients
 void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable &qt)
@@ -138,16 +148,11 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 		for(col = 0; col < JpegSampleWidth; col++)
 		{
             jpegImageTotalSize++;
-            if (gBitCapacity == messageIndexValue) {
-                /*printf("The message Index value is %d \n", messageIndexValue);
-                printf("The gBitCapacity is %d \n", gBitCapacity);*/
-                return;
-            }
 
 			qt.GetDataValue(row*JpegSampleWidth+col);   
             if ((*data)[row][col] == 0 || (*data)[row][col] == 1) {
-                break;
-            } else if ((*data)[row][col] > 5) {
+                continue;
+            } else if ((*data)[row][col] > 1) {
                 //printf("The embedding JPEG coefficient value is : %d\n", (*data)[row][col]);
                 VAR.byteValue = (*data)[row][col];
                 unsigned char messageBits = gMsgBufferInBinary[messageIndexValue];
@@ -172,36 +177,6 @@ void hideInBlock(JpegEncoderCoefficientBlock *data, JpegEncoderQuantizationTable
 	return;
 } // hideInBlock
 
-// C++ program to convert hexadecimal to decimal 
-#include<iostream> 
-#include<string.h> 
-using namespace std;
-
-
-
-// takes the biffer, extracts a filename, and writes the rest of the data to disk
-void writeMsg()
-{
-	return;
-} // writeMsg
-
-// uses the first 4 bytes in the message buffer to set the actual size of the message
-void setMsgSize()
-{
-	return;
-} // setMsgSize
-
-// takes some number of bits and places them in a inBufferfer
-int putBitsInBuffer(unsigned int numBits, unsigned char bits, unsigned char *outBuffer, unsigned int outBufferLength)
-{
-	return(SUCCESS);
-} // putBitsInBuffer
-
-// this function gets the Uniformity Factor
-double getUniformity_D(JpegDecoderCoefficientBlock data)
-{
-	return(0);
-} // getUniformity_D
 
 // this function removes the bits from a block
 void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantizationTable &qt)
@@ -218,24 +193,25 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
         for (col = 0; col < JpegSampleWidth; col++)
         {
             jpegImageTotalSize++;
-            if (messageIndexValue == 248) {
-                return;
-            }
 
             if ((data)[row][col] == 0 || (data)[row][col] == 1) {
-                break;
+                continue;
             }
-            else if ((data)[row][col] > 5) {
+            else if ((data)[row][col] > 1) {
                 //printf("The JPEG extracted coefficient value is : %d\n", (data)[row][col]);
                 CBits.byteValue = (data)[row][col];
                 /*printf("The coefficient binary values are  %d%d%d%d %d%d%d%d \n", CBits.bitValue.bit7, CBits.bitValue.bit6, CBits.bitValue.bit5, CBits.bitValue.bit5
                     , CBits.bitValue.bit3, CBits.bitValue.bit2, CBits.bitValue.bit1, CBits.bitValue.bit0);*/
 
                //This if statement is adding the size of the embedded data into a buffer called str.
-               if (extractMessageSize != 8) {
+               if (extractMessageSize != 16 && extractMessageSize < 16) {
+                    
                     gMsgBufferInBinary[extractMessageSize] = CBits.bitValue.bit0;
+                    printf("%d", CBits.bitValue.bit0);
+                    printf("The extract message size is %d \n", extractMessageSize);
                     str[extractMessageSize] = CBits.bitValue.bit0;
                     extractMessageSize++;
+                    
                     //continue;
                }
                else {
@@ -244,7 +220,8 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                }
 
                 //The code below here is setting the byte value for the message size.
-                if (extractMessageSize == 7) {
+                if (extractMessageSize == 16) {
+					//unsure how extractMessageSize is used here. Though here we'll just add the other size byte
                     MessageSizeBits.bitValue.bit3 = str[0];
                     MessageSizeBits.bitValue.bit2 = str[1];
                     MessageSizeBits.bitValue.bit1 = str[2];
@@ -253,13 +230,28 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     MessageSizeBits.bitValue.bit6 = str[5];
                     MessageSizeBits.bitValue.bit5 = str[6];
                     MessageSizeBits.bitValue.bit4 = str[7];
+
+					TempMessageSizeBits.bitValue.bit3 = str[8];
+					TempMessageSizeBits.bitValue.bit2 = str[9];
+					TempMessageSizeBits.bitValue.bit1 = str[10];
+					TempMessageSizeBits.bitValue.bit0 = str[11];
+					TempMessageSizeBits.bitValue.bit7 = str[12];
+					TempMessageSizeBits.bitValue.bit6 = str[13];
+					TempMessageSizeBits.bitValue.bit5 = str[14];
+					TempMessageSizeBits.bitValue.bit4 = str[15];
+					tempEmbeddedMessageSize = TempMessageSizeBits.byteValue | MessageSizeBits.byteValue << 8;
                     /*printf("The total message size binary values are  %d%d%d%d %d%d%d%d \n", MessageSizeBits.bitValue.bit7,
                         MessageSizeBits.bitValue.bit6, MessageSizeBits.bitValue.bit5, MessageSizeBits.bitValue.bit5
                         , MessageSizeBits.bitValue.bit3, MessageSizeBits.bitValue.bit2,
                         MessageSizeBits.bitValue.bit1, MessageSizeBits.bitValue.bit0);*/
-                    printf("The FINAL hex value is %x \n", MessageSizeBits.byteValue);
-                    embeddedMessageSize = MessageSizeBits.byteValue;
+                    printf("The FINAL MSB hex value is %x \n", MessageSizeBits.byteValue);
+					printf("The FINAL tMSB hex value is %x \n", TempMessageSizeBits.byteValue);
+                    printf("The FINAL tempEmbeddedSize is %x \n", tempEmbeddedMessageSize);
+                    //embeddedMessageSize = MessageSizeBits.byteValue;
+					embeddedMessageSize = tempEmbeddedMessageSize;
+                    embeddedMessageSize = embeddedMessageSize - 3;
                     printf("The Hex value is %x \n", embeddedMessageSize);
+					extractMessageSize++;
                 }
 
                 messageIndexValue++;
