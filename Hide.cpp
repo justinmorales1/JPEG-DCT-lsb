@@ -249,6 +249,7 @@ void extractFromBlock(JpegDecoderCoefficientBlock data, const JpegDecoderQuantiz
                     printf("The FINAL tempEmbeddedSize is %x \n", tempEmbeddedMessageSize);
                     //embeddedMessageSize = MessageSizeBits.byteValue;
 					embeddedMessageSize = tempEmbeddedMessageSize;
+                    embeddedMessageSize = embeddedMessageSize - 3;
                     printf("The Hex value is %x \n", embeddedMessageSize);
 					extractMessageSize++;
                 }

@@ -495,7 +495,7 @@ int main(int argc, char *argv[])
         printf("\n");
         outputFile = fopen("extractedData.txt", "wb");
 
-        fwrite(hexBuffer + 1, bufsize, 1, outputFile);
+        fwrite(hexBuffer + 1, embeddedMessageSize-3, 1, outputFile);
         fclose(outputFile);
         free(gMsgBufferInBinary);
         
