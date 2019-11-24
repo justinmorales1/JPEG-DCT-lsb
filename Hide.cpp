@@ -19,9 +19,10 @@ unsigned int messageIndexValue;
 unsigned int jpegImageTotalSize;
 unsigned int coverMessageTotalSize;
 unsigned int extractMessageSize = 0;
-char *hexBuffer;
+unsigned char *hexBuffer;
+char *hexSizeBuffer;
 unsigned char *gMsgBuffer;
-char *gMsgBufferInBinary;
+unsigned char *gMsgBufferInBinary;
 char str[16];
 unsigned int gMsgSize;
 double gAlpha = 1.0;			// jpenquan.h

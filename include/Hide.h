@@ -27,9 +27,10 @@
 // Global Variables
 extern char gOutputFileName[260];
 extern unsigned char *gMsgBuffer;
-extern char *gMsgBufferInBinary;
-extern char *extractedBuffer;
-extern char *hexBuffer;
+extern unsigned char *gMsgBufferInBinary;
+extern unsigned char *extractedBuffer;
+extern unsigned char *hexBuffer;
+extern char *hexSizeBuffer;
 extern char str[16];
 extern unsigned int gMsgSize;
 extern unsigned int extractMessageSize;

@@ -166,10 +166,11 @@ int main(int argc, char *argv[])
 
 			case 'e':	// extract a message
               
-				gExtractMsg = true;
-                gMsgBufferInBinary = (char *)malloc(5000000);
+				gExtractMsg = true;//char *hexSizeBuffer;
+                gMsgBufferInBinary = (unsigned char *)malloc(5000000);
 				memset(gMsgBufferInBinary, 0, 65536);
-                hexBuffer = (char *)malloc(5000000);
+                hexBuffer = (unsigned char *)malloc(5000000);
+                hexSizeBuffer = (char *)malloc(5000000);
 				break;
 
 			case 'w':	// wipe a message (replaces message with zeros)
@@ -195,7 +196,7 @@ int main(int argc, char *argv[])
 				size = (int) _filelength(fileno) + (int) strlen(argv[i]) + 5; // get length of message file
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (unsigned char *) malloc(size);
-                gMsgBufferInBinary = (char *)malloc(5000000);
+                gMsgBufferInBinary = (unsigned char *)malloc(5000000);
 				if(gMsgBuffer == NULL)
 				{
 					printf("Could not allocate memory for message file.\n\n");
@@ -480,6 +481,7 @@ int main(int argc, char *argv[])
             BitsToHex.bitValue.bit5 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit4 = gMsgBufferInBinary[dataCounts++];
             hexBuffer[i] = BitsToHex.byteValue;  
+            hexSizeBuffer[i] = BitsToHex.byteValue;
             //printf("%d", gMsgBufferInBinary[i]);
 
         }
@@ -488,7 +490,7 @@ int main(int argc, char *argv[])
         for (int i = 1; i < embeddedMessageSize; i++) {
             printf("%x", hexBuffer[i]);
         }
-        long bufsize = strlen(hexBuffer) + 1;
+        long bufsize = strlen(hexSizeBuffer) + 1;
         FILE *outputFile;
         printf("\n");
         outputFile = fopen("extractedData.txt", "wb");
