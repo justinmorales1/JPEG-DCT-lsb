@@ -166,7 +166,10 @@ int main(int argc, char *argv[])
 
 			case 'e':	// extract a message
               
-				gExtractMsg = true;//char *hexSizeBuffer;
+				//for ease of coding, malloc fixed size buffers
+				//gMsgBufferInBinary will contain extracted bits
+				//hexBuffer will contain those bits formed as hex characters for printing to an out file
+				gExtractMsg = true;
                 gMsgBufferInBinary = (unsigned char *)malloc(5000000);
 				memset(gMsgBufferInBinary, 0, 65536);
                 hexBuffer = (unsigned char *)malloc(5000000);
@@ -186,8 +189,7 @@ int main(int argc, char *argv[])
                 char buffer[65536];
 				fptr = fopen(argv[i], "rb");
                
-				if(fptr == NULL)
-				{
+				if(fptr == NULL){
 					printf("Could not open message file %s\n\n", argv[i]);
 					exit(1);
 				}
@@ -197,8 +199,7 @@ int main(int argc, char *argv[])
 															// the +5 allows for 4-byte length & NULL terminator
 				gMsgBuffer = (unsigned char *) malloc(size);
                 gMsgBufferInBinary = (unsigned char *)malloc(5000000);
-				if(gMsgBuffer == NULL)
-				{
+				if(gMsgBuffer == NULL){
 					printf("Could not allocate memory for message file.\n\n");
 					exit(1);
 				}           
@@ -209,14 +210,10 @@ int main(int argc, char *argv[])
 				*(gMsgBuffer + gMsgSize++) = (size >> 16) & 0xFF;
 				*(gMsgBuffer + gMsgSize++) = (size >> 8) & 0xFF;
 				*(gMsgBuffer + gMsgSize++) = size & 0xFF;
-
                 gMsgSize += (unsigned int)fread(gMsgBuffer, 1, size, fptr);	// read entire message file into memory
-
-
                 printf("The message size in hex is %x and the decimal value size is %d \n", gMsgSize, gMsgSize);
 
-                //This code here is embedding the binary message size into the messageBuffer
-				//*
+                //Here we embed the 16 bit binary message size into the messageBuffer
 				unsigned int tempGMsgSize;
 				tempGMsgSize = gMsgSize >> 8;
 				MessageDataVAR.byteValue = tempGMsgSize;
@@ -227,7 +224,7 @@ int main(int argc, char *argv[])
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit3;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
                 gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
-                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;//*/
+                gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
 				MessageDataVAR.byteValue = gMsgSize;
 				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit7;
 				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit6;
@@ -237,14 +234,11 @@ int main(int argc, char *argv[])
 				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit2;
 				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit1;
 				gMsgBufferInBinary[dataCount++] = MessageDataVAR.bitValue.bit0;
-                //dataCount = 32;
-                //printf("The first hex value in gMsgBufferInBinary %x", MessageDataVAR.byteValue);
-                //This code here is turning the entire message into binary and then adding it into the messageBuffer.
+
+                //Here we convert the message into binary and put it into messageBuffer.
                 for (int i = 0; i < gMsgSize; i++) {
                     unsigned char byte = gMsgBuffer[i];
-                    printf("%x", gMsgBuffer[i]);
                     DataVAR.byteValue = byte;
-                                       
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit7;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit6;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit5;
@@ -253,11 +247,6 @@ int main(int argc, char *argv[])
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit2;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit1;
                     gMsgBufferInBinary[dataCount++] = DataVAR.bitValue.bit0;
-                }
-                printf("\n");
-                //This is just printing out all of the binary data in the buffer. This can be used for debugging purposes.
-                for (int i = 0; i < gMsgSize * 8; i++) {
-                    printf("%d", gMsgBufferInBinary[i]);
                 }
                 gBitCapacity = dataCount;
 				fclose(fptr);
@@ -401,8 +390,11 @@ int main(int argc, char *argv[])
 		{
 			free(gMsgBuffer);
 		}
-		//printf("\n\nStorage Capacity: %d bits (%d bytes)\nMessage Size: %d bytes\n", jpegImageTotalSize, jpegImageTotalSize /8, gMsgSize);
         printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits %d (bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, gMsgSize * 8, gMsgSize);
+		printf("\n\nCover size: %d bits\nMessage Size: %d bits\n", jpegImageTotalSize, gMsgSize * 8);
+		float capacityUsed = messageIndexValue;
+		capacityUsed = capacityUsed / jpegImageTotalSize;
+		printf("\n\nCapacity of cover used: %% %3f\n", capacityUsed);
 
 		if( (jpegImageTotalSize /8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT HIDDEN!!!\n\n");
 		return(SUCCESS);
@@ -464,14 +456,13 @@ int main(int argc, char *argv[])
 		}
 
 		readJpg(inputFile, v);
-
-		if(gWipeMsg || gDestroyMsg)
+		if (gWipeMsg || gDestroyMsg) {
 			writeJpg(outputFile, g, p);
+		}
+
         printf("\n");
-        //This loop here is printing the contents of the gMsgBuffer in binary. You can compare that data to the embedding data.
+        //Converting our binary bits to hex characters
         for (int i = 0; i <  embeddedMessageSize; i++) {
-            //printf("%d", gMsgBufferInBinary[i]);    
-           
             BitsToHex.bitValue.bit3 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit2 = gMsgBufferInBinary[dataCounts++];
             BitsToHex.bitValue.bit1 = gMsgBufferInBinary[dataCounts++];
@@ -482,26 +473,20 @@ int main(int argc, char *argv[])
             BitsToHex.bitValue.bit4 = gMsgBufferInBinary[dataCounts++];
             hexBuffer[i] = BitsToHex.byteValue;  
             hexSizeBuffer[i] = BitsToHex.byteValue;
-            //printf("%d", gMsgBufferInBinary[i]);
+        }
+        printf("\n");
 
-        }
-        printf("\n");
-        printf("\n");
-        for (int i = 1; i < embeddedMessageSize; i++) {
-            printf("%x", hexBuffer[i]);
-        }
         long bufsize = strlen(hexSizeBuffer) + 1;
         FILE *outputFile;
-
-        outputFile = fopen(argv[4], "wb");
-
+		outputFile = fopen(argv[4], "wb");
         fwrite(hexBuffer + 1, embeddedMessageSize-3, 1, outputFile);
         fclose(outputFile);
         free(gMsgBufferInBinary);
-        
-        printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits  ( %d bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, embeddedMessageSize * 8, (embeddedMessageSize * 8) / 8);
-        if( (gBitCapacity/8) < gMsgSize) printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
-	} // if extracting, wiping, or destroying
 
+        printf("\n\nThe Storage Capacity: %d bits (%d bytes)\nThe Message Size:  %d bits  ( %d bytes)\n", jpegImageTotalSize, jpegImageTotalSize / 8, embeddedMessageSize * 8, (embeddedMessageSize * 8) / 8);
+		if ((gBitCapacity / 8) < gMsgSize) {
+			printf("\n\nWARNING! ENTIRE MESSAGE WAS NOT EXTRACTED!!!\n\n");
+		}
+	} // if extracting, wiping, or destroying
 	return(SUCCESS);
 } // main
